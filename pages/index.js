@@ -38,7 +38,7 @@ export default function Home() {
           withBorder
         >
           <Text size="md">
-          Fibbage is the lying, bluffing, fib-till-you-win multiplayer trivia party game from the makers of YOU DON'T KNOW JACK! Play with 2-8 players! Fool your friends with your lies, avoid theirs, and find the (usually outrageous) truth. And get this: your phone or tablet is your controller!
+            Fibbage is the lying, bluffing, fib-till-you-win multiplayer trivia party game from the makers of YOU DON&lsquo;T KNOW JACK! Play with 2-8 players! Fool your friends with your lies, avoid theirs, and find the (usually outrageous) truth. And get this: your phone or tablet is your controller!
           </Text>
         </Paper>
         <SessionModal

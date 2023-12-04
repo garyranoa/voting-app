@@ -135,7 +135,7 @@ function GuesserView(sessionId, word, guesses, roundNumber) {
   );
 }
 
-const renderTime = ({ remainingTime }) => {
+const RenderTime = ({ remainingTime }) => {
   const currentTime = useRef(remainingTime);
   const prevTime = useRef(null);
   const isNewTimeFirstTick = useRef(false);
@@ -188,7 +188,7 @@ function GuesserViewV2(sessionId, word, guesses, roundNumber) {
             duration={60}
             colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
             colorsTime={[10, 6, 3, 0]}>
-          {renderTime}
+          {RenderTime}
         </CountdownCircleTimer>
       </div>
       
