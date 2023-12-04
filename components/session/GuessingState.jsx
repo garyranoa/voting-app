@@ -18,6 +18,7 @@ import {
   updateRoundState,
   updateUserGuess,
   updateUserIsCorrect,
+  updateUserVote,
 } from "../../lib/firebase";
 import { getWordDefinition } from "../../lib/vocab";
 import { CountdownCircleTimer } from 'react-countdown-circle-timer'
@@ -89,14 +90,14 @@ function GuesserEntryViewOptions({ sessionId, roundNumber }) {
           <Button color="red" variant="filled" radius="md" mt="xl" mb="xl" uppercase
             disabled={disabled}
             onClick={() =>
-              updateUserGuess(sessionId,roundNumber,cookieCutter.get("username"), 'KILL')
+              updateUserVote(sessionId,roundNumber,cookieCutter.get("username"), 'KILL')
             }>
             <Center><BiDislike size={25} /><Box ml={10}>KILL</Box></Center>
           </Button> &nbsp;
           <Button color="blue" variant="filled" radius="md" mt="xl" mb="xl" uppercase
           disabled={disabled}
           onClick={() =>
-            updateUserGuess(sessionId,roundNumber,cookieCutter.get("username"), 'KEEP')
+            updateUserVote(sessionId,roundNumber,cookieCutter.get("username"), 'KEEP')
           }>
             <Center><BiLike size={25} /><Box ml={10}>KEEP</Box></Center>
           </Button>
