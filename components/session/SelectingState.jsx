@@ -62,7 +62,7 @@ function DasherControls({ sessionId, roundNumber }) {
         variant="filled"
         color="red"
         onClick={() =>
-          updateRoundState(sessionId, roundNumber, ROUND_STATES.VOTING)
+          updateRoundState(sessionId, roundNumber, ROUND_STATES.GUESSING)
         }
       >
         Confirm Word

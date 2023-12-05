@@ -14,7 +14,7 @@ function Loading() {
   );
 }
 
-const scenarioHandler = (id, round, players, isLastRound) => {
+const scenarioHandler = (id, round, voters, isLastRound) => {
   switch (round.state) {
     case ROUND_STATES.SELECTING:
       return (
@@ -31,7 +31,7 @@ const scenarioHandler = (id, round, players, isLastRound) => {
           sessionId={id}
           dasher={round.dasher}
           word={round.word}
-          guesses={round.guesses}
+          votes={round.votes}
           roundNumber={round.number}
         />
       );
@@ -50,7 +50,7 @@ const scenarioHandler = (id, round, players, isLastRound) => {
       return (
         <ResultState
           sessionId={id}
-          players={players}
+          voters={voters}
           dasher={round.dasher}
           isLastRound={isLastRound}
         />
@@ -61,7 +61,7 @@ const scenarioHandler = (id, round, players, isLastRound) => {
 };
 
 export default function Round({ sessionData }) {
-  const { limit, rounds, players, id } = sessionData;
+  const { limit, rounds, voters, id } = sessionData;
   if (rounds === undefined) return Loading();
   const latestRound = rounds.at(-1);
   const isLastRound = latestRound.number == limit;
@@ -89,7 +89,7 @@ export default function Round({ sessionData }) {
           </Text>
         )}
       </div>
-      {scenarioHandler(id, latestRound, players, isLastRound)}
+      {scenarioHandler(id, latestRound, voters, isLastRound)}
       <div
         style={{
           paddingTop: "80px",

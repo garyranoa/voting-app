@@ -160,7 +160,7 @@ const RenderTime = ({ remainingTime }) => {
 };
 
 function VoterView(sessionId, word, votes, roundNumber, timer) {
-  const guess = guesses[cookieCutter.get("username")].guess;
+  const vote = votes[cookieCutter.get("username")].vote;
   
   return (
     
@@ -180,8 +180,8 @@ function VoterView(sessionId, word, votes, roundNumber, timer) {
       <Title color="red.8" pt="xl" pb="xl" transform="uppercase">
         {word}
       </Title>
-      {guess.length > 0 ? (
-        <VoterWaitView guess={guess} />
+      {vote.length > 0 ? (
+        <VoterWaitView vote={vote} />
       ) : (
         <GuesserEntryViewOptions sessionId={sessionId} roundNumber={roundNumber} />
       )}
@@ -317,9 +317,10 @@ function GuessCardV2({ guesses }) {
 }
 
 
-function DasherView(sessionId, word, guesses, roundNumber, definition) {
-  const ready = Object.keys(guesses).every(
-    (user) => guesses[user].guess.length > 0
+function DasherView(sessionId, word, votes, roundNumber, definition) {
+  console.log('votes', votes)
+  const ready = Object.keys(votes).every(
+    (user) => votes[user].vote.length > 0
   );
   return (
     <>

@@ -42,11 +42,11 @@ function JoinedIcon() {
 }
 
 function UserList(props) {
-  return props.players.length === 0 ? (
-    <Title size="h2">No players yet</Title>
+  return props.voters.length === 0 ? (
+    <Title size="h2">No voters yet</Title>
   ) : (
     <List spacing="xs" style={listStyle} icon={<JoinedIcon />}>
-      {props.players.map((p) => (
+      {props.voters.map((p) => (
         <List.Item key={p}>{p}</List.Item>
       ))}
     </List>
@@ -65,7 +65,7 @@ function PlayButton(sessionId, playable, setErrorVisible, setErrorMessage) {
       />
       {!playable && (
         <p style={{ textAlign: "center", color: "red" }}>
-          You need at least {MIN_PLAYERS} players to start
+          You need at least {MIN_PLAYERS} voters to start
         </p>
       )}
     </>
@@ -90,8 +90,8 @@ function WaitForStart() {
 export default function Lobby({ sessionData }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [errorVisible, setErrorVisible] = useState(false);
-  const { id, players, creator } = sessionData;
-  const playerList = Object.keys(players);
+  const { id, voters, creator } = sessionData;
+  const voterList = Object.keys(voters);
   return (
     <>
       <Title size="h1" style={{ paddingTop: "20px", paddingBottom: "20px" }}>
@@ -107,12 +107,12 @@ export default function Lobby({ sessionData }) {
         <Title size="h2" style={cardTitleStyle}>
           Voters
         </Title>
-        <UserList players={playerList.filter((p) => p != creator)} />
+        <UserList voters={voterList.filter((p) => p != creator)} />
         <br />
         {cookieCutter.get("username") === creator
           ? PlayButton(
               id,
-              playerList.filter((p) => p != creator).length  >= MIN_PLAYERS,
+              voterList.filter((p) => p != creator).length  >= MIN_PLAYERS,
               setErrorVisible,
               setErrorMessage
             )
