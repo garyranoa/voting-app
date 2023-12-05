@@ -161,7 +161,6 @@ const RenderTime = ({ remainingTime }) => {
 
 function VoterView(sessionId, word, votes, roundNumber, timer) {
   const vote = votes[cookieCutter.get("username")].vote;
-  
   return (
     
     <div style={{ paddingLeft: "10px", paddingRight: "10px" }}>
@@ -318,7 +317,7 @@ function GuessCardV2({ guesses }) {
 
 
 function DasherView(sessionId, word, votes, roundNumber, definition) {
-  console.log('votes', votes)
+  console.log('votes', votes[user])
   const ready = Object.keys(votes).every(
     (user) => votes[user].vote.length > 0
   );
