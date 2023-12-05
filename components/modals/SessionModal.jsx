@@ -62,7 +62,7 @@ export default function SessionModal(props) {
           handleSubmission(
             props.join
               ? joinSession(v.sessionId, v.username)
-              : initSession(v.username, v.rounds),
+              : initSession(v.username, v.rounds, v.timer),
             v.username,
             setErrorVisible,
             setErrorMessage

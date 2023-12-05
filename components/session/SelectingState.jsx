@@ -27,11 +27,7 @@ function DasherCaption() {
         maxWidth: "350px",
       }}
     >
-      Pick a word that you think your friends will have a hard time guessing.
-      Everyone can see the word, but only you can see the definition and only
-      you can either confirm it or pick a different word. Remember: if no one
-      guesses the correct definition (either by voting or writing it), then you,
-      the dasher will score points!
+      Pick a word for Voting option
     </Text>
   );
 }
@@ -47,7 +43,7 @@ function GuesserCaption() {
         maxWidth: "350px",
       }}
     >
-      The dasher is picking a word. Only the dasher can see the definition.
+      The dasher is picking a voting option.
     </Text>
   );
 }

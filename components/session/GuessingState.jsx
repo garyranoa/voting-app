@@ -106,7 +106,7 @@ function GuesserEntryViewOptions({ sessionId, roundNumber }) {
   );
 }
 
-function GuesserWaitView({ guess }) {
+function VoterWaitView({ guess }) {
   return (
     <>
       <Title size="h4" mt="md" mb="xl" italic>
@@ -116,23 +116,6 @@ function GuesserWaitView({ guess }) {
         You have already submitted your answer, please wait for the others
       </Text>
     </>
-  );
-}
-
-function GuesserView(sessionId, word, guesses, roundNumber) {
-  const guess = guesses[cookieCutter.get("username")].guess;
-  return (
-    <div style={{ paddingLeft: "10px", paddingRight: "10px" }}>
-      <Title size="h2">Define the following word</Title>
-      <Title color="red.8" pt="xl" pb="xl" transform="uppercase">
-        {word}
-      </Title>
-      {guess.length > 0 ? (
-        <GuesserWaitView guess={guess} />
-      ) : (
-        <GuesserEntryView sessionId={sessionId} roundNumber={roundNumber} />
-      )}
-    </div>
   );
 }
 
@@ -176,7 +159,7 @@ const RenderTime = ({ remainingTime }) => {
   );
 };
 
-function GuesserViewV2(sessionId, word, guesses, roundNumber) {
+function VoterView(sessionId, word, votes, roundNumber, timer) {
   const guess = guesses[cookieCutter.get("username")].guess;
   
   return (
@@ -186,7 +169,7 @@ function GuesserViewV2(sessionId, word, guesses, roundNumber) {
           <CountdownCircleTimer
             isPlaying
             size={150}
-            duration={60}
+            duration={timer}
             colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
             colorsTime={[10, 6, 3, 0]}>
           {RenderTime}
@@ -198,7 +181,7 @@ function GuesserViewV2(sessionId, word, guesses, roundNumber) {
         {word}
       </Title>
       {guess.length > 0 ? (
-        <GuesserWaitView guess={guess} />
+        <VoterWaitView guess={guess} />
       ) : (
         <GuesserEntryViewOptions sessionId={sessionId} roundNumber={roundNumber} />
       )}
@@ -333,40 +316,8 @@ function GuessCardV2({ guesses }) {
   });
 }
 
-function DasherView(sessionId, word, guesses, roundNumber, definition) {
-  const ready = Object.keys(guesses).every(
-    (user) => guesses[user].guess.length > 0
-  );
-  return (
-    <>
-      <Card ml="auto" mr="auto" mb="xl" style={{ maxWidth: "350px" }}>
-        <Title color="red.8" size="h4" transform="uppercase">
-          {word}
-        </Title>
-        <Text size="lg" italic>
-          {definition}
-        </Text>
-      </Card>
-      <Title size="h3">Mark correct definitions</Title>
-      <GuessCard guesses={guesses} />
-      <Button
-        mt="md"
-        color="red.8"
-        disabled={!ready}
-        onClick={() => submissionHandler(sessionId, roundNumber, guesses)}
-      >
-        Submit
-      </Button>
-      {!ready && (
-        <Text size="xs" pt="md" italic>
-          Please wait for users to submit their answers
-        </Text>
-      )}
-    </>
-  );
-}
 
-function DasherViewV2(sessionId, word, guesses, roundNumber, definition) {
+function DasherView(sessionId, word, guesses, roundNumber, definition) {
   const ready = Object.keys(guesses).every(
     (user) => guesses[user].guess.length > 0
   );
@@ -392,7 +343,7 @@ function DasherViewV2(sessionId, word, guesses, roundNumber, definition) {
       </Button>
       {!ready && (
         <Text size="xs" pt="md" italic>
-          Please wait for users to submit their answers
+          Please wait for users to submit their votes
         </Text>
       )}
     </>
@@ -403,8 +354,9 @@ export default function GuessingState({
   sessionId,
   dasher,
   word,
-  guesses,
+  votes,
   roundNumber,
+  timer
 }) {
   const [definition, setDefinition] = useState("");
   useEffect(() => {
@@ -415,12 +367,12 @@ export default function GuessingState({
       );
   }, [word]);
   return cookieCutter.get("username") === dasher
-    ? DasherViewV2(
+    ? DasherView(
         sessionId,
         word,
-        guesses,
+        votes,
         roundNumber,
         definition.charAt(0).toUpperCase() + definition.slice(1)
       )
-    : GuesserViewV2(sessionId, word, guesses, roundNumber);
+    : VoterView(sessionId, word, votes, roundNumber, timer);
 }

@@ -13,12 +13,7 @@ export default function AboutModal(props) {
             fullScreen
         >
             <p>
-                This app was built by a lone and not very talented developer :)
-                <br/><br/>
-                My one and only goal behind this project was to be able to play this game with my friends.
-                <br/><br/>
-                If you have any suggestions or feedback, please feel free to create an issue
-                on the project GitHub page. PRs are also welcomed.
+                About Text
             </p>
         </Modal>
     )

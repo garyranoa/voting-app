@@ -77,13 +77,6 @@ export default function Footer() {
             );
           })}
         </div>
-        <ActionIcon
-          className={classes.gh}
-          size="lg"
-          variant="default"
-          radius="xl"
-        >
-        </ActionIcon>
       </footer>
     </>
   );

@@ -82,7 +82,7 @@ function WaitForStart() {
         paddingTop: "15px",
       }}
     >
-      Waiting for the host to start the game
+      Waiting for the host to open the voting
     </Text>
   );
 }
@@ -101,18 +101,18 @@ export default function Lobby({ sessionData }) {
         Invite your friends to join the game via session ID:
         <strong> {id}</strong>
       </Text>
-      <p>New joiners will appear in the below list</p>
+      <p>New Voters will appear in the below list</p>
       <br />
       <Card shadow="lg" radius="md" withBorder style={cardStyle}>
         <Title size="h2" style={cardTitleStyle}>
-          Players
+          Voters
         </Title>
-        <UserList players={playerList} />
+        <UserList players={playerList.filter((p) => p != creator)} />
         <br />
         {cookieCutter.get("username") === creator
           ? PlayButton(
               id,
-              playerList.length >= MIN_PLAYERS,
+              playerList.filter((p) => p != creator).length  >= MIN_PLAYERS,
               setErrorVisible,
               setErrorMessage
             )

@@ -11,7 +11,7 @@ export default function SelectRoundsInput(props) {
                 {...props.form.getInputProps('rounds')}
             />
             <p style={{fontStyle: 'italic', fontSize: 12, textAlign: 'left'}}>
-                We recommend setting round count to a multiple of players
+                
             </p>
         </>
     )
