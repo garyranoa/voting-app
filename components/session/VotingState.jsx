@@ -84,27 +84,27 @@ function Option(
 }
 
 function Options({
-  guesses,
+  votes,
   definition,
   voteSetter,
   seed,
   allowedToVote,
   allVotesSubmitted,
 }) {
-  if (definition === undefined || guesses == undefined) return;
-  const trueDefinitionVoters = Object.keys(guesses).filter((user) =>
-    guesses[user].hasOwnProperty("correctVote")
-      ? guesses[user].correctVote
+  if (definition === undefined || votes == undefined) return;
+  const trueDefinitionVoters = Object.keys(votes).filter((user) =>
+  votes[user].hasOwnProperty("correctVote")
+      ? votes[user].correctVote
       : false
   );
   const options = sortBy(
-    Object.keys(guesses)
-      .filter((user) => !guesses[user].correct)
+    Object.keys(votes)
+      .filter((user) => !votes[user].correct)
       .map((user) => ({
         owner: user,
-        definition: guesses[user].guess,
-        votes: guesses[user].hasOwnProperty("votes")
-          ? Object.keys(guesses[user].votes)
+        definition: votes[user].guess,
+        votes: votes[user].hasOwnProperty("votes")
+          ? Object.keys(votes[user].votes)
           : [],
       }))
       .concat(
@@ -223,7 +223,7 @@ function VotingScreen(
   sessionId,
   roundNumber,
   dasher,
-  guesses,
+  votes,
   vote,
   setVote,
   allowedToVote,
@@ -254,7 +254,7 @@ function VotingScreen(
         definitions.
       </Text>
       <Options
-        guesses={guesses}
+        votes={votes}
         definition={definition}
         voteSetter={setVote}
         seed={seed}
@@ -341,31 +341,31 @@ function VotingScreen(
 export default function VotingState({
   sessionId,
   roundNumber,
-  guesses,
+  votes,
   word,
   seed,
   dasher,
 }) {
-  const guessedCorrectly = guesses.hasOwnProperty(cookieCutter.get("username"))
-    ? guesses[cookieCutter.get("username")].correct
+  const guessedCorrectly = votes.hasOwnProperty(cookieCutter.get("username"))
+    ? votes[cookieCutter.get("username")].correct
     : false;
-  const usersWithIncorrectGuesses = Object.keys(guesses).filter(
-    (user) => !guesses[user].correct
+  const usersWithIncorrectGuesses = Object.keys(votes).filter(
+    (user) => !votes[user].correct
   );
-  const usersWithCorrectGuesses = Object.keys(guesses).filter(
-    (user) => guesses[user].correct
+  const usersWithCorrectGuesses = Object.keys(votes).filter(
+    (user) => votes[user].correct
   );
-  const usersWithCorrectVotes = Object.keys(guesses).filter((user) => {
-    return guesses[user].hasOwnProperty("correctVote")
-      ? guesses[user].correctVote
+  const usersWithCorrectVotes = Object.keys(votes).filter((user) => {
+    return votes[user].hasOwnProperty("correctVote")
+      ? votes[user].correctVote
       : false;
   });
   const correctUsers = usersWithCorrectGuesses.concat(usersWithCorrectVotes);
   const usersWithWrongVotes = Object.assign(
     {},
-    ...Object.keys(guesses).flatMap((user) => {
-      return guesses[user].hasOwnProperty("votes")
-        ? Object.keys(guesses[user].votes).map((v) => {
+    ...Object.keys(votes).flatMap((user) => {
+      return votes[user].hasOwnProperty("votes")
+        ? Object.keys(votes[user].votes).map((v) => {
             return { [v]: user };
           })
         : null;
@@ -374,8 +374,8 @@ export default function VotingState({
   const usersWhoVoted = Object.keys(usersWithWrongVotes).concat(
     usersWithCorrectVotes
   );
-  const expectedVotes = Object.keys(guesses).filter(
-    (user) => !guesses[user].correct
+  const expectedVotes = Object.keys(votes).filter(
+    (user) => !votes[user].correct
   ).length;
   const votingCanProceed = expectedVotes > 1;
   const allVotesSubmitted = usersWhoVoted.length == expectedVotes;
@@ -399,7 +399,7 @@ export default function VotingState({
         sessionId,
         roundNumber,
         dasher,
-        guesses,
+        votes,
         vote,
         setVote,
         allowedToVote,

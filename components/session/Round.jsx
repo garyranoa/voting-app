@@ -41,7 +41,7 @@ const scenarioHandler = (id, round, voters, isLastRound, timer) => {
         <VotingState
           sessionId={id}
           roundNumber={round.number}
-          guesses={round.guesses}
+          voters={round.voters}
           word={round.word}
           seed={round.seed}
           dasher={round.dasher}
@@ -54,6 +54,7 @@ const scenarioHandler = (id, round, voters, isLastRound, timer) => {
           voters={voters}
           dasher={round.dasher}
           isLastRound={isLastRound}
+          round={round}
         />
       );
     default:

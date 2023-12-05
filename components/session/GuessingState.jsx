@@ -106,11 +106,11 @@ function GuesserEntryViewOptions({ sessionId, roundNumber }) {
   );
 }
 
-function VoterWaitView({ guess }) {
+function VoterWaitView({ vote }) {
   return (
     <>
       <Title size="h4" mt="md" mb="xl" italic>
-        {guess}
+        {vote}
       </Title>
       <Text pl="lg" pr="lg">
         You have already submitted your answer, please wait for the others
@@ -188,15 +188,15 @@ function VoterView(sessionId, word, votes, roundNumber, timer) {
   );
 }
 
-function submissionHandler(sessionId, roundNumber, guesses) {
-  Object.keys(guesses).forEach((user) => {
-    if (guesses[user].correct) {
+function submissionHandler(sessionId, roundNumber, votes) {
+  /*Object.keys(votes).forEach((user) => {
+    if (votes[user].correct) {
       updateUserIsCorrect(sessionId, roundNumber, user).catch((error) =>
         console.log(error)
       );
     }
-  });
-  updateRoundState(sessionId, roundNumber, ROUND_STATES.VOTING).catch((error) =>
+  });*/
+  updateRoundState(sessionId, roundNumber, ROUND_STATES.RESULTS).catch((error) =>
     console.log(error)
   );
 }
@@ -271,10 +271,10 @@ function GuessCard({ guesses }) {
   });
 }
 
-function GuessCardV2({ guesses }) {
-  return Object.keys(guesses).map((user, index) => {
-    const guess = guesses[user].guess;
-    const waiting = guess.length == 0;
+function GuessCardV2({ votes }) {
+  return Object.keys(votes).map((user, index) => {
+    const vote = votes[user].vote;
+    const waiting = vote.length == 0;
     return (
       <Card
         key={index}
@@ -294,7 +294,7 @@ function GuessCardV2({ guesses }) {
           {user}
         </Text>
         <Text color={waiting ? "dimmed" : "yellow"} italic>
-          {waiting ? "Waiting for answer..." : guess}
+          {waiting ? "Waiting for answer..." : vote}
         </Text>
         <div
           style={{
@@ -317,7 +317,6 @@ function GuessCardV2({ guesses }) {
 
 
 function DasherView(sessionId, word, votes, roundNumber, definition) {
-  console.log('votes', votes[user])
   const ready = Object.keys(votes).every(
     (user) => votes[user].vote.length > 0
   );
@@ -332,12 +331,12 @@ function DasherView(sessionId, word, votes, roundNumber, definition) {
         </Text>
       </Card>
       <Title size="h3">Answers from Voters</Title>
-      <GuessCardV2 guesses={guesses} />
+      <GuessCardV2 votes={votes} />
       <Button
         mt="md"
         color="red.8"
         disabled={!ready}
-        onClick={() => submissionHandler(sessionId, roundNumber, guesses)}
+        onClick={() => submissionHandler(sessionId, roundNumber, votes)}
       >
         Submit
       </Button>

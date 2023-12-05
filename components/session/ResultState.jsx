@@ -66,10 +66,10 @@ function GameContinues(sessionId, dasher) {
   );
 }
 
-function Scoreboard({ scores }) {
+function Resultboard({ results }) {
   return (
     <>
-      <Title mb="md">Scoreboard</Title>
+      <Title mb="md">Results</Title>
       <Table
         mr="auto"
         ml="auto"
@@ -79,19 +79,19 @@ function Scoreboard({ scores }) {
         captionSide="bottom"
         highlightOnHover
       >
-        <caption>Round and total scores gained thus far</caption>
+        <caption></caption>
         <thead>
           <tr>
-            <th style={{ textAlign: "center" }}>Player</th>
-            <th style={{ textAlign: "center" }}>Score</th>
+            <th style={{ textAlign: "center" }}>VOTER</th>
+            <th style={{ textAlign: "center" }}>SELECTION</th>
           </tr>
         </thead>
         <tbody>
-          {scores.map((entry) => {
+          {results.map((entry) => {
             return (
               <tr key={entry.user}>
                 <td>{entry.user}</td>
-                <td>{entry.score}</td>
+                <td>{entry.votes}</td>
               </tr>
             );
           })}
@@ -103,27 +103,30 @@ function Scoreboard({ scores }) {
 
 export default function ResultState({
   sessionId,
-  players,
+  voters,
   dasher,
   isLastRound,
+  round
 }) {
-  const scores = sortBy(
-    Object.keys(players).map((user) => {
+  const results = sortBy(
+    Object.keys(voters)
+    .filter((user) => user != dasher)
+    .map((user) => {
       return {
         user: user,
-        score: players[user].score,
-        order: -players[user].score,
+        votes: round.votes[user].vote,
+        order: -voters[user].votes,
       };
     }),
     "order"
   );
-  const topScore = scores[0].score;
-  const winners = scores
+  const topScore = results[0].votes;
+  const winners = results
     .filter((entry) => entry.score == topScore)
     .map((entry) => entry.user);
   return (
     <>
-      <Scoreboard scores={scores} />
+      <Resultboard results={results} />
       {isLastRound
         ? EndOfGame(winners, topScore)
         : GameContinues(sessionId, dasher)}
