@@ -13,14 +13,16 @@ import { IconCheck, IconX } from "@tabler/icons";
 import { BiDislike, BiLike, BiSolidDislike, BiSolidLike  } from "react-icons/bi";
 import ReAct, { useEffect, useState, useRef } from "react";
 import ReactDOM from "react-dom";
-import { MAX_DEF_LEN, MIN_DEF_LEN, ROUND_STATES } from "../../lib/constants";
+import { MAX_DEF_LEN, MIN_DEF_LEN, ROUND_STATES, VOTING_STATES, } from "../../lib/constants";
 import {
   updateRoundState,
   updateUserGuess,
   updateUserIsCorrect,
   updateUserVote,
+  updateRoundVotingState,
 } from "../../lib/firebase";
 import { getWordDefinition } from "../../lib/vocab";
+import DisableVotingModal from "../modals/DisableVotingModal";
 import { CountdownCircleTimer } from 'react-countdown-circle-timer'
 
 
@@ -68,11 +70,10 @@ function GuesserEntryView({ sessionId, roundNumber }) {
   );
 }
 
-function GuesserEntryViewOptions({ sessionId, roundNumber }) {
+function VoterEntryViewOptions({ sessionId, roundNumber }) {
   const [definition, setDefinition] = useState("");
-  const invalidDefinition =
-    definition.length < MIN_DEF_LEN || definition.length > MAX_DEF_LEN;
-    const disabled = false
+  const invalidDefinition = definition.length < MIN_DEF_LEN || definition.length > MAX_DEF_LEN;
+  const disabled = false
   return (
     <>
       <div
@@ -159,10 +160,16 @@ const RenderTime = ({ remainingTime }) => {
   );
 };
 
-function VoterView(sessionId, word, votes, roundNumber, timer) {
+function VoterView(sessionId, word, votes, roundNumber, timer, voting_state) {
+  const [createOpened, setCreateOpened] = useState(false);
   const vote = votes[cookieCutter.get("username")].vote;
-  return (
+
+  //alert(voting_state)
+  if (!createOpened && voting_state === VOTING_STATES.PAUSED) {
     
+    setCreateOpened(true)
+  }
+  return (
     <div style={{ paddingLeft: "10px", paddingRight: "10px" }}>
       <div className="timer-wrapper">
           <CountdownCircleTimer
@@ -170,7 +177,12 @@ function VoterView(sessionId, word, votes, roundNumber, timer) {
             size={150}
             duration={timer}
             colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
-            colorsTime={[10, 6, 3, 0]}>
+            colorsTime={[10, 6, 3, 0]}
+            onComplete={() => {
+              
+              setCreateOpened(true)
+              return { shouldRepeat: false, delay: 1.5 }
+            }}>
           {RenderTime}
         </CountdownCircleTimer>
       </div>
@@ -182,8 +194,32 @@ function VoterView(sessionId, word, votes, roundNumber, timer) {
       {vote.length > 0 ? (
         <VoterWaitView vote={vote} />
       ) : (
-        <GuesserEntryViewOptions sessionId={sessionId} roundNumber={roundNumber} />
+        <VoterEntryViewOptions sessionId={sessionId} roundNumber={roundNumber} />
       )}
+
+      {voting_state === VOTING_STATES.PAUSED ? (
+
+        <DisableVotingModal
+            title={voting_state}
+            opened={createOpened}
+            setOpened={setCreateOpened}/>
+
+      ) : (
+      <></>
+      )}
+
+{voting_state !== VOTING_STATES.PAUSED ? (
+
+<DisableVotingModal
+title="Voting stop. Time expires"
+opened={createOpened}
+setOpened={setCreateOpened}/>
+
+) : (
+<></>
+)}
+
+
     </div>
   );
 }
@@ -322,7 +358,39 @@ function DasherView(sessionId, word, votes, roundNumber, definition) {
   );
   return (
     <>
+    
+    <SegmentedControl
+            ml="auto"
+            mr="auto"
+            radius="md"
+            disabled={false}
+            onChange={(v) => (
+                    updateRoundVotingState(sessionId, roundNumber, (v == 0 ? VOTING_STATES.PAUSED : VOTING_STATES.RUNNING)).catch((error) =>
+                    console.log(error)
+                  )
+              )}
+            data={[
+              {
+                label: (
+                  <Center>
+                    <Box ml={10}>OFF</Box>
+                  </Center>
+                ),
+                value: "0",
+              },
+              {
+                label: (
+                  <Center>
+                    <Box ml={10}>ON</Box>
+                  </Center>
+                ),
+                value: "1",
+              },
+            ]}
+          />
+
       <Card ml="auto" mr="auto" mb="xl" style={{ maxWidth: "350px" }}>
+
         <Title color="red.8" size="h4" transform="uppercase">
           {word}
         </Title>
@@ -355,7 +423,8 @@ export default function GuessingState({
   word,
   votes,
   roundNumber,
-  timer
+  timer,
+  voting_state
 }) {
   const [definition, setDefinition] = useState("");
   useEffect(() => {
@@ -373,5 +442,5 @@ export default function GuessingState({
         roundNumber,
         definition.charAt(0).toUpperCase() + definition.slice(1)
       )
-    : VoterView(sessionId, word, votes, roundNumber, timer);
+    : VoterView(sessionId, word, votes, roundNumber, timer, voting_state);
 }
