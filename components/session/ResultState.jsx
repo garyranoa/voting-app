@@ -130,18 +130,26 @@ export default function ResultState({
     .filter((entry) => entry.score == topScore)
     .map((entry) => entry.user);
 
-    const option1Votes = sortBy(
-      Object.keys(rounds)
-      .map((round) => round.votes)
-      ,
-      "order"
-    );
-console.log(rounds)
-console.log(option1Votes)
-  const option1Votes1 = rounds
-    
-  const option1 = [{name: "KEEP" , votes: 1}]
-  const option2 = [{name: "KILL", votes: 2}]
+  let option1TotalVotes = 0
+  let option2TotalVotes = 0
+  
+  for (const round in rounds) {
+    const roundInfo = rounds[round];
+    for (const r in roundInfo) {
+      if (r === 'votes') {
+        for (const vote in roundInfo[r]) {
+          let selected = roundInfo[r][vote].vote
+          if (selected === 'KEEP') {
+            option1TotalVotes++
+          } else {
+            option2TotalVotes++
+          }
+        }
+      }
+    }
+}
+const option1 = [{name: "KEEP" , votes: option1TotalVotes}]
+const option2 = [{name: "KILL", votes: option2TotalVotes}]
   
   return (
     <>
