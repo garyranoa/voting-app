@@ -133,7 +133,6 @@ const RenderTime = ({ remainingTime }) => {
   } else {
     isNewTimeFirstTick.current = false;
   }
-
   // force one last re-render when the time is over to tirgger the last animation
   if (remainingTime === 0) {
     setTimeout(() => {
@@ -142,7 +141,7 @@ const RenderTime = ({ remainingTime }) => {
   }
 
   const isTimeUp = isNewTimeFirstTick.current;
-
+  
   return (
     <div className="time-wrapper">
       <div key={remainingTime} className={`time ${isTimeUp ? "up" : ""}`}>
@@ -162,12 +161,12 @@ const RenderTime = ({ remainingTime }) => {
 
 function VoterView(sessionId, word, votes, roundNumber, timer, voting_state) {
   const [createOpened, setCreateOpened] = useState(false);
+  const [createOpenedPause, setCreateOpenedPause] = useState(false);
   const vote = votes[cookieCutter.get("username")].vote;
 
-  //alert(voting_state)
-  if (!createOpened && voting_state === VOTING_STATES.PAUSED) {
-    
-    setCreateOpened(true)
+  if (!createOpenedPause && voting_state === VOTING_STATES.PAUSED) {
+    setCreateOpened(false)
+    setCreateOpenedPause(true)
   }
   return (
     <div style={{ paddingLeft: "10px", paddingRight: "10px" }}>
@@ -179,7 +178,7 @@ function VoterView(sessionId, word, votes, roundNumber, timer, voting_state) {
             colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
             colorsTime={[10, 6, 3, 0]}
             onComplete={() => {
-              
+              setCreateOpenedPause(false)
               setCreateOpened(true)
               return { shouldRepeat: false, delay: 1.5 }
             }}>
@@ -201,8 +200,8 @@ function VoterView(sessionId, word, votes, roundNumber, timer, voting_state) {
 
         <DisableVotingModal
             title={voting_state}
-            opened={createOpened}
-            setOpened={setCreateOpened}/>
+            opened={createOpenedPause}
+            setOpened={setCreateOpenedPause}/>
 
       ) : (
       <></>
