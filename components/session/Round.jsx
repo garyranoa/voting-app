@@ -14,7 +14,7 @@ function Loading() {
   );
 }
 
-const scenarioHandler = (id, round, voters, isLastRound, timer, voting_state) => {
+const scenarioHandler = (id, round, voters, isLastRound, timer, rounds) => {
   switch (round.state) {
     case ROUND_STATES.SELECTING:
       return (
@@ -56,6 +56,7 @@ const scenarioHandler = (id, round, voters, isLastRound, timer, voting_state) =>
           dasher={round.dasher}
           isLastRound={isLastRound}
           round={round}
+          rounds={rounds}
         />
       );
     default:
@@ -92,7 +93,7 @@ export default function Round({ sessionData }) {
           </Text>
         )}
       </div>
-      {scenarioHandler(id, latestRound, voters, isLastRound, timer, rounds.voting_state)}
+      {scenarioHandler(id, latestRound, voters, isLastRound, timer, rounds)}
       <div
         style={{
           paddingTop: "80px",

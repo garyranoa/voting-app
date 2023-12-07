@@ -4,22 +4,25 @@ import cookieCutter from "cookie-cutter";
 import Link from "next/link";
 import { newRound } from "../../lib/firebase";
 
-function EndOfGame(winners, topScore) {
+function EndOfGame(option1, option2) {
   return (
     <>
+    &nbsp;
+    {option1.length > 0 && (
+        <Title size="sm">
+          {option1[0].name} has total {option1[0].votes} vote(s)!
+        </Title>
+      )}
+      &nbsp;
+      {option2.length > 0 && (
+        <Title size="sm">
+          {option2[0].name} has total {option2[0].votes} vote(s)!
+        </Title>
+      )}
+
       <Title mt="xl" mb="xl">
         The End
       </Title>
-      {winners.length == 1 && (
-        <Title size="h3">
-          {winners[0]} is the winner with {topScore} points!
-        </Title>
-      )}
-      {winners.length > 1 && (
-        <Title size="h3">
-          We have multiple winners who are tied with {topScore} point each!
-        </Title>
-      )}
       <Text mt="xl">We hope you have enjoyed this game!</Text>
       <Link href="/" passHref>
         <Button mt="xl" mb="xl" variant="filled" color="red.8" radius="md">
@@ -106,7 +109,9 @@ export default function ResultState({
   voters,
   dasher,
   isLastRound,
-  round
+  round,
+  rounds
+
 }) {
   const results = sortBy(
     Object.keys(voters)
@@ -124,11 +129,25 @@ export default function ResultState({
   const winners = results
     .filter((entry) => entry.score == topScore)
     .map((entry) => entry.user);
+
+    const option1Votes = sortBy(
+      Object.keys(rounds)
+      .map((round) => round.votes)
+      ,
+      "order"
+    );
+console.log(rounds)
+console.log(option1Votes)
+  const option1Votes1 = rounds
+    
+  const option1 = [{name: "KEEP" , votes: 1}]
+  const option2 = [{name: "KILL", votes: 2}]
+  
   return (
     <>
       <Resultboard results={results} />
       {isLastRound
-        ? EndOfGame(winners, topScore)
+        ? EndOfGame(option1, option2)
         : GameContinues(sessionId, dasher)}
     </>
   );
