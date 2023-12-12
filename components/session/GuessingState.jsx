@@ -165,13 +165,23 @@ function VoterView(sessionId, options, votes, roundNumber, timer, voting_state) 
   const [createOpenedPause, setCreateOpenedPause] = useState(false);
   const vote = votes[cookieCutter.get("username")].vote;
 
+  const paddingSides = "10px";
+const cardStyle = {
+  maxWidth: "350px",
+  marginLeft: "auto",
+  marginRight: "auto",
+};
+
   if (!createOpenedPause && voting_state === VOTING_STATES.PAUSED) {
     setCreateOpened(false)
     setCreateOpenedPause(true)
   }
+  let hideTimer = true
+  if (vote.length == 0) {hideTimer = false}
+  if (hideTimer && vote.length == 0) {hideTimer = false}
   return (
     <div style={{ paddingLeft: "10px", paddingRight: "10px" }}>
-      {vote.length == 0 || !createOpenedPause ? (
+      {vote.length == 0 || voting_state !== VOTING_STATES.PAUSED ? (
         
       <div className="timer-wrapper">
           <CountdownCircleTimer
@@ -188,11 +198,19 @@ function VoterView(sessionId, options, votes, roundNumber, timer, voting_state) 
           {RenderTime}
         </CountdownCircleTimer>
       </div>) : <></>}
-      
-      <Title size="h2">Vote the following feature</Title>
-      <Title color="red.8" pt="xl" pb="xl" transform="uppercase">
-        {options.id} {options.title} {options.description}
-      </Title>
+      <Title size="h4" style={{
+        paddingTop: paddingSides,
+        paddingBottom: paddingSides,
+      }}>Vote the following feature</Title>
+      <Card shadow="lg" radius="md" withBorder style={cardStyle} mb="md">
+        <Title size="h5" color="red.5" weight={800}>
+          Feature #{options[0].id}
+        </Title>
+        <Title size="h3" color="blue.5" weight={800}>
+          {options[0].title}
+        </Title>
+        <Title size="sm" italic dangerouslySetInnerHTML={{ __html: options[0].description }}></Title>
+      </Card>
       {vote.length > 0 ? (
         <VoterWaitView vote={vote} />
       ) : (
@@ -375,18 +393,18 @@ function DasherView(sessionId, options, votes, roundNumber, definition) {
               {
                 label: (
                   <Center>
-                    <Box ml={10}>OFF</Box>
-                  </Center>
-                ),
-                value: "0",
-              },
-              {
-                label: (
-                  <Center>
                     <Box ml={10}>ON</Box>
                   </Center>
                 ),
                 value: "1",
+              },
+              {
+                label: (
+                  <Center>
+                    <Box ml={10}>OFF</Box>
+                  </Center>
+                ),
+                value: "0",
               },
             ]}
           />
