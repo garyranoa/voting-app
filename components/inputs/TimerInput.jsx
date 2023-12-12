@@ -10,6 +10,9 @@ export default function SelectTimerInput(props) {
                 placeholder="60"
                 {...props.form.getInputProps('timer')}
             />
+               <p style={{fontStyle: 'italic', fontSize: 12, textAlign: 'left'}}>
+                
+                </p>
         </>
     )
 }

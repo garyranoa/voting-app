@@ -56,7 +56,7 @@ function DasherControls({ sessionId, roundNumber }) {
         color="red"
         onClick={() => updateWord(sessionId, roundNumber)}
       >
-        New Word
+        New Option
       </Button>
       <Button
         variant="filled"
@@ -65,7 +65,7 @@ function DasherControls({ sessionId, roundNumber }) {
           updateRoundState(sessionId, roundNumber, ROUND_STATES.GUESSING)
         }
       >
-        Confirm Word
+        Confirm Option
       </Button>
     </Group>
   );
@@ -82,35 +82,37 @@ function GuesserWaitScreen() {
 export default function SelectingState({
   sessionId,
   dasher,
-  word,
+  options,
   roundNumber,
 }) {
   const isDasher = cookieCutter.get("username") === dasher;
   const [definition, setDefinition] = useState("");
   useEffect(() => {
-    getWordDefinition(word)
+    getWordDefinition(options)
       .then(setDefinition)
       .catch((error) =>
         console.log(`Error retrieving definition for word ${word}: ${error}`)
       );
-  }, [word]);
+  }, [options]);
   return (
     <>
-      <Title size="h2">Word Selection</Title>
+      <Title size="h2">Voting Option Selection</Title>
       {isDasher ? <DasherCaption /> : <GuesserCaption />}
       <br />
       <Card shadow="lg" radius="md" withBorder style={cardStyle} mb="md">
         <Title size="h3" color="dimmed" mb="md">
-          Sampled Word
+          
         </Title>
-        <Title size="h4" color="red.5" weight={800} transform="uppercase">
-          {word}
+        <Title size="h5" color="red.5" weight={800}>
+          Feature #{options[0].id}
         </Title>
-        {isDasher && (
-          <Title size="h4" italic>
-            {definition.charAt(0).toUpperCase() + definition.slice(1)}
+        <Title size="h3" color="blue.5" weight={800}>
+          {options[0].title}
+        </Title>
+        <Title size="sm" italic dangerouslySetInnerHTML={{ __html: options[0].description }}>
+            
           </Title>
-        )}
+        
       </Card>
       {isDasher ? (
         <DasherControls sessionId={sessionId} roundNumber={roundNumber} />

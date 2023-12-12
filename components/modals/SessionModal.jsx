@@ -4,7 +4,7 @@
 
 import { Button, Modal } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { initSession, joinSession } from "../../lib/firebase";
+import { initSession, joinSession, getVotingOption } from "../../lib/firebase";
 import {
   baseSessionValidators,
   joinSessionValidators,
@@ -13,6 +13,7 @@ import {
 import UsernameInput from "../inputs/UserInput";
 import RoundsInput from "../inputs/RoundsInput";
 import TimerInput from "../inputs/TimerInput";
+import FileUpload from "../inputs/DropzoneUpload";
 import SessionIdInput from "../inputs/SessionIdInput";
 import ErrorMessage, { displayError } from "../errors/ErrorMessage";
 import { useState } from "react";
@@ -51,6 +52,7 @@ export default function SessionModal(props) {
     initialValues: { username: "", sessionId: "" },
     validate: { ...baseSessionValidators, ...scenarioValidators },
   });
+  
   return (
     <Modal
       opened={props.opened}

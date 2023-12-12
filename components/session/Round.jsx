@@ -21,7 +21,7 @@ const scenarioHandler = (id, round, voters, isLastRound, timer, rounds) => {
         <SelectingState
           sessionId={id}
           dasher={round.dasher}
-          word={round.word}
+          options={round.options}
           roundNumber={round.number}
         />
       );
@@ -30,7 +30,7 @@ const scenarioHandler = (id, round, voters, isLastRound, timer, rounds) => {
         <GuessingState
           sessionId={id}
           dasher={round.dasher}
-          word={round.word}
+          options={round.options}
           votes={round.votes}
           roundNumber={round.number}
           timer={timer}
@@ -43,7 +43,7 @@ const scenarioHandler = (id, round, voters, isLastRound, timer, rounds) => {
           sessionId={id}
           roundNumber={round.number}
           voters={round.voters}
-          word={round.word}
+          options={round.options}
           seed={round.seed}
           dasher={round.dasher}
         />

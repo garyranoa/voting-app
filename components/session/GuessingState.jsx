@@ -20,6 +20,7 @@ import {
   updateUserIsCorrect,
   updateUserVote,
   updateRoundVotingState,
+  getVotingOption,
 } from "../../lib/firebase";
 import { getWordDefinition } from "../../lib/vocab";
 import DisableVotingModal from "../modals/DisableVotingModal";
@@ -114,7 +115,7 @@ function VoterWaitView({ vote }) {
         {vote}
       </Title>
       <Text pl="lg" pr="lg">
-        You have already submitted your answer, please wait for the others
+        You have already submitted your vote, please wait for the others
       </Text>
     </>
   );
@@ -159,7 +160,7 @@ const RenderTime = ({ remainingTime }) => {
   );
 };
 
-function VoterView(sessionId, word, votes, roundNumber, timer, voting_state) {
+function VoterView(sessionId, options, votes, roundNumber, timer, voting_state) {
   const [createOpened, setCreateOpened] = useState(false);
   const [createOpenedPause, setCreateOpenedPause] = useState(false);
   const vote = votes[cookieCutter.get("username")].vote;
@@ -170,6 +171,8 @@ function VoterView(sessionId, word, votes, roundNumber, timer, voting_state) {
   }
   return (
     <div style={{ paddingLeft: "10px", paddingRight: "10px" }}>
+      {vote.length == 0 || !createOpenedPause ? (
+        
       <div className="timer-wrapper">
           <CountdownCircleTimer
             isPlaying
@@ -184,11 +187,11 @@ function VoterView(sessionId, word, votes, roundNumber, timer, voting_state) {
             }}>
           {RenderTime}
         </CountdownCircleTimer>
-      </div>
+      </div>) : <></>}
       
-      <Title size="h2">Vote the following word</Title>
+      <Title size="h2">Vote the following feature</Title>
       <Title color="red.8" pt="xl" pb="xl" transform="uppercase">
-        {word}
+        {options.id} {options.title} {options.description}
       </Title>
       {vote.length > 0 ? (
         <VoterWaitView vote={vote} />
@@ -351,7 +354,7 @@ function GuessCardV2({ votes }) {
 }
 
 
-function DasherView(sessionId, word, votes, roundNumber, definition) {
+function DasherView(sessionId, options, votes, roundNumber, definition) {
   const ready = Object.keys(votes).every(
     (user) => votes[user].vote.length > 0
   );
@@ -390,12 +393,12 @@ function DasherView(sessionId, word, votes, roundNumber, definition) {
 
       <Card ml="auto" mr="auto" mb="xl" style={{ maxWidth: "350px" }}>
 
-        <Title color="red.8" size="h4" transform="uppercase">
-          {word}
+      <Title size="h5" color="red.5" weight={800}>
+          Feature #{options[0].id}
         </Title>
-        <Text size="lg" italic>
-          {definition}
-        </Text>
+        <Title size="h3" color="blue.5" weight={800}>
+          {options[0].title}
+        </Title>
       </Card>
       <Title size="h3">Answers from Voters</Title>
       <GuessCardV2 votes={votes} />
@@ -419,27 +422,27 @@ function DasherView(sessionId, word, votes, roundNumber, definition) {
 export default function GuessingState({
   sessionId,
   dasher,
-  word,
+  options,
   votes,
   roundNumber,
   timer,
   voting_state
 }) {
   const [definition, setDefinition] = useState("");
-  useEffect(() => {
-    getWordDefinition(word)
+  /*useEffect(() => {
+    getWordDefinition(options)
       .then(setDefinition)
       .catch((error) =>
         console.log(`Error retrieving definition for word ${word}: ${error}`)
       );
-  }, [word]);
+  }, [options]);*/
   return cookieCutter.get("username") === dasher
     ? DasherView(
         sessionId,
-        word,
+        options,
         votes,
         roundNumber,
-        definition.charAt(0).toUpperCase() + definition.slice(1)
+        ""
       )
-    : VoterView(sessionId, word, votes, roundNumber, timer, voting_state);
+    : VoterView(sessionId, options, votes, roundNumber, timer, voting_state);
 }
