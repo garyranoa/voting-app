@@ -21,6 +21,7 @@ import {
   updateUserVote,
   updateRoundVotingState,
   getVotingOption,
+  updateUserTimeExpire,
 } from "../../lib/firebase";
 import { getWordDefinition } from "../../lib/vocab";
 import DisableVotingModal from "../modals/DisableVotingModal";
@@ -163,7 +164,9 @@ const RenderTime = ({ remainingTime }) => {
 function VoterView(sessionId, options, votes, roundNumber, timer, voting_state) {
   const [createOpened, setCreateOpened] = useState(false);
   const [createOpenedPause, setCreateOpenedPause] = useState(false);
+  const [showTimer, setShowTimer] = useState(false);
   const vote = votes[cookieCutter.get("username")].vote;
+  const expire = votes[cookieCutter.get("username")]?.expire;
 
   const paddingSides = "10px";
 const cardStyle = {
@@ -171,17 +174,50 @@ const cardStyle = {
   marginLeft: "auto",
   marginRight: "auto",
 };
-
-  if (!createOpenedPause && voting_state === VOTING_STATES.PAUSED) {
-    setCreateOpened(false)
-    setCreateOpenedPause(true)
+console.log(voting_state)
+  if (voting_state === VOTING_STATES.PAUSED) {  
+    if (!createOpenedPause) {
+      setCreateOpenedPause(true)
+      if (showTimer) { 
+        setShowTimer(false) 
+      }else {
+        setShowTimer(true)
+      }
+    } else {
+      if (showTimer) { 
+        setShowTimer(false) 
+      } 
+    }
+    
+  }else {
+    
+    if (expire === 0) {
+      if (!showTimer) { 
+        setShowTimer(true) 
+      }else {
+        if (createOpened) {
+          setCreateOpened(false)
+          
+          
+        }
+      }
+    }else if (expire === 1) {
+      console.log(createOpenedPause, showTimer)
+      //
+      if (createOpened) {
+        //setCreateOpened(false)
+        
+        
+      }
+    
+    
   }
-  let hideTimer = true
-  if (vote.length == 0) {hideTimer = false}
-  if (hideTimer && vote.length == 0) {hideTimer = false}
+  }
+
+  
   return (
     <div style={{ paddingLeft: "10px", paddingRight: "10px" }}>
-      {vote.length == 0 || voting_state !== VOTING_STATES.PAUSED ? (
+      {(showTimer && vote.length === 0) ? (
         
       <div className="timer-wrapper">
           <CountdownCircleTimer
@@ -191,8 +227,10 @@ const cardStyle = {
             colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
             colorsTime={[10, 6, 3, 0]}
             onComplete={() => {
-              setCreateOpenedPause(false)
+              updateUserTimeExpire(sessionId,roundNumber,cookieCutter.get("username"), 1)
               setCreateOpened(true)
+              setShowTimer(false)
+              
               return { shouldRepeat: false, delay: 1.5 }
             }}>
           {RenderTime}
@@ -218,7 +256,6 @@ const cardStyle = {
       )}
 
       {voting_state === VOTING_STATES.PAUSED ? (
-
         <DisableVotingModal
             title={voting_state}
             opened={createOpenedPause}
@@ -228,7 +265,7 @@ const cardStyle = {
       <></>
       )}
 
-{voting_state !== VOTING_STATES.PAUSED ? (
+{voting_state === "RUNNING" ? (
 
 <DisableVotingModal
 title="Voting stop. Time expires"
@@ -327,9 +364,10 @@ function GuessCard({ guesses }) {
   });
 }
 
-function GuessCardV2({ votes }) {
+function GuessCardV2({ votes, sid, round }) {
   return Object.keys(votes).map((user, index) => {
     const vote = votes[user].vote;
+    const expire = votes[user].expire;
     const waiting = vote.length == 0;
     return (
       <Card
@@ -352,6 +390,16 @@ function GuessCardV2({ votes }) {
         <Text color={waiting ? "dimmed" : "yellow"} italic>
           {waiting ? "Waiting for answer..." : vote}
         </Text>
+        {expire === 1 && vote.length === 0 && (
+        <Button
+        mt="sm"
+        color="red.8"
+        onClick={() =>
+          updateUserTimeExpire(sid,round, user, 0)
+        }>
+        Time expired. Ask to Revote?
+      </Button>)}
+
         <div
           style={{
             paddingTop: "10px",
@@ -373,7 +421,7 @@ function GuessCardV2({ votes }) {
 
 
 function DasherView(sessionId, options, votes, roundNumber, definition) {
-  const ready = Object.keys(votes).every(
+  const ready =  Object.keys(votes).every(
     (user) => votes[user].vote.length > 0
   );
   return (
@@ -418,8 +466,8 @@ function DasherView(sessionId, options, votes, roundNumber, definition) {
           {options[0].title}
         </Title>
       </Card>
-      <Title size="h3">Answers from Voters</Title>
-      <GuessCardV2 votes={votes} />
+      <Title size="h5">Answers from Voters</Title>
+      <GuessCardV2 votes={votes} sid={sessionId} round={roundNumber} />
       <Button
         mt="md"
         color="red.8"

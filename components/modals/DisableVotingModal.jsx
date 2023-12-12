@@ -15,7 +15,7 @@ export default function DisableModal(props) {
             backgroundOpacity: 0.55,
             blur: 6,
           }}>
-            <h2>{props.title}</h2>
+            <h2 align="center">{props.title}</h2>
         </Modal>
     );
 
