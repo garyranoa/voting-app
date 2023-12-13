@@ -121,7 +121,7 @@ function ResultStats({ results }) {
             return (
               <tr key={entry.option}>
                 <td>{entry.option}</td>
-                <td>{entry.percent.toFixed()}</td>
+                <td>{entry.percent}</td>
               </tr>
             );
           })}
@@ -228,8 +228,8 @@ const option2 = [{name: "KEEP", votes: option2TotalVotes}]
 const percent1 = (option1TRoundVotes / totalVoters) * 100
 const percent2 = (option2TRoundVotes / totalVoters) * 100
 
-const stats = [{option: "KEEP", percent: `${percent2}%`}]
-stats.push({option: "KILL", percent: `${percent1}%`})
+const stats = [{option: "KEEP", percent: `${percent2.toFixed()}%`}]
+stats.push({option: "KILL", percent: `${percent1.toFixed()}%`})
   
   return (
     <>
