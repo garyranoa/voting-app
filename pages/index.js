@@ -11,16 +11,16 @@ export default function Home() {
     <div>
       <main>
         <div>
-          <h2 style={{ fontWeight: "bold" }}>Fibbage like Game</h2>
+          <h2 style={{ fontWeight: "bold" }}>Backlogapalooza</h2>
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <h1>Menu</h1>
           <SelectionButton
-            content="New Game"
+            content="NEW GAME"
             onClick={() => setCreateOpened(true)}
           />
           <SelectionButton
-            content="Join Game"
+            content="START VOTING"
             onClick={() => setJoinOpened(true)}
           />
         </div>

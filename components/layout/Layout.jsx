@@ -37,7 +37,7 @@ export default function Layout({ children }) {
         </a>
       </Link>
       <div>{children}</div>
-      <Footer />
+      {/*<Footer />*/}
     </div>
   );
 }
