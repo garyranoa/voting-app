@@ -222,7 +222,7 @@ export default function ResultState({
       }
     }
 }
-const totalVoters = option1TotalVotes + option2TotalVotes
+const totalVoters = option1TRoundVotes + option2TRoundVotes
 const option1 = [{name: "KILL" , votes: option1TotalVotes}]
 const option2 = [{name: "KEEP", votes: option2TotalVotes}]
 const percent1 = (option1TRoundVotes / totalVoters) * 100
