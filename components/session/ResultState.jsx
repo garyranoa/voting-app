@@ -34,14 +34,14 @@ function EndOfGame(option1, option2) {
             {option2.length > 0 && (
               <tr>
               <td>{option2[0].name}</td>
-              <td>{option2[0].votes} / {`${percent1}%`}</td>
+              <td>{option2[0].votes} / {`${percent1.toFixed()}%`}</td>
             </tr>
           )}
 
           {option1.length > 0 && (
               <tr>
               <td>{option1[0].name}</td>
-              <td>{option1[0].votes} / {`${percent2}%`}</td>
+              <td>{option1[0].votes} / {`${percent2.toFixed()}%`}</td>
             </tr>
           )}
         </tbody>
@@ -121,7 +121,7 @@ function ResultStats({ results }) {
             return (
               <tr key={entry.option}>
                 <td>{entry.option}</td>
-                <td>{entry.percent}</td>
+                <td>{entry.percent.toFixed()}</td>
               </tr>
             );
           })}
