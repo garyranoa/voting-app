@@ -28,7 +28,7 @@ export default function Layout({ children }) {
           align="center"
           variant="gradient"
           gradient={{ from: 'yellow', to: 'red', deg: 45 }}
-          size="90px"
+          size="80px"
           weight={700}
           style={{ fontFamily: 'Greycliff CF, cursive, fantasy' }}
         >
