@@ -196,9 +196,7 @@ console.log(voting_state)
         setShowTimer(true) 
       }else {
         if (createOpened) {
-          setCreateOpened(false)
-          
-          
+          setCreateOpened(false) 
         }
       }
     }else if (expire === 1) {

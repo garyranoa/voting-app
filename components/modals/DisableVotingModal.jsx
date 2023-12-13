@@ -1,6 +1,8 @@
 import {Modal} from "@mantine/core";
+import { BiStopwatch, BiPauseCircle   } from "react-icons/bi";
 
 export default function DisableModal(props) {
+  const icon = (props.title === "PAUSED" ? <BiPauseCircle size={50} /> : <BiStopwatch size={50} /> )
     return (
         <Modal
           opened={props.opened}
@@ -15,7 +17,8 @@ export default function DisableModal(props) {
             backgroundOpacity: 0.55,
             blur: 6,
           }}>
-            <h2 align="center">{props.title}</h2>
+            
+            <h2 align="center">{icon}<br/>{props.title}</h2>
         </Modal>
     );
 
