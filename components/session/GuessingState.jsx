@@ -266,7 +266,7 @@ console.log(voting_state)
 {voting_state === "RUNNING" ? (
 
 <DisableVotingModal
-title="Voting stop. Time expires"
+title="TIME EXPIRES"
 opened={createOpened}
 setOpened={setCreateOpened}/>
 
