@@ -74,7 +74,7 @@ function DasherControls({ sessionId, roundNumber }) {
 function GuesserWaitScreen() {
   return (
     <Text size="xs" italic>
-      Waiting for the dasher to either confirm or reject the word...
+      Waiting for the dasher to either confirm or reject the voting option...
     </Text>
   );
 }

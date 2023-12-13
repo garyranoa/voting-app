@@ -153,7 +153,8 @@ const option2 = [{name: "KILL", votes: option2TotalVotes}]
   
   return (
     <>
-      <Resultboard results={results} />
+      {dasher === cookieCutter.get("username") && (
+      <Resultboard results={results} />)}
       {isLastRound
         ? EndOfGame(option1, option2)
         : GameContinues(sessionId, dasher)}
