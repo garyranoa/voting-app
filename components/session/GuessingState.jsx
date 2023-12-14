@@ -8,9 +8,12 @@ import {
   Textarea,
   Title,
   Box,
+  UnstyledButton,
+  Menu, MenuItem, MenuLabel, Divider,
 } from "@mantine/core";
+
 import { IconCheck, IconX } from "@tabler/icons";
-import { BiDislike, BiLike, BiSolidDislike, BiSolidLike  } from "react-icons/bi";
+import { BiDislike, BiLike, BiEditAlt, BiReset, BiUpvote, BiDotsVerticalRounded  } from "react-icons/bi";
 import ReAct, { useEffect, useState, useRef } from "react";
 import ReactDOM from "react-dom";
 import { MAX_DEF_LEN, MIN_DEF_LEN, ROUND_STATES, VOTING_STATES, } from "../../lib/constants";
@@ -22,6 +25,8 @@ import {
   updateRoundVotingState,
   getVotingOption,
   updateUserTimeExpire,
+  updateUserResetVote,
+  updateUserEditVote
 } from "../../lib/firebase";
 import { getWordDefinition } from "../../lib/vocab";
 import DisableVotingModal from "../modals/DisableVotingModal";
@@ -164,9 +169,11 @@ const RenderTime = ({ remainingTime }) => {
 function VoterView(sessionId, options, votes, roundNumber, timer, voting_state) {
   const [createOpened, setCreateOpened] = useState(false);
   const [createOpenedPause, setCreateOpenedPause] = useState(false);
+  const [createOpenedAction, setCreateOpenedAction] = useState(false);
   const [showTimer, setShowTimer] = useState(false);
   const vote = votes[cookieCutter.get("username")].vote;
   const expire = votes[cookieCutter.get("username")]?.expire;
+  const action = votes[cookieCutter.get("username")]?.action;
 
   const paddingSides = "10px";
 const cardStyle = {
@@ -175,6 +182,7 @@ const cardStyle = {
   marginRight: "auto",
 };
 console.log(voting_state)
+
   if (voting_state === VOTING_STATES.PAUSED) {  
     if (!createOpenedPause) {
       setCreateOpenedPause(true)
@@ -199,17 +207,7 @@ console.log(voting_state)
           setCreateOpened(false) 
         }
       }
-    }else if (expire === 1) {
-      console.log(createOpenedPause, showTimer)
-      //
-      if (createOpened) {
-        //setCreateOpened(false)
-        
-        
-      }
-    
-    
-  }
+    }
   }
 
   
@@ -257,22 +255,13 @@ console.log(voting_state)
         <DisableVotingModal
             title={voting_state}
             opened={createOpenedPause}
-            setOpened={setCreateOpenedPause}/>
+            setOpened={setCreateOpenedPause}/>) : (<></>)}
 
-      ) : (
-      <></>
-      )}
-
-{voting_state === "RUNNING" ? (
-
-<DisableVotingModal
-title="TIME EXPIRES"
-opened={createOpened}
-setOpened={setCreateOpened}/>
-
-) : (
-<></>
-)}
+      {voting_state === "RUNNING" ? (
+        <DisableVotingModal
+          title="TIME EXPIRES"
+          opened={createOpened}
+          setOpened={setCreateOpened}/>) : (<></>)}
 
 
     </div>
@@ -362,11 +351,51 @@ function GuessCard({ guesses }) {
   });
 }
 
+function VotersActionMenu(user, menuNo, sid, round) {
+  return (
+    <Menu position="right" offset={10}>
+      <Menu.Target>
+        <Button  size="xs" rightIcon={<BiDotsVerticalRounded size="20" />} variant="subtle" color="dark">
+          {user}
+        </Button>
+      </Menu.Target>
+      <Menu.Dropdown color="red">
+        {menuNo === 1 && (
+          <>
+            <Menu.Item size="xs" icon={<BiReset size={15} />}
+            onClick={() =>
+              updateUserResetVote(sid,round, user)
+            }>Reset Vote</Menu.Item>
+            <Menu.Item size="xs" icon={<BiEditAlt size={15} />}
+            onClick={() =>
+              updateUserEditVote(sid,round, user)
+            }>Edit Vote</Menu.Item>
+          </>
+        )} 
+        {menuNo === 2 && (
+          <>
+            <Menu.Item size="xs" icon={<BiUpvote size={15} />}
+            onClick={() =>
+              updateUserTimeExpire(sid,round, user, 0)
+            }>Revote</Menu.Item>
+          </>
+        )}
+        
+        
+      </Menu.Dropdown>
+      
+    </Menu>
+  );
+}
+
 function GuessCardV2({ votes, sid, round }) {
   return Object.keys(votes).map((user, index) => {
     const vote = votes[user].vote;
     const expire = votes[user].expire;
     const waiting = vote.length == 0;
+    let menuNo = (expire == 1 && vote.length == 0 ? 2 : 0)
+    if (menuNo == 0 ) { menuNo = (expire == 0 && vote.length > 0 ? 1 : 0) }
+    
     return (
       <Card
         key={index}
@@ -380,15 +409,20 @@ function GuessCardV2({ votes, sid, round }) {
           marginLeft: "auto",
           marginRight: "auto",
           padding: "5px",
+          position: "relative",
+          zIndex: 0
         }}
       >
+        
         <Text size="xs" align="left" color="dimmed" pb="xs">
-          {user}
+          {menuNo == 0 && (user)}
+          {menuNo > 0 && (VotersActionMenu(user, menuNo, sid, round))}
         </Text>
         <Text color={waiting ? "dimmed" : "yellow"} italic>
           {waiting ? "Waiting for answer..." : vote}
         </Text>
-        {expire === 1 && vote.length === 0 && (
+
+        {/*expire === 1 && vote.length === 0 && (
         <Button
         mt="sm"
         color="red.8"
@@ -396,7 +430,7 @@ function GuessCardV2({ votes, sid, round }) {
           updateUserTimeExpire(sid,round, user, 0)
         }>
         Time expired. Ask to Revote?
-      </Button>)}
+      </Button>) */}
 
         <div
           style={{
@@ -464,7 +498,7 @@ function DasherView(sessionId, options, votes, roundNumber, definition) {
           {options[0].title}
         </Title>
       </Card>
-      <Title size="h5">Answers from Voters</Title>
+      <Title size="h5">Selected vote from Voters</Title>
       <GuessCardV2 votes={votes} sid={sessionId} round={roundNumber} />
       <Button
         mt="md"
