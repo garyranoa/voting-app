@@ -14,7 +14,7 @@ import { sortBy } from "lodash";
 import cookieCutter from "cookie-cutter";
 import {
   castVote,
-  incrementUserScore,
+  //incrementUserScore,
   updateRoundState,
 } from "../../lib/firebase";
 import { ROUND_STATES, TRUE_DEFINITION } from "../../lib/constants";
@@ -155,9 +155,9 @@ function handleContinueButton(
   dasher
 ) {
   if (awardDasherPoints) {
-    incrementUserScore(sessionId, dasher, 2).catch((error) =>
+    /*incrementUserScore(sessionId, dasher, 2).catch((error) =>
       console.log(`failed to increment user score: ${error}`)
-    );
+    );*/
   }
   updateRoundState(sessionId, roundNumber, ROUND_STATES.RESULTS).catch(
     (error) => console.log(error)
