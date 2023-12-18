@@ -14,29 +14,16 @@ import {
 export default function Layout({ children }) {
   return (
     <div
-      style={{
-        textAlign: "center",
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-      }}
+      className="content bd-masthead"
     >
-      <Link href="/" passHref>
-        <a style={{ color: "unset !important", textDecoration: 'none' }}>
-        <Text
-          component="span"
-          align="center"
-          variant="gradient"
-          gradient={{ from: 'yellow', to: 'red', deg: 45 }}
-          size="80px"
-          weight={700}
-          style={{ fontFamily: 'Greycliff CF, cursive, fantasy' }}
-        >
-          Voting App
-        </Text>
-        </a>
-      </Link>
-      <div>{children}</div>
+      <div className="contentWrapper">
+        <Link href="/" passHref>
+          <a className="logo text-center">
+            <img src="/hisa-logo.png" alt="" />
+          </a>
+        </Link>
+        <div>{children}</div>
+      </div>
       {/*<Footer />*/}
     </div>
   );
