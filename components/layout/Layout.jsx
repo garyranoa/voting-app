@@ -19,7 +19,7 @@ export default function Layout({ children }) {
       <div className="contentWrapper">
         <Link href="/" passHref>
           <a className="logo text-center">
-            <img src="/hisa-logo.png" alt="" />
+            <Image src="/hisa-logo.png" alt="" width={205} height={205} />
           </a>
         </Link>
         <div>{children}</div>
