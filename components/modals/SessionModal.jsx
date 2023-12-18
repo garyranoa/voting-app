@@ -55,6 +55,7 @@ export default function SessionModal(props) {
   
   return (
     <Modal
+      className="customModal"
       opened={props.opened}
       onClose={() => props.setOpened(false)}
       title={props.title}
