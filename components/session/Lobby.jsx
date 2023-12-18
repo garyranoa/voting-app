@@ -8,20 +8,6 @@ import ErrorDialog from "../errors/ErrorDialog";
 import { useState } from "react";
 import { displayError } from "../errors/ErrorMessage";
 
-const cardStyle = {
-  maxWidth: "350px",
-  marginLeft: "auto",
-  marginRight: "auto",
-  textAlign: "left",
-};
-
-const cardTitleStyle = {
-  textAlign: "center",
-  paddingBottom: "20px",
-  marginBottom: "20px",
-  borderBottom: "1px solid grey",
-};
-
 const listStyle = {
   marginLeft: "auto",
   marginRight: "auto",
@@ -43,7 +29,7 @@ function JoinedIcon() {
 
 function UserList(props) {
   return props.voters.length === 0 ? (
-    <Title size="h2">No voters yet</Title>
+    <h2>No voters yet</h2>
   ) : (
     <List spacing="xs" style={listStyle} icon={<JoinedIcon />}>
       {props.voters.map((p) => (
@@ -64,7 +50,7 @@ function PlayButton(sessionId, playable, setErrorVisible, setErrorMessage) {
         }
       />
       {!playable && (
-        <p style={{ textAlign: "center", color: "red" }}>
+        <p className="votingInfo">
           You need at least {MIN_PLAYERS} voters to start
         </p>
       )}
@@ -94,19 +80,16 @@ export default function Lobby({ sessionData }) {
   const voterList = Object.keys(voters);
   return (
     <>
-      <Title size="h1" style={{ paddingTop: "20px", paddingBottom: "20px" }}>
-        New Game
-      </Title>
-      <Text ml="auto" mr="auto" style={{ maxWidth: "350px" }}>
-        Invite your friends to join the game via session ID:
-        <strong> {id}</strong>
+      <Title size="h1" className="votingTitle">New Game</Title>
+      <Text className="votingText">
+        <p>Invite your friends to join the game via</p>
+        <p><label><strong>SESSION ID: {id}</strong></label></p>
       </Text>
-      <p>New Voters will appear in the below list</p>
-      <br />
-      <Card shadow="lg" radius="md" withBorder style={cardStyle}>
-        <Title size="h2" style={cardTitleStyle}>
-          Voters
-        </Title>
+      <div className="divider"></div>
+      <Text className="votingText"><p className="mb-4" align="center">New Voters will appear in the below list</p></Text>
+      
+      <Card className="votingCard">
+        <Title size="h2">Voters</Title>
         <UserList voters={voterList.filter((p) => p != creator)} />
         <br />
         {cookieCutter.get("username") === creator

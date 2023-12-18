@@ -78,10 +78,6 @@ export default function SessionModal(props) {
         {!props.join && <TimerInput form={form} />}
         <Button
           type="submit"
-          color="red"
-          mt="xl"
-          mb="xl"
-          style={{ width: "100%" }}
         >
           Go!
         </Button>
