@@ -211,5 +211,6 @@ h1 {
 .time-wrapper .time.down {
   opacity: 0;
   transform: translateY(100%);
+  
 }
   
