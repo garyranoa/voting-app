@@ -10,35 +10,23 @@ export default function Home() {
   return (
     <div>
       <main>
-        <div>
-          <h2 style={{ fontWeight: "bold" }}>Backlogapalooza</h2>
-        </div>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <h1>Menu</h1>
+        <div className="votingWrap">
+          <h1 className="mt-3 mb-3">Voting App</h1>
           <SelectionButton
+            className="customBtn"
             content="NEW GAME"
             onClick={() => setCreateOpened(true)}
           />
           <SelectionButton
+            className="customBtn"
             content="START VOTING"
             onClick={() => setJoinOpened(true)}
           />
         </div>
-        <br />
-        <br />
-        <Paper
-          style={{
-            padding: "10px 10px",
-            maxWidth: "500px",
-            margin: "auto auto",
-          }}
-          shadow="xxl"
-          radius="lg"
-          p="s"
-          withBorder
-        >
+
+        <Paper className="votingText mt-4">
           <Text size="md">
-            Please click the START VOTING button to start voting!
+            Please click the <strong>START VOTING</strong> button to start voting!
           </Text>
         </Paper>
         <SessionModal
