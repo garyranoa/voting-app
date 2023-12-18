@@ -25,11 +25,11 @@ import {
   updateRoundVotingState,
   getVotingOption,
   updateUserTimeExpire,
-  updateUserResetVote,
-  updateUserEditVote
+  updateUserActionVote,
 } from "../../lib/firebase";
 import { getWordDefinition } from "../../lib/vocab";
 import DisableVotingModal from "../modals/DisableVotingModal";
+import ActionMessageModal from "../modals/ActionMessageModal";
 import { CountdownCircleTimer } from 'react-countdown-circle-timer'
 
 
@@ -171,6 +171,7 @@ function VoterView(sessionId, options, votes, roundNumber, timer, voting_state) 
   const [createOpenedPause, setCreateOpenedPause] = useState(false);
   const [createOpenedAction, setCreateOpenedAction] = useState(false);
   const [showTimer, setShowTimer] = useState(false);
+  const user = cookieCutter.get("username")
   const vote = votes[cookieCutter.get("username")].vote;
   const expire = votes[cookieCutter.get("username")]?.expire;
   const action = votes[cookieCutter.get("username")]?.action;
@@ -181,8 +182,9 @@ const cardStyle = {
   marginLeft: "auto",
   marginRight: "auto",
 };
-console.log(voting_state)
+console.log(voting_state, action)
 
+  let actionMessage = ""
   if (voting_state === VOTING_STATES.PAUSED) {  
     if (!createOpenedPause) {
       setCreateOpenedPause(true)
@@ -197,9 +199,33 @@ console.log(voting_state)
       } 
     }
     
+  }
+  else if (expire == 0 && action.length > 0) {
+    if (action == "ACTION") {
+      updateUserActionVote(sessionId,roundNumber, user, "")
+      if (createOpenedAction) { setCreateOpenedAction(false) }
+      if (!showTimer) { 
+        //setShowTimer(true)
+      }
+      
+    }else {
+      if (action == "RESET") {
+        actionMessage = "VOTE RESET"
+      } else {
+        actionMessage = "YOU ARE ASK TO EDIT YOUR VOTE"
+      }
+      if (!createOpenedAction) { 
+        setCreateOpenedAction(true) 
+        if (showTimer) { 
+          setShowTimer(false) 
+        }
+        updateUserActionVote(sessionId,roundNumber, user, "ACTION")
+      }
+    }
+    
   }else {
     
-    if (expire === 0) {
+    if (expire === 0 && action.length == 0) {
       if (!showTimer) { 
         setShowTimer(true) 
       }else {
@@ -257,11 +283,17 @@ console.log(voting_state)
             opened={createOpenedPause}
             setOpened={setCreateOpenedPause}/>) : (<></>)}
 
-      {voting_state === "RUNNING" ? (
+      {voting_state === "RUNNING" && action.length == 0 ? (
         <DisableVotingModal
           title="TIME EXPIRES"
           opened={createOpened}
           setOpened={setCreateOpened}/>) : (<></>)}
+
+    {voting_state === "RUNNING" && action.length > 0 ? (
+        <ActionMessageModal
+          title={actionMessage}
+          opened={createOpenedAction}
+          setOpened={setCreateOpenedAction}/>) : (<></>)}
 
 
     </div>
@@ -351,6 +383,11 @@ function GuessCard({ guesses }) {
   });
 }
 
+function actionSubmitHandler(sessionId, roundNumber, user, action) {
+  updateUserActionVote(sessionId,roundNumber, user, action)
+  updateUserVote(sessionId,roundNumber,user, '');
+}
+
 function VotersActionMenu(user, menuNo, sid, round) {
   return (
     <Menu position="right" offset={10}>
@@ -364,11 +401,12 @@ function VotersActionMenu(user, menuNo, sid, round) {
           <>
             <Menu.Item size="xs" icon={<BiReset size={15} />}
             onClick={() =>
-              updateUserResetVote(sid,round, user)
+              actionSubmitHandler(sid,round, user, "RESET")
+
             }>Reset Vote</Menu.Item>
             <Menu.Item size="xs" icon={<BiEditAlt size={15} />}
             onClick={() =>
-              updateUserEditVote(sid,round, user)
+              actionSubmitHandler(sid,round, user, "EDIT")
             }>Edit Vote</Menu.Item>
           </>
         )} 
