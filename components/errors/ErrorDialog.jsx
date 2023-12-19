@@ -12,7 +12,7 @@ export default function ErrorDialog(props) {
       style={{ maxWidth: "250px" }}
     >
       <Text color="red.5">Error</Text>
-      <Text color="dimmed">{props.error}</Text>
+      <Text><p>{props.error}</p></Text>
     </Dialog>
   );
 }

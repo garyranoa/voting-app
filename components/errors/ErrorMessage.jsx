@@ -19,8 +19,8 @@ export function displayError(error, setErrorVisible, setErrorMessage) {
 export default function ErrorMessage(props) {
   return (
     <Paper className="errorBox">
-      <Title size="h3" color="red">Error</Title>
-      <Text color="dimmed">{props.message}</Text>
+      <Title>Error</Title>
+      <Text><p>{props.message}</p></Text>
     </Paper>
   );
 }
