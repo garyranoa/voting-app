@@ -258,7 +258,7 @@ console.log(voting_state, action)
           {RenderTime}
         </CountdownCircleTimer>
       </div>) : <></>}
-      <Title className="voteOption mb-4">Vote the following feature</Title>
+      <Title className="voteOption mb-4 mt-4">Vote the following feature</Title>
       <Card className="votersCard">
         <Title className="votersFeature mb-4">Feature #{options[0].id}</Title>
         <Title className="votersRef mb-4">{options[0].title}</Title>
@@ -465,41 +465,42 @@ function DasherView(sessionId, options, votes, roundNumber, definition) {
   return (
     <>
     
-    <SegmentedControl
-            ml="auto"
-            mr="auto"
-            radius="md"
-            disabled={false}
-            onChange={(v) => (
-                    updateRoundVotingState(sessionId, roundNumber, (v == 0 ? VOTING_STATES.PAUSED : VOTING_STATES.RUNNING)).catch((error) =>
-                    console.log(error)
-                  )
-              )}
-            data={[
-              {
-                label: (
-                  <Center>
-                    <Box ml={10}>ON</Box>
-                  </Center>
-                ),
-                value: "1",
-              },
-              {
-                label: (
-                  <Center>
-                    <Box ml={10}>OFF</Box>
-                  </Center>
-                ),
-                value: "0",
-              },
-            ]}
-          />
+      <SegmentedControl  
+        className="voterSwitch mb-4 mt-4"    
+        ml="auto"
+        mr="auto"
+        radius="md"
+        disabled={false}
+        onChange={(v) => (
+                updateRoundVotingState(sessionId, roundNumber, (v == 0 ? VOTING_STATES.PAUSED : VOTING_STATES.RUNNING)).catch((error) =>
+                console.log(error)
+              )
+          )}
+        data={[
+          {
+            label: (
+              <Center>
+                <Box ml={10}>ON</Box>
+              </Center>
+            ),
+            value: "1",
+          },
+          {
+            label: (
+              <Center>
+                <Box ml={10}>OFF</Box>
+              </Center>
+            ),
+            value: "0",
+          },
+        ]}
+      />
 
       <Card className="votersCard mb-4">
         <Title className="votersFeature mb-4">Feature #{options[0].id}</Title>
         <Title className="votersRef mb-4">{options[0].title}</Title>
       </Card>
-      <Title className="voteOption mb-2">Selected vote from Voters</Title>
+      <Title className="voteOption mt-2 mb-3">Selected vote from Voters</Title>
       <GuessCardV2 votes={votes} sid={sessionId} round={roundNumber} />
       <Button className="customBtn mt-4" disabled={!ready} onClick={() => submissionHandler(sessionId, roundNumber, votes)}>Submit</Button>
       {!ready && (
