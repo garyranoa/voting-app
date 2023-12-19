@@ -64,9 +64,7 @@ function GameContinues(sessionId, dasher) {
   return (
     <>
       {cookieCutter.get("username") != dasher && (
-        <Text pt="xl" ml="auto" mr="auto" style={{ maxWidth: "350px" }}>
-          Please wait for the dasher to begin begin the next round
-        </Text>
+        <Text className="votingText"><p>Please wait for the dasher to begin begin the next round</p></Text>
       )}
       {cookieCutter.get("username") == dasher && (
         <>
@@ -80,15 +78,8 @@ function GameContinues(sessionId, dasher) {
           >
             Next Round
           </Button>
-          <Text
-            style={{ maxWidth: "350px" }}
-            mr="auto"
-            ml="auto"
-            size="sm"
-            italic
-          >
-            As the dasher, you can end this round. Please check with your
-            friends that everyone is ready!
+          <Text className="votersText text-center">
+            <p>As the dasher, you can end this round. Please check with your friends that everyone is ready!</p>
           </Text>
         </>
       )}

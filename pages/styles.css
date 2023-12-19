@@ -130,8 +130,8 @@ p, label, span, div {
   border-radius: 30px !important;
   padding: 2rem !important;
 }
-.votersUsername button {
-  color: #000;
+.votersUsername button, .votersUsername {
+  color: #000 !important;
   font-size: 16px;
   padding: 10px;
   height: auto;
