@@ -61,134 +61,134 @@ h1 {
 }
 
 .customModal .mantine-Modal-modal {
-  background-color: #fff;
-  border-radius: 20px;
-  width: 500px;
-  padding: 4rem 2rem;
+  background-color: #fff !important;
+  border-radius: 20px !important;
+  width: 500px !important;
+  padding: 4rem 2rem !important;
   transform: translateY(-50%) !important;
   top: 50% !important;
-  position: relative;
+  position: relative !important;
 }
 .customModal .mantine-Modal-modal .mantine-ActionIcon-root {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  color: #000;
+  position: absolute !important;
+  top: 10px !important;
+  right: 10px !important;
+  color: #000 !important;
 }
 .customModal .mantine-Modal-title, .votingTitle {
-  color: #647a68;
-  font-family: 'Poppins', sans-serif;
-  font-size: 36px;
-  text-transform: uppercase;
-  font-weight: 700;
-  text-align: center;
-  margin: 0 auto;
+  color: #647a68 !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 36px !important;
+  text-transform: uppercase !important;
+  font-weight: 700 !important;
+  text-align: center !important;
+  margin: 0 auto !important;
 }
 .votingText p {
-  font-family: 'Poppins', sans-serif;
-  font-size: 16px;
-  color: #000;
-  margin-bottom: 0;
-  text-align: center;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 16px !important;
+  color: #000 !important;
+  margin-bottom: 0 !important;
+  text-align: center !important;
 }
 .votingText p label {
-  font-size: 22px;
+  font-size: 22px !important;
 }
 .votingInfo {
-  color: #fff;
-  font-family: 'Poppins', sans-serif;
-  font-size: 16px;
-  text-align: center;
+  color: #fff !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 16px !important;
+  text-align: center !important;
 }
 .votingCard {
-  background-color: #647a68;
-  border-radius: 20px;
-  padding: 0;
+  background-color: #647a68 !important;
+  border-radius: 20px !important;
+  padding: 0 !important;
 }
 .votingCard h1 {
-  color: #fff;
-  font-family: 'Poppins', sans-serif;
-  font-size: 28px;
-  text-transform: uppercase;
-  padding: 20px 0;
-  border-bottom: 1px solid #fff;
+  color: #fff !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 28px !important;
+  text-transform: uppercase !important;
+  padding: 20px 0 !important;
+  border-bottom: 1px solid #fff !important;
 }
 .votingCard h2 {
-  color: #fff;
-  font-family: 'Poppins', sans-serif;
-  font-size: 22px;
-  text-transform: uppercase;
-  padding: 15px 0;
-  text-align: center;
+  color: #fff !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 22px !important;
+  text-transform: uppercase !important;
+  padding: 15px 0 !important;
+  text-align: center !important;
 }
 .votingCard button {
   background-color: #cf8a3a !important;
   margin: 0 auto 20px !important;
-  display: block;
+  display: block !important;
   color: #fff !important;
-  font-family: 'Poppins', sans-serif;
-  font-size: 20px;
-  border-radius: 30px;
-  padding: 20px 0;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 20px !important;
+  border-radius: 30px !important;
+  padding: 20px 0 !important;
   height: auto !important;
 }
 
 .customModal .mantine-Modal-modal form label {
-  color: #000;
-  margin-bottom: 10px;
+  color: #000 !important;
+  margin-bottom: 10px !important;
 }
 .customModal .mantine-Modal-modal form input {
-  background-color: #f0f0f0;
-  border: none;
-  border-radius: 30px;
-  padding: 15px 0;
-  height: auto;
-  text-indent: 20px;
-  color: #000;
+  background-color: #f0f0f0 !important;
+  border: none !important;
+  border-radius: 30px !important;
+  padding: 15px 0 !important;
+  height: auto !important;
+  text-indent: 20px !important;
+  color: #000 !important;
 }
 .customModal .mantine-Modal-modal form button.mantine-Button-root {
-  background-color: #5f63f2;
-  border-radius: 30px;
-  height: auto;
-  padding: 20px 0;
-  text-align: center;
-  color: #fff;
-  font-size: 20px;
-  width: 320px;
-  margin: 20px auto;
-  display: block;
+  background-color: #5f63f2 !important;
+  border-radius: 30px !important;
+  height: auto !important;
+  padding: 20px 0 !important;
+  text-align: center !important;
+  color: #fff !important;
+  font-size: 20px !important;
+  width: 320px !important;
+  margin: 20px auto !important;
+  display: block !important;
 }
 .customModal .mantine-Input-rightSection {
-  right: 15px;;
+  right: 15px !important;
 }
 .customModal .mantine-NumberInput-controlUp, .customModal .mantine-NumberInput-controlDown {
-  border: none;
+  border: none !important;
 }
 .customModal .mantine-NumberInput-controlUp:hover, .customModal .mantine-NumberInput-controlDown:hover {
-  color: #000;
-  background-color: transparent;
+  color: #000 !important;
+  background-color: transparent !important;
 }
 
 .errorBox {
-  background-color: #647a68;
-  padding: 1rem;
+  background-color: #647a68 !important;
+  padding: 1rem !important;
 }
 .errorBox h1 {
-  color: #fff;
-  font-family: 'Poppins', sans-serif;
-  font-size: 22px;
-  text-transform: uppercase;
-  padding: 5px 0;
+  color: #fff !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 22px !important;
+  text-transform: uppercase !important;
+  padding: 5px 0 !important;
 }
 .errorBox p {
-  color: #fff;
-  text-align: center;
+  color: #fff !important;
+  text-align: center !important;
 }
 .divider {
-  background-color: #647a68;
-  height: 3px;
-  width: 150px;
-  margin: 20px auto;
+  background-color: #647a68 !important;
+  height: 3px !important;
+  width: 150px !important;
+  margin: 20px auto !important;
 }
 
 .timer-wrapper {
