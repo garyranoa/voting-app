@@ -18,17 +18,7 @@ const cardStyle = {
 
 function DasherCaption() {
   return (
-    <Text
-      mr="auto"
-      ml="auto"
-      style={{
-        paddingLeft: paddingSides,
-        paddingRight: paddingSides,
-        maxWidth: "350px",
-      }}
-    >
-      Pick a word for Voting option
-    </Text>
+    <Text className="votingText"><p>Pick a word for Voting option</p></Text>
   );
 }
 
@@ -51,31 +41,15 @@ function GuesserCaption() {
 function DasherControls({ sessionId, roundNumber }) {
   return (
     <Group position="center" spacing="md" grow align="center" style={cardStyle}>
-      <Button
-        variant="outline"
-        color="red"
-        onClick={() => updateWord(sessionId, roundNumber)}
-      >
-        New Option
-      </Button>
-      <Button
-        variant="filled"
-        color="red"
-        onClick={() =>
-          updateRoundState(sessionId, roundNumber, ROUND_STATES.GUESSING)
-        }
-      >
-        Confirm Option
-      </Button>
+      <Button className="customBtn1" onClick={() => updateWord(sessionId, roundNumber)}>New Option</Button>
+      <Button className="customBtn2" onClick={() => updateRoundState(sessionId, roundNumber, ROUND_STATES.GUESSING)}>Confirm Option</Button>
     </Group>
   );
 }
 
 function GuesserWaitScreen() {
   return (
-    <Text size="xs" italic>
-      Waiting for the dasher to either confirm or reject the voting option...
-    </Text>
+    <Text className="votingInfo" italic><p>Waiting for the dasher to either confirm or reject the voting option...</p></Text>
   );
 }
 
@@ -96,29 +70,20 @@ export default function SelectingState({
   }, [options]);
   return (
     <>
-      <Title size="h2">Voting Option Selection</Title>
+      <Title className="voteOption">Voting Option Selection</Title>
       {isDasher ? <DasherCaption /> : <GuesserCaption />}
       <br />
-      <Card shadow="lg" radius="md" withBorder style={cardStyle} mb="md">
-        <Title size="h3" color="dimmed" mb="md">
-          
-        </Title>
-        <Title size="h5" color="red.5" weight={800}>
-          Feature #{options[0].id}
-        </Title>
-        <Title size="h3" color="blue.5" weight={800}>
-          {options[0].title}
-        </Title>
-        <Title size="sm" italic dangerouslySetInnerHTML={{ __html: options[0].description }}>
-            
-          </Title>
-        
-      </Card>
-      {isDasher ? (
-        <DasherControls sessionId={sessionId} roundNumber={roundNumber} />
-      ) : (
-        <GuesserWaitScreen />
-      )}
+      <Card className="votersCard">
+        <Title size="h3"></Title>
+        <Title className="votersFeature mb-4">Feature #{options[0].id}</Title>
+        <Title className="votersRef mb-4">{options[0].title}</Title>
+        <Text className="votersDescription" dangerouslySetInnerHTML={{ __html: options[0].description }}></Text>
+        {isDasher ? (
+          <DasherControls sessionId={sessionId} roundNumber={roundNumber} />
+        ) : (
+          <GuesserWaitScreen />
+        )}
+      </Card>      
     </>
   );
 }

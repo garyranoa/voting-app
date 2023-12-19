@@ -258,18 +258,11 @@ console.log(voting_state, action)
           {RenderTime}
         </CountdownCircleTimer>
       </div>) : <></>}
-      <Title size="h4" style={{
-        paddingTop: paddingSides,
-        paddingBottom: paddingSides,
-      }}>Vote the following feature</Title>
-      <Card shadow="lg" radius="md" withBorder style={cardStyle} mb="md">
-        <Title size="h5" color="red.5" weight={800}>
-          Feature #{options[0].id}
-        </Title>
-        <Title size="h3" color="blue.5" weight={800}>
-          {options[0].title}
-        </Title>
-        <Title size="sm" italic dangerouslySetInnerHTML={{ __html: options[0].description }}></Title>
+      <Title className="voteOption mb-4">Vote the following feature</Title>
+      <Card className="votersCard">
+        <Title className="votersFeature mb-4">Feature #{options[0].id}</Title>
+        <Title className="votersRef mb-4">{options[0].title}</Title>
+        <Title className="votersDescription" dangerouslySetInnerHTML={{ __html: options[0].description }}></Title>
       </Card>
       {vote.length > 0 ? (
         <VoterWaitView vote={vote} />
@@ -442,30 +435,12 @@ function GuessCardV2({ votes, sid, round }) {
     if (menuNo == 0 ) { menuNo = (expire == 0 && vote.length > 0 ? 1 : 0) }
     
     return (
-      <Card
-        key={index}
-        shadow="xl"
-        radius="md"
-        mt="lg"
-        mb="lg"
-        withBorder
-        style={{
-          maxWidth: "350px",
-          marginLeft: "auto",
-          marginRight: "auto",
-          padding: "5px",
-          position: "relative",
-          zIndex: 0
-        }}
-      >
-        
+      <Card key={index} className="votersCard1">        
         <Text size="xs" align="left" color="dimmed" pb="xs">
           {menuNo == 0 && (user)}
           {menuNo > 0 && (VotersActionMenu(user, menuNo, sid, round))}
         </Text>
-        <Text color={waiting ? "dimmed" : "yellow"} italic>
-          {waiting ? "Waiting for answer..." : vote}
-        </Text>
+        <Text className="votingText" color={waiting ? "dimmed" : "yellow"}>{waiting ? "Waiting for answer..." : vote}</Text>
 
         {/*expire === 1 && vote.length === 0 && (
         <Button
@@ -476,21 +451,6 @@ function GuessCardV2({ votes, sid, round }) {
         }>
         Time expired. Ask to Revote?
       </Button>) */}
-
-        <div
-          style={{
-            paddingTop: "10px",
-            marginLeft: "auto",
-            marginRight: "auto",
-            maxWidth: "200px",
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          
-        </div>
       </Card>
     );
   });
@@ -534,29 +494,15 @@ function DasherView(sessionId, options, votes, roundNumber, definition) {
             ]}
           />
 
-      <Card ml="auto" mr="auto" mb="xl" style={{ maxWidth: "350px" }}>
-
-      <Title size="h5" color="red.5" weight={800}>
-          Feature #{options[0].id}
-        </Title>
-        <Title size="h3" color="blue.5" weight={800}>
-          {options[0].title}
-        </Title>
+      <Card className="votersCard mb-4">
+        <Title className="votersFeature mb-4">Feature #{options[0].id}</Title>
+        <Title className="votersRef mb-4">{options[0].title}</Title>
       </Card>
-      <Title size="h5">Selected vote from Voters</Title>
+      <Title className="voteOption mb-2">Selected vote from Voters</Title>
       <GuessCardV2 votes={votes} sid={sessionId} round={roundNumber} />
-      <Button
-        mt="md"
-        color="red.8"
-        disabled={!ready}
-        onClick={() => submissionHandler(sessionId, roundNumber, votes)}
-      >
-        Submit
-      </Button>
+      <Button className="customBtn mt-4" disabled={!ready} onClick={() => submissionHandler(sessionId, roundNumber, votes)}>Submit</Button>
       {!ready && (
-        <Text size="xs" pt="md" italic>
-          Please wait for users to submit their votes
-        </Text>
+        <Text className="votingText"><p>Please wait for users to submit their votes</p></Text>
       )}
     </>
   );

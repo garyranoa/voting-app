@@ -71,34 +71,18 @@ export default function Round({ sessionData }) {
   const isLastRound = latestRound.number == limit;
   return (
     <>
-      {latestRound.state != null && (
-        <Title size="h1" mt="lg" mb="lg">
-          Round {latestRound.number} of {limit}
-        </Title>
-      )}
-      <div
-        style={{
-          fontStyle: "italic",
-          paddingTop: "10px",
-          paddingBottom: "10px",
-        }}
-      >
+      <div>
         {latestRound.dasher === cookieCutter.get("username") ? (
-          <Text color="dimmed" mb="xl">
-            You are the dasher
-          </Text>
+          <Title className="votingTitle">You are the dasher</Title>
         ) : (
-          <Text color="dimmed" mb="xl">
-            You are a voter
-          </Text>
+          <Title className="votingTitle">You are a voter</Title>
         )}
       </div>
-      {scenarioHandler(id, latestRound, voters, isLastRound, timer, rounds)}
-      <div
-        style={{
-          paddingTop: "80px",
-        }}
-      ></div>
+      {latestRound.state != null && (
+        <Text className="voteCounter">Round {latestRound.number} of {limit}</Text>
+      )}
+      <div className="divider"></div>
+      {scenarioHandler(id, latestRound, voters, isLastRound, timer, rounds)}      
     </>
   );
 }

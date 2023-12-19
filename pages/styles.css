@@ -23,8 +23,8 @@ h1 {
   background: url("../public/voting-app-bg.jpg") no-repeat top center;
   background-size: cover;
   padding: 0;
-  height: 100vh;
   position: relative;
+  overflow: auto;
 }
 .contentWrapper {
   width: 600px;
@@ -33,31 +33,16 @@ h1 {
   -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.49);
   -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.49);
   padding: 4rem 4rem;
-  margin: 0 auto;
   background-color: #fff;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-}
-
-.customBtn {
-  background-color: #5f63f2 !important;
-  display: block !important;
-  margin: 10px auto !important;
-  color: #fff !important;
-  font-family: 'Poppins', sans-serif !important;
-  font-size: 20px !important;
-  border-radius: 30px !important;
-  padding: 20px 0 !important;
-  height: auto !important;
+  margin: 10% auto 5%;
+  transform: translateY(-5%);
 }
 .votingText {
   background-color: transparent !important;
   font-family: 'Poppins', sans-serif !important;
   color: #000 !important;
   text-align: center !important;
-  font-size: 17px !important;
+  font-size: 16px !important;
 }
 
 .customModal .mantine-Modal-modal {
@@ -88,7 +73,6 @@ h1 {
   font-family: 'Poppins', sans-serif !important;
   font-size: 16px !important;
   color: #000 !important;
-  margin-bottom: 0 !important;
   text-align: center !important;
 }
 .votingText p label {
@@ -131,6 +115,60 @@ h1 {
   border-radius: 30px !important;
   padding: 20px 0 !important;
   height: auto !important;
+}
+.voteCounter, .voteOption {
+  color: #000 !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 24px !important;
+  font-weight: 700 !important;
+  text-align: center !important;
+  text-transform: uppercase !important;
+}
+.votersCard {
+  background-color: #647a68 !important;
+  border-radius: 30px !important;
+  padding: 2rem !important;
+}
+.votersCard1 {
+  background-color: #f0f0f0 !important;
+  border-radius: 30px !important;
+  padding: 2rem !important;
+}
+.votersFeature {
+  color: #fff !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 18px!important;
+  font-weight: 600 !important;
+  text-align: center !important;
+  text-transform: uppercase !important;
+}
+.votersRef {
+  color: #fff !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 28px!important;
+  font-weight: 700 !important;
+  text-align: center !important;
+}
+.votersDescription {
+  color: #fff !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 16px!important;
+  font-weight: 400 !important;
+  text-align: center !important;
+}
+ul.votersList {
+  color: #fff;
+}
+ul.votersList li {
+  display: block;
+  padding: 20px 10%;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 18px;
+}
+.waitingInfo {
+  text-align: center;
+  color: #fff;
+  padding-bottom: 1rem;
 }
 
 .customModal .mantine-Modal-modal form label {
@@ -183,6 +221,44 @@ h1 {
 .errorBox p {
   color: #fff !important;
   text-align: center !important;
+}
+
+/*misc*/
+.customBtn {
+  background-color: #5f63f2 !important;
+  display: block !important;
+  margin: 10px auto !important;
+  color: #fff !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 20px !important;
+  border-radius: 30px !important;
+  padding: 20px 0 !important;
+  height: auto !important;
+  width: 300px;
+}
+.customBtn1 {
+  background-color: transparent !important;
+  display: block !important;
+  color: #fff !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 16px !important;
+  border-radius: 30px !important;
+  padding: 15px 10px !important;
+  height: auto !important;
+  text-transform: uppercase !important;
+  border: 2px solid #fff;
+}
+.customBtn2 {
+  background-color: #cf8a3a !important;
+  border: 2px solid #cf8a3a;
+  display: block !important;
+  color: #fff !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 16px !important;
+  border-radius: 30px !important;
+  padding: 15px 10px !important;
+  height: auto !important;
+  text-transform: uppercase !important;
 }
 .divider {
   background-color: #647a68 !important;

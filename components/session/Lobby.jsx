@@ -31,7 +31,7 @@ function UserList(props) {
   return props.voters.length === 0 ? (
     <h2>No voters yet</h2>
   ) : (
-    <List spacing="xs" style={listStyle} icon={<JoinedIcon />}>
+    <List className="votersList" icon={<JoinedIcon />}>
       {props.voters.map((p) => (
         <List.Item key={p}>{p}</List.Item>
       ))}
@@ -60,14 +60,7 @@ function PlayButton(sessionId, playable, setErrorVisible, setErrorMessage) {
 
 function WaitForStart() {
   return (
-    <Text
-      style={{
-        textAlign: "center",
-        fontStyle: "italic",
-        borderTop: "1px solid grey",
-        paddingTop: "15px",
-      }}
-    >
+    <Text className="waitingInfo">
       Waiting for the host to open the voting
     </Text>
   );
