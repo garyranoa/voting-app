@@ -344,6 +344,7 @@ function GuessCard({ guesses }) {
           }}
         >
           <SegmentedControl
+            className="votersSwitch"
             ml="auto"
             mr="auto"
             radius="md"

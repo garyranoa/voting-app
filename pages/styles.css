@@ -18,10 +18,11 @@ h1 {
   font-family: 'Poppins', sans-serif;
   text-transform: uppercase;
 }
-
-.content {
+body {
   background: url("../public/voting-app-bg.jpg") no-repeat top center;
   background-size: cover;
+}
+.content {
   padding: 0;
   position: relative;
   overflow: auto;
