@@ -1,9 +1,15 @@
+body {
+  background: url("../public/voting-app-bg.jpg") no-repeat top center;
+  background-size: cover;
+}
 h1 {
-    font-family: "Roboto";
+    font-family: 'Poppins', sans-serif !important;
     text-align: center;
     margin-bottom: 40px;
   }
-
+p, label, span, div {
+  font-family: 'Poppins', sans-serif !important;
+}
 .logo {
   display: block;
 }
@@ -18,10 +24,7 @@ h1 {
   font-family: 'Poppins', sans-serif;
   text-transform: uppercase;
 }
-body {
-  background: url("../public/voting-app-bg.jpg") no-repeat top center;
-  background-size: cover;
-}
+
 .content {
   padding: 0;
   position: relative;
@@ -40,7 +43,6 @@ body {
 }
 .votingText {
   background-color: transparent !important;
-  font-family: 'Poppins', sans-serif !important;
   color: #000 !important;
   text-align: center !important;
   font-size: 16px !important;
@@ -63,7 +65,6 @@ body {
 }
 .customModal .mantine-Modal-title, .votingTitle {
   color: #647a68 !important;
-  font-family: 'Poppins', sans-serif !important;
   font-size: 36px !important;
   text-transform: uppercase !important;
   font-weight: 700 !important;
@@ -71,7 +72,6 @@ body {
   margin: 0 auto !important;
 }
 .votingText p {
-  font-family: 'Poppins', sans-serif !important;
   font-size: 16px !important;
   color: #000 !important;
   text-align: center !important;
@@ -81,7 +81,6 @@ body {
 }
 .votingInfo {
   color: #fff !important;
-  font-family: 'Poppins', sans-serif !important;
   font-size: 16px !important;
   text-align: center !important;
 }
@@ -92,7 +91,6 @@ body {
 }
 .votingCard h1 {
   color: #fff !important;
-  font-family: 'Poppins', sans-serif !important;
   font-size: 28px !important;
   text-transform: uppercase !important;
   padding: 20px 0 !important;
@@ -100,7 +98,6 @@ body {
 }
 .votingCard h2 {
   color: #fff !important;
-  font-family: 'Poppins', sans-serif !important;
   font-size: 22px !important;
   text-transform: uppercase !important;
   padding: 15px 0 !important;
@@ -111,7 +108,6 @@ body {
   margin: 0 auto 20px !important;
   display: block !important;
   color: #fff !important;
-  font-family: 'Poppins', sans-serif !important;
   font-size: 20px !important;
   border-radius: 30px !important;
   padding: 20px 0 !important;
@@ -119,7 +115,6 @@ body {
 }
 .voteCounter, .voteOption {
   color: #000 !important;
-  font-family: 'Poppins', sans-serif !important;
   font-size: 24px !important;
   font-weight: 700 !important;
   text-align: center !important;
@@ -135,9 +130,46 @@ body {
   border-radius: 30px !important;
   padding: 2rem !important;
 }
+.votersUsername button {
+  color: #000;
+  font-size: 16px;
+  padding: 10px;
+  height: auto;
+}
+.votersUsername .mantine-Menu-dropdown {
+  background-color: #647a68 !important;
+  border: none !important;
+}
+.votersUsername .mantine-Menu-dropdown button {
+  color: #fff !important;
+  padding: 5px !important;
+}
+.voterSwitch {
+  background-color: #647a68;
+  border-radius: 5px;
+  padding: 0;
+  overflow: hidden;
+}
+.voterSwitch span.mantine-1xbdki {
+  border-radius: 0 !important;
+  -webkit-transform: translate(0, 0 );
+  -moz-transform: translate(0, 0 );
+  -ms-transform: translate(0, 0 );
+  transform: translate(0, 0 );
+  width: 55px !important;
+}
+.voterSwitch span.mantine-tl0dfr {
+  border-radius: 0 !important;
+  -webkit-transform: translate(55px, 0 );
+  -moz-transform: translate(55px, 0 );
+  -ms-transform: translate(55px, 0 );
+  transform: translate(55px, 0 );
+}
+.voterSwitch .mantine-SegmentedControl-control, .voterSwitch .mantine-SegmentedControl-controlActive {
+  border-radius: 0 !important;
+}
 .votersFeature {
   color: #fff !important;
-  font-family: 'Poppins', sans-serif !important;
   font-size: 18px!important;
   font-weight: 600 !important;
   text-align: center !important;
@@ -145,14 +177,12 @@ body {
 }
 .votersRef {
   color: #fff !important;
-  font-family: 'Poppins', sans-serif !important;
   font-size: 28px!important;
   font-weight: 700 !important;
   text-align: center !important;
 }
 .votersDescription {
   color: #fff !important;
-  font-family: 'Poppins', sans-serif !important;
   font-size: 16px!important;
   font-weight: 400 !important;
   text-align: center !important;
@@ -163,7 +193,6 @@ ul.votersList {
 ul.votersList li {
   display: block;
   padding: 20px 10%;
-  font-family: 'Poppins', sans-serif !important;
   font-size: 18px;
 }
 .waitingInfo {
@@ -214,7 +243,6 @@ ul.votersList li {
 }
 .errorBox h1 {
   color: #fff !important;
-  font-family: 'Poppins', sans-serif !important;
   font-size: 22px !important;
   text-transform: uppercase !important;
   padding: 5px 0 !important;
@@ -230,7 +258,6 @@ ul.votersList li {
   display: block !important;
   margin: 10px auto !important;
   color: #fff !important;
-  font-family: 'Poppins', sans-serif !important;
   font-size: 20px !important;
   border-radius: 30px !important;
   padding: 20px 0 !important;
@@ -241,7 +268,6 @@ ul.votersList li {
   background-color: transparent !important;
   display: block !important;
   color: #fff !important;
-  font-family: 'Poppins', sans-serif !important;
   font-size: 16px !important;
   border-radius: 30px !important;
   padding: 15px 10px !important;
@@ -254,7 +280,6 @@ ul.votersList li {
   border: 2px solid #cf8a3a;
   display: block !important;
   color: #fff !important;
-  font-family: 'Poppins', sans-serif !important;
   font-size: 16px !important;
   border-radius: 30px !important;
   padding: 15px 10px !important;

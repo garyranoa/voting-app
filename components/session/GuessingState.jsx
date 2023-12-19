@@ -117,12 +117,8 @@ function VoterEntryViewOptions({ sessionId, roundNumber }) {
 function VoterWaitView({ vote }) {
   return (
     <>
-      <Title size="h4" mt="md" mb="xl" italic>
-        {vote}
-      </Title>
-      <Text pl="lg" pr="lg">
-        You have already submitted your vote, please wait for the others
-      </Text>
+      <Title className="voteOption mt-4 mb-3">{vote}</Title>
+      <Text className="votingText"><p>You have already submitted your vote, please wait for the others</p></Text>
     </>
   );
 }
@@ -437,21 +433,11 @@ function GuessCardV2({ votes, sid, round }) {
     
     return (
       <Card key={index} className="votersCard1">        
-        <Text size="xs" align="left" color="dimmed" pb="xs">
+        <Text className="votersUsername">
           {menuNo == 0 && (user)}
           {menuNo > 0 && (VotersActionMenu(user, menuNo, sid, round))}
         </Text>
-        <Text className="votingText" color={waiting ? "dimmed" : "yellow"}>{waiting ? "Waiting for answer..." : vote}</Text>
-
-        {/*expire === 1 && vote.length === 0 && (
-        <Button
-        mt="sm"
-        color="red.8"
-        onClick={() =>
-          updateUserTimeExpire(sid,round, user, 0)
-        }>
-        Time expired. Ask to Revote?
-      </Button>) */}
+        <Text className="voteOption mt-3" color={waiting ? "dimmed" : "yellow"}>{waiting ? "Waiting for answer..." : vote}</Text>
       </Card>
     );
   });
