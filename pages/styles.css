@@ -42,14 +42,14 @@ h1 {
 }
 
 .customBtn {
-  background-color: #5f63f2;
-  display: block;
+  background-color: #5f63f2 !important;
+  display: block !important;
   margin: 10px auto !important;
-  color: #fff;
-  font-family: 'Poppins', sans-serif;
-  font-size: 20px;
-  border-radius: 30px;
-  padding: 20px 0;
+  color: #fff !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 20px !important;
+  border-radius: 30px !important;
+  padding: 20px 0 !important;
   height: auto !important;
 }
 .votingText {
@@ -154,7 +154,7 @@ h1 {
   text-align: center;
   color: #fff;
   font-size: 20px;
-  max-width: 320px;
+  width: 320px;
   margin: 20px auto;
   display: block;
 }
@@ -167,6 +167,19 @@ h1 {
 .customModal .mantine-NumberInput-controlUp:hover, .customModal .mantine-NumberInput-controlDown:hover {
   color: #000;
   background-color: transparent;
+}
+
+.errorBox {
+  background-color: #647a68;
+  padding: 1rem;
+}
+.errorBox h1 {
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 28px;
+  text-transform: uppercase;
+  padding: 20px 0;
+  border-bottom: 1px solid #fff;
 }
 
 .divider {

@@ -76,11 +76,7 @@ export default function SessionModal(props) {
         {props.join && <SessionIdInput form={form} />}
         {!props.join && <RoundsInput form={form} />}
         {!props.join && <TimerInput form={form} />}
-        <Button
-          type="submit"
-        >
-          Go!
-        </Button>
+        <Button type="submit">Go!</Button>
       </form>
       {errorVisible && <ErrorMessage message={errorMessage} />}
     </Modal>
