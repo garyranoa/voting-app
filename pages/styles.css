@@ -1,5 +1,5 @@
 body {
-  background: url("../public/voting-app-bg.jpg") no-repeat top center;
+  background: #647968 url("../public/voting-app-bg.jpg") no-repeat top center;
   background-size: cover;
 }
 h1 {
@@ -31,7 +31,8 @@ p, label, span, div {
   overflow: auto;
 }
 .contentWrapper {
-  width: 600px;
+  width: 90%;
+  max-width: 600px;
   border-radius: 20px;
   box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.49);
   -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.49);
@@ -217,6 +218,9 @@ p, label, span, div {
 .votersDescription a {
   color: #fff;
 }
+.votersDescription ul li {
+  text-align: left;
+}
 ul.votersList {
   color: #fff;
 }
@@ -359,5 +363,43 @@ ul.votersList li {
   opacity: 0;
   transform: translateY(100%);
   
+}
+
+@media (min-width: 1180px) and (max-width: 1366px) {
+
+}
+
+@media (max-width: 480px) {
+  .contentWrapper {
+    padding: 1rem;
+    transform: translateY(0);
+  }
+  .votingWrap h1 {
+    font-size: 40px;
+  }
+  .entryBtns {
+    display: block;
+  }
+  .customBtn1, .customBtn2 {
+    width: 100%;
+    margin-bottom: 10px;
+    max-width: 100%;
+  }
+  .customModal .mantine-Modal-title, .votingTitle {
+    font-size: 30px !important;
+  }
+  .customModal .mantine-Modal-modal {
+    max-width: 95%;
+    transform: translateY(-40%) !important;
+  }
+  .customModal .mantine-Modal-modal form button.mantine-Button-root {
+    width: 100% !important;
+  }
+  .votingCard button {
+    width: 90% !important;
+  }
+  .customBtn {
+    width: 100%;
+  }
 }
   

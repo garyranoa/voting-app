@@ -40,7 +40,7 @@ function GuesserCaption() {
 
 function DasherControls({ sessionId, roundNumber }) {
   return (
-    <Group position="center" spacing="md" grow align="center" style={cardStyle}>
+    <Group position="center" spacing="md" grow align="center" className="entryBtns mt-4">
       <Button className="customBtn1" onClick={() => updateWord(sessionId, roundNumber)}>New Option</Button>
       <Button className="customBtn2" onClick={() => updateRoundState(sessionId, roundNumber, ROUND_STATES.GUESSING)}>Confirm Option</Button>
     </Group>
