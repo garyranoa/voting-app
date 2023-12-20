@@ -248,6 +248,14 @@ ul.votersList li {
   text-indent: 20px !important;
   color: #000 !important;
 }
+.customModal .mantine-MultiSelect-input {
+  background-color: transparent !important;
+  padding: 0 !important;
+  border: none !important;
+}
+.customModal .mantine-MultiSelect-dropdown {
+  background-color: #647a68 !important;
+}
 .customModal .mantine-Modal-modal form button.mantine-Button-root {
   background-color: #5f63f2 !important;
   border-radius: 30px !important;
