@@ -18,6 +18,7 @@ export default function VotingOptionsInput() {
                 data={data}
                 label="Voting Options on this round"
                 placeholder="Pick voting options"
+                className="customSelect"
             />
         </>
     )

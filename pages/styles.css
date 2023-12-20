@@ -278,6 +278,34 @@ ul.votersList li {
   color: #000 !important;
   background-color: transparent !important;
 }
+.customSelect .mantine-MultiSelect-wrapper {
+  background-color: #f0f0f0 !important;
+  border-radius: 30px;
+  padding: 7px 10px;
+}
+.customSelect .mantine-MultiSelect-wrapper .mantine-MultiSelect-value {
+  padding: 0 20px 0 10px !important;
+  position: relative;
+  margin: 1px 1px !important;
+  z-index: 12;
+}
+.customSelect .mantine-MultiSelect-wrapper .mantine-MultiSelect-value button {
+  color: #fff !important;
+  top: 0 !important;
+  right: 0 !important;
+  font-weight: 700 !important;
+}
+.customSelect .mantine-MultiSelect-wrapper input{
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  left: 0;
+}
+.customSelect .mantine-MultiSelect-rightSection {
+  position: absolute;
+  right: 0 !important;
+  z-index: 12;
+}
 
 .errorBox {
   background-color: #647a68 !important;
