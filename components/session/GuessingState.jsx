@@ -400,11 +400,6 @@ function VotersActionMenu(user, menuNo, sid, round) {
               actionSubmitHandler(sid,round, user, "EDIT")
             }>Edit Vote</Menu.Item>
 
-            <Menu.Item size="xs" icon={<BiUpvote size={15} />}
-            onClick={() =>
-              updateUserTimeExpire(sid,round, user, 0)
-            }>Revote</Menu.Item>
-
           </>
         )} 
         {menuNo === 2 && (

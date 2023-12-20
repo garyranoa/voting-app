@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { getWordDefinition } from "../../lib/vocab";
 import { updateRoundState, updateWord } from "../../lib/firebase";
 import { ROUND_STATES } from "../../lib/constants";
+import OptionsInput from "../inputs/OptionsInput";
 
 const paddingSides = "20px";
 const cardStyle = {
@@ -40,10 +41,16 @@ function GuesserCaption() {
 
 function DasherControls({ sessionId, roundNumber }) {
   return (
+    <>
+    <form className="customModal">
+    <OptionsInput maxSelectedValues={2} />
+    
     <Group position="center" spacing="md" grow align="center" className="entryBtns mt-4">
       <Button className="customBtn1" onClick={() => updateWord(sessionId, roundNumber)}>New Option</Button>
       <Button className="customBtn2" onClick={() => updateRoundState(sessionId, roundNumber, ROUND_STATES.GUESSING)}>Confirm Option</Button>
     </Group>
+    </form>
+    </>
   );
 }
 

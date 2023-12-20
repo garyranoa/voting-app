@@ -21,7 +21,7 @@ export default function VotingOptionsInput(props) {
                 className="customSelect"
                 clearable                
                 maxSelectedValues={props.maxSelectedValues}
-                {...props.form.getInputProps('options')}
+                /*{...props.form.getInputProps('options')}*/
             />
         </>
     )
