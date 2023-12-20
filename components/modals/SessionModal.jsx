@@ -65,7 +65,7 @@ export default function SessionModal(props) {
           handleSubmission(
             props.join
               ? joinSession(v.sessionId, v.username)
-              : initSession(v.username, v.rounds, v.timer),
+              : initSession(v.username, v.rounds, v.timer, v.options),
             v.username,
             setErrorVisible,
             setErrorMessage
@@ -76,7 +76,7 @@ export default function SessionModal(props) {
         {props.join && <SessionIdInput form={form} />}
         {!props.join && <RoundsInput form={form} />}
         {!props.join && <TimerInput form={form} />}
-        {!props.join && <OptionsInput form={form} />}
+        {!props.join && <OptionsInput maxSelectedValues={2} form={form} />}
         <Button type="submit">Go!</Button>
       </form>
       {errorVisible && <ErrorMessage message={errorMessage} />}

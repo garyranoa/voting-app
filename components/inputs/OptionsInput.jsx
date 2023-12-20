@@ -1,6 +1,6 @@
 import { MultiSelect } from "@mantine/core";
 
-export default function VotingOptionsInput() {
+export default function VotingOptionsInput(props) {
     
     const data = [
         { value: 'KEEP', label: 'KEEP' },
@@ -19,6 +19,9 @@ export default function VotingOptionsInput() {
                 label="Voting Options on this round"
                 placeholder="Pick voting options"
                 className="customSelect"
+                clearable                
+                maxSelectedValues={props.maxSelectedValues}
+                {...props.form.getInputProps('options')}
             />
         </>
     )
