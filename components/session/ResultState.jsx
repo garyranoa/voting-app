@@ -68,16 +68,7 @@ function GameContinues(sessionId, dasher) {
       )}
       {cookieCutter.get("username") == dasher && (
         <>
-          <Button
-            mt="xl"
-            mb="xl"
-            variant="filled"
-            color="red.8"
-            radius="md"
-            onClick={() => newRound(sessionId)}
-          >
-            Next Round
-          </Button>
+          <Button className="customBtn mt-4 mb-4">Next Round</Button>
           <Text className="votersText text-center">
             <p>As the dasher, you can end this round. Please check with your friends that everyone is ready!</p>
           </Text>
@@ -90,16 +81,8 @@ function GameContinues(sessionId, dasher) {
 function ResultStats({ results }) {
   return (
     <>
-      <Title mb="md" size="h4">ROUND STATS</Title>
-      <Table
-        mr="auto"
-        ml="auto"
-        style={{ maxWidth: "350px" }}
-        verticalSpacing="xs"
-        horizontalSpacing="xs"
-        captionSide="bottom"
-        highlightOnHover
-      >
+      <Title className="votingTitle1 mt-4 pt-4">ROUND STATS</Title>
+      <Table className="customTable" cellPadding="0" cellSpacing="0" width="100%">
         <caption></caption>
         <thead>
           <tr>
@@ -111,8 +94,8 @@ function ResultStats({ results }) {
           {results.map((entry) => {
             return (
               <tr key={entry.option}>
-                <td>{entry.option}</td>
-                <td>{entry.percent}</td>
+                <td style={{ textAlign: "center" }}>{entry.option}</td>
+                <td style={{ textAlign: "center" }}>{entry.percent}</td>
               </tr>
             );
           })}
@@ -125,16 +108,8 @@ function ResultStats({ results }) {
 function Resultboard({ results }) {
   return (
     <>
-      <Title mb="md" size="h2">RESULTS</Title>
-      <Table
-        mr="auto"
-        ml="auto"
-        style={{ maxWidth: "350px" }}
-        verticalSpacing="xs"
-        horizontalSpacing="xs"
-        captionSide="bottom"
-        highlightOnHover
-      >
+      <Title className="votingTitle1">RESULTS</Title>
+      <Table className="customTable mb-4" cellPadding="0" cellSpacing="0" width="100%">
         <caption></caption>
         <thead>
           <tr>
@@ -146,8 +121,8 @@ function Resultboard({ results }) {
           {results.map((entry) => {
             return (
               <tr key={entry.user}>
-                <td>{entry.user}</td>
-                <td>{entry.votes}</td>
+                <td style={{ textAlign: "center" }}>{entry.user}</td>
+                <td style={{ textAlign: "center" }}><strong>{entry.votes}</strong></td>
               </tr>
             );
           })}

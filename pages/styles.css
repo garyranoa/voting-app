@@ -71,6 +71,33 @@ p, label, span, div {
   text-align: center !important;
   margin: 0 auto !important;
 }
+.customTable th {
+  color: #000 !important;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600 !important;
+  font-size: 18px !important;
+  border-bottom: 1px solid #cfcfcf !important;
+  padding: 10px 0 !important;
+}
+.customTable tr:nth-child(even) td {
+  background-color: #e0e0e0;
+}
+.customTable td {
+  color: #000 !important;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400 !important;
+  font-size: 16px !important;
+  border: none !important;
+  padding: 10px 0 !important;
+}
+.votingTitle1 {
+  color: #647a68 !important;
+  font-size: 28px !important;
+  text-transform: uppercase !important;
+  font-weight: 700 !important;
+  text-align: center !important;
+  margin: 0 auto !important;
+}
 .votingText p {
   font-size: 16px !important;
   color: #000 !important;
@@ -186,6 +213,9 @@ p, label, span, div {
   font-size: 16px!important;
   font-weight: 400 !important;
   text-align: center !important;
+}
+.votersDescription a {
+  color: #fff;
 }
 ul.votersList {
   color: #fff;
