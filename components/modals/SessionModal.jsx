@@ -13,7 +13,7 @@ import {
 import UsernameInput from "../inputs/UserInput";
 import RoundsInput from "../inputs/RoundsInput";
 import TimerInput from "../inputs/TimerInput";
-import FileUpload from "../inputs/DropzoneUpload";
+import OptionsInput from "../inputs/OptionsInput";
 import SessionIdInput from "../inputs/SessionIdInput";
 import ErrorMessage, { displayError } from "../errors/ErrorMessage";
 import { useState } from "react";
@@ -76,6 +76,7 @@ export default function SessionModal(props) {
         {props.join && <SessionIdInput form={form} />}
         {!props.join && <RoundsInput form={form} />}
         {!props.join && <TimerInput form={form} />}
+        {!props.join && <OptionsInput form={form} />}
         <Button type="submit">Go!</Button>
       </form>
       {errorVisible && <ErrorMessage message={errorMessage} />}
