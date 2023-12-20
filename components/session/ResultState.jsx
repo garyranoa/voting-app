@@ -68,7 +68,7 @@ function GameContinues(sessionId, dasher) {
       )}
       {cookieCutter.get("username") == dasher && (
         <>
-          <Button className="customBtn mt-4 mb-4">Next Round</Button>
+          <Button className="customBtn mt-4 mb-4" onClick={() => newRound(sessionId)}>Next Round</Button>
           <Text className="votersText text-center">
             <p>As the dasher, you can end this round. Please check with your friends that everyone is ready!</p>
           </Text>
