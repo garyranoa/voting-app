@@ -9,6 +9,9 @@ import { getWordDefinition } from "../../lib/vocab";
 import { updateRoundState, updateWord } from "../../lib/firebase";
 import { ROUND_STATES } from "../../lib/constants";
 import OptionsInput from "../inputs/OptionsInput";
+import { useForm } from "@mantine/form";
+import ErrorMessage, { displayError } from "../errors/ErrorMessage";
+import { nextRoundValidators } from "../../lib/validators";
 
 const paddingSides = "20px";
 const cardStyle = {
@@ -39,19 +42,55 @@ function GuesserCaption() {
   );
 }
 
-function DasherControls({ sessionId, roundNumber }) {
+function handleSubmission(request, setErrorVisible, setErrorMessage) {
+  request
+    .then((result) => {
+      const { error } = result;
+      if (!error) {
+        
+      } else {
+        displayError(error, setErrorVisible, setErrorMessage);
+      }
+    })
+    .catch((error) => displayError(error, setErrorVisible, setErrorMessage));
+}
+
+function DasherControls({ sessionId, roundNumber, options }) {
+  const [errorVisible, setErrorVisible] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const form = useForm({
+    initialValues: {  },
+    validate: {...nextRoundValidators },
+  });
+
   return (
-    <>
-    <form className="customModal">
-    <OptionsInput maxSelectedValues={2} />
-    
-    <Group position="center" spacing="md" grow align="center" className="entryBtns mt-4">
-      <Button className="customBtn1" onClick={() => updateWord(sessionId, roundNumber)}>New Option</Button>
-      <Button className="customBtn2" onClick={() => updateRoundState(sessionId, roundNumber, ROUND_STATES.GUESSING)}>Confirm Option</Button>
-    </Group>
-    </form>
-    </>
-  );
+      (roundNumber == 1 ?
+            <>
+              <Group position="center" spacing="md" grow align="center" className="entryBtns mt-4">
+                <Button className="customBtn1" onClick={() => updateWord(sessionId, roundNumber)}>New Option</Button>
+                <Button className="customBtn2" onClick={() => updateRoundState(sessionId, roundNumber, ROUND_STATES.GUESSING)}>Confirm Option</Button>
+              </Group>
+            </> 
+        :
+          <>
+            <form className="customModal"
+            onSubmit={form.onSubmit((v) =>
+              handleSubmission(
+                  updateRoundState(sessionId, roundNumber, ROUND_STATES.GUESSING, v.options),
+                  setErrorVisible,
+                  setErrorMessage
+                )
+              )}>
+              <OptionsInput maxSelectedValues={10} defaultValue={options} form={form} />
+              <Group position="center" spacing="md" grow align="center" className="entryBtns mt-4">
+                <Button className="customBtn1" onClick={() => updateWord(sessionId, roundNumber)}>New Option</Button>
+                <Button className="customBtn2" type="submit">Confirm Option</Button>
+            </Group>
+            </form>
+            {errorVisible && <ErrorMessage message={errorMessage} />}
+          </>
+        ));
 }
 
 function GuesserWaitScreen() {
@@ -65,16 +104,17 @@ export default function SelectingState({
   dasher,
   options,
   roundNumber,
+  votingOptions
 }) {
   const isDasher = cookieCutter.get("username") === dasher;
   const [definition, setDefinition] = useState("");
-  useEffect(() => {
+  /*useEffect(() => {
     getWordDefinition(options)
       .then(setDefinition)
       .catch((error) =>
         console.log(`Error retrieving definition for word ${word}: ${error}`)
       );
-  }, [options]);
+  }, [options]);*/
   return (
     <>
       <Title className="voteOption">Voting Option Selection</Title>
@@ -86,7 +126,7 @@ export default function SelectingState({
         <Title className="votersRef mb-4">{options[0].title}</Title>
         <Text className="votersDescription" dangerouslySetInnerHTML={{ __html: options[0].description }}></Text>
         {isDasher ? (
-          <DasherControls sessionId={sessionId} roundNumber={roundNumber} />
+          <DasherControls sessionId={sessionId} roundNumber={roundNumber} options={votingOptions} />
         ) : (
           <GuesserWaitScreen />
         )}

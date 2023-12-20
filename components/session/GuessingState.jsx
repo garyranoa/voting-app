@@ -77,7 +77,7 @@ function GuesserEntryView({ sessionId, roundNumber }) {
   );
 }
 
-function VoterEntryViewOptions({ sessionId, roundNumber }) {
+function VoterEntryViewOptions({ sessionId, roundNumber, options }) {
   const [definition, setDefinition] = useState("");
   const invalidDefinition = definition.length < MIN_DEF_LEN || definition.length > MAX_DEF_LEN;
   const disabled = false
@@ -95,20 +95,17 @@ function VoterEntryViewOptions({ sessionId, roundNumber }) {
             justifyContent: "space-between",
           }}
         >
-          <Button color="red" variant="filled" radius="md" mt="xl" mb="xl" uppercase
-            disabled={disabled}
-            onClick={() =>
-              updateUserVote(sessionId,roundNumber,cookieCutter.get("username"), 'KILL')
-            }>
-            <Center><BiDislike size={25} /><Box ml={10}>KILL</Box></Center>
-          </Button> &nbsp;
-          <Button color="blue" variant="filled" radius="md" mt="xl" mb="xl" uppercase
-          disabled={disabled}
-          onClick={() =>
-            updateUserVote(sessionId,roundNumber,cookieCutter.get("username"), 'KEEP')
-          }>
-            <Center><BiLike size={25} /><Box ml={10}>KEEP</Box></Center>
-          </Button>
+
+        {options &&
+          options.map((item, i) => (
+            <>
+              <Button key={i} color={i % 2 ? 'red' : 'blue'} variant="filled" radius="md" mt="xl" mb="xl" uppercase
+                  disabled={disabled}
+                    onClick={() => updateUserVote(sessionId,roundNumber,cookieCutter.get("username"), item)}>
+              <Center><BiUpvote size={25} /><Box ml={10}>{item}</Box></Center>
+            </Button>&nbsp;
+            </>
+        ))}
         </div>
     </>
   );
@@ -162,7 +159,7 @@ const RenderTime = ({ remainingTime }) => {
   );
 };
 
-function VoterView(sessionId, options, votes, roundNumber, timer, voting_state) {
+function VoterView(sessionId, options, votes, roundNumber, timer, voting_state, votingOptions) {
   const [createOpened, setCreateOpened] = useState(false);
   const [createOpenedPause, setCreateOpenedPause] = useState(false);
   const [createOpenedAction, setCreateOpenedAction] = useState(false);
@@ -263,7 +260,7 @@ console.log(voting_state, action)
       {vote.length > 0 ? (
         <VoterWaitView vote={vote} />
       ) : (
-        <VoterEntryViewOptions sessionId={sessionId} roundNumber={roundNumber} />
+        <VoterEntryViewOptions sessionId={sessionId} roundNumber={roundNumber} options={votingOptions} />
       )}
 
       {voting_state === VOTING_STATES.PAUSED ? (
@@ -498,7 +495,8 @@ export default function GuessingState({
   votes,
   roundNumber,
   timer,
-  voting_state
+  voting_state,
+  votingOptions
 }) {
   const [definition, setDefinition] = useState("");
   /*useEffect(() => {
@@ -516,5 +514,5 @@ export default function GuessingState({
         roundNumber,
         ""
       )
-    : VoterView(sessionId, options, votes, roundNumber, timer, voting_state);
+    : VoterView(sessionId, options, votes, roundNumber, timer, voting_state, votingOptions);
 }

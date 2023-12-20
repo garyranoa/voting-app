@@ -14,7 +14,7 @@ function Loading() {
   );
 }
 
-const scenarioHandler = (id, round, voters, isLastRound, timer, rounds) => {
+const scenarioHandler = (id, round, voters, isLastRound, timer, rounds, votingOptions) => {
   switch (round.state) {
     case ROUND_STATES.SELECTING:
       return (
@@ -23,6 +23,7 @@ const scenarioHandler = (id, round, voters, isLastRound, timer, rounds) => {
           dasher={round.dasher}
           options={round.options}
           roundNumber={round.number}
+          votingOptions={votingOptions}
         />
       );
     case ROUND_STATES.GUESSING:
@@ -35,6 +36,7 @@ const scenarioHandler = (id, round, voters, isLastRound, timer, rounds) => {
           roundNumber={round.number}
           timer={timer}
           voting_state={round.voting_state}
+          votingOptions={votingOptions}
         />
       );
     case ROUND_STATES.VOTING:
@@ -65,10 +67,12 @@ const scenarioHandler = (id, round, voters, isLastRound, timer, rounds) => {
 };
 
 export default function Round({ sessionData }) {
-  const { limit, rounds, voters, id, timer } = sessionData;
+  const { limit, rounds, voters, id, timer, defaultOptions } = sessionData;
   if (rounds === undefined) return Loading();
   const latestRound = rounds.at(-1);
   const isLastRound = latestRound.number == limit;
+  let options = latestRound.number == 1 ? defaultOptions : latestRound.votingOptions
+  if (latestRound.state === ROUND_STATES.SELECTING) { options = defaultOptions }
   return (
     <>
       <div>
@@ -82,7 +86,7 @@ export default function Round({ sessionData }) {
         <Text className="voteCounter">Round {latestRound.number} of {limit}</Text>
       )}
       <div className="divider"></div>
-      {scenarioHandler(id, latestRound, voters, isLastRound, timer, rounds)}      
+      {scenarioHandler(id, latestRound, voters, isLastRound, timer, rounds, options)}      
     </>
   );
 }
