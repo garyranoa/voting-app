@@ -159,7 +159,7 @@ const RenderTime = ({ remainingTime }) => {
   );
 };
 
-function VoterView(sessionId, options, votes, roundNumber, timer, voting_state, votingOptions) {
+function VoterView(sessionId, question, votes, roundNumber, timer, voting_state, votingOptions) {
   const [createOpened, setCreateOpened] = useState(false);
   const [createOpenedPause, setCreateOpenedPause] = useState(false);
   const [createOpenedAction, setCreateOpenedAction] = useState(false);
@@ -253,9 +253,9 @@ console.log(voting_state, action)
       </div>) : <></>}
       <Title className="voteOption mb-4 mt-4">Vote the following feature</Title>
       <Card className="votersCard">
-        <Title className="votersFeature mb-4">Feature #{options[0].id}</Title>
-        <Title className="votersRef mb-4">{options[0].title}</Title>
-        <Title className="votersDescription" dangerouslySetInnerHTML={{ __html: options[0].description }}></Title>
+        <Title className="votersFeature mb-4">Feature #{question.id}</Title>
+        <Title className="votersRef mb-4">{question.title}</Title>
+        <Title className="votersDescription" dangerouslySetInnerHTML={{ __html: question.description }}></Title>
       </Card>
       {vote.length > 0 ? (
         <VoterWaitView vote={vote} />
@@ -436,7 +436,7 @@ function GuessCardV2({ votes, sid, round }) {
 }
 
 
-function DasherView(sessionId, options, votes, roundNumber, definition) {
+function DasherView(sessionId, question, votes, roundNumber, definition) {
   const ready =  Object.keys(votes).every(
     (user) => votes[user].vote.length > 0
   );
@@ -475,8 +475,8 @@ function DasherView(sessionId, options, votes, roundNumber, definition) {
       />
 
       <Card className="votersCard mb-4">
-        <Title className="votersFeature mb-4">Feature #{options[0].id}</Title>
-        <Title className="votersRef mb-4">{options[0].title}</Title>
+        <Title className="votersFeature mb-4">Feature #{question.id}</Title>
+        <Title className="votersRef mb-4">{question.title}</Title>
       </Card>
       <Title className="voteOption mt-2 mb-3">Selected vote from Voters</Title>
       <GuessCardV2 votes={votes} sid={sessionId} round={roundNumber} />
@@ -491,7 +491,7 @@ function DasherView(sessionId, options, votes, roundNumber, definition) {
 export default function GuessingState({
   sessionId,
   dasher,
-  options,
+  question,
   votes,
   roundNumber,
   timer,
@@ -509,10 +509,10 @@ export default function GuessingState({
   return cookieCutter.get("username") === dasher
     ? DasherView(
         sessionId,
-        options,
+        question,
         votes,
         roundNumber,
         ""
       )
-    : VoterView(sessionId, options, votes, roundNumber, timer, voting_state, votingOptions);
+    : VoterView(sessionId, question, votes, roundNumber, timer, voting_state, votingOptions);
 }

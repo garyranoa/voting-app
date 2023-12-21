@@ -5,8 +5,7 @@
 import { Title, Text, Card, Group, Button } from "@mantine/core";
 import cookieCutter from "cookie-cutter";
 import { useEffect, useState } from "react";
-import { updateRoundState, updateWord, 
-  importQuestion } from "../../lib/firebase";
+import { updateRoundState, updateWord} from "../../lib/firebase";
 import { ROUND_STATES } from "../../lib/constants";
 import OptionsInput from "../inputs/OptionsInput";
 import { useForm } from "@mantine/form";
@@ -65,14 +64,12 @@ function DasherControls({ sessionId, roundNumber, options }) {
     validate: {...nextRoundValidators },
   });
 
-  const q = []
-
   return (
       (roundNumber == 1 ?
             <>
               <Group position="center" spacing="md" grow align="center" className="entryBtns mt-4">
                 <Button className="customBtn1" onClick={() => updateWord(sessionId, roundNumber)}>New Option</Button>
-                <Button className="customBtn2" onClick={() => updateRoundState(sessionId, roundNumber, ROUND_STATES.GUESSING)}>Confirm Option</Button>
+                <Button className="customBtn2" onClick={() => updateRoundState(sessionId, roundNumber, ROUND_STATES.GUESSING, options)}>Confirm Option</Button>
               </Group>
             </> 
         :
@@ -80,8 +77,7 @@ function DasherControls({ sessionId, roundNumber, options }) {
             <form className="customModal"
             onSubmit={form.onSubmit((v) =>
               handleSubmission(
-                  //updateRoundState(sessionId, roundNumber, ROUND_STATES.GUESSING, v.options),
-                  importQuestion(q),
+                  updateRoundState(sessionId, roundNumber, ROUND_STATES.GUESSING, v.options),
                   setErrorVisible,
                   setErrorMessage
                 )
@@ -106,7 +102,7 @@ function GuesserWaitScreen() {
 export default function SelectingState({
   sessionId,
   dasher,
-  options,
+  question,
   roundNumber,
   votingOptions
 }) {
@@ -126,9 +122,9 @@ export default function SelectingState({
       <br />
       <Card className="votersCard">
         <Title size="h3"></Title>
-        <Title className="votersFeature mb-4">Feature #{options[0].id}</Title>
-        <Title className="votersRef mb-4">{options[0].title}</Title>
-        <Text className="votersDescription" dangerouslySetInnerHTML={{ __html: options[0].description }}></Text>
+        <Title className="votersFeature mb-4">Feature #{question.id}</Title>
+        <Title className="votersRef mb-4">{question.title}</Title>
+        <Text className="votersDescription" dangerouslySetInnerHTML={{ __html: question.description }}></Text>
         {isDasher ? (
           <DasherControls sessionId={sessionId} roundNumber={roundNumber} options={votingOptions} />
         ) : (
