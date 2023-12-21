@@ -151,7 +151,7 @@ p, label, span, div {
 .votersCard {
   background-color: #647a68 !important;
   border-radius: 30px !important;
-  padding: 2rem !important;
+  padding: 2rem !important;overflow: visible !important;
 }
 .votersCard1 {
   background-color: #f0f0f0 !important;
@@ -283,6 +283,10 @@ ul.votersList li {
   border-radius: 30px;
   padding: 7px 10px;
 }
+.customSelect label {
+  margin-bottom: .5rem;
+  color: #fff;
+}
 .customSelect .mantine-MultiSelect-wrapper .mantine-MultiSelect-value {
   padding: 0 20px 0 10px !important;
   position: relative;
@@ -305,6 +309,12 @@ ul.votersList li {
   position: absolute;
   right: 0 !important;
   z-index: 12;
+}
+.customSelect .mantine-MultiSelect-rightSection button {
+  color: #000 !important;
+}
+.customSelect .mantine-MultiSelect-wrapper .mantine-MultiSelect-dropdown {
+  background-color: #000 !important;
 }
 
 .errorBox {
