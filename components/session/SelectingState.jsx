@@ -5,8 +5,8 @@
 import { Title, Text, Card, Group, Button } from "@mantine/core";
 import cookieCutter from "cookie-cutter";
 import { useEffect, useState } from "react";
-import { getWordDefinition } from "../../lib/vocab";
-import { updateRoundState, updateWord } from "../../lib/firebase";
+import { updateRoundState, updateWord, 
+  importQuestion } from "../../lib/firebase";
 import { ROUND_STATES } from "../../lib/constants";
 import OptionsInput from "../inputs/OptionsInput";
 import { useForm } from "@mantine/form";
@@ -47,13 +47,14 @@ function handleSubmission(request, setErrorVisible, setErrorMessage) {
     .then((result) => {
       const { error } = result;
       if (!error) {
-        
+          
       } else {
         displayError(error, setErrorVisible, setErrorMessage);
       }
     })
     .catch((error) => displayError(error, setErrorVisible, setErrorMessage));
 }
+
 
 function DasherControls({ sessionId, roundNumber, options }) {
   const [errorVisible, setErrorVisible] = useState(false);
@@ -63,6 +64,8 @@ function DasherControls({ sessionId, roundNumber, options }) {
     initialValues: {  },
     validate: {...nextRoundValidators },
   });
+
+  const q = []
 
   return (
       (roundNumber == 1 ?
@@ -77,7 +80,8 @@ function DasherControls({ sessionId, roundNumber, options }) {
             <form className="customModal"
             onSubmit={form.onSubmit((v) =>
               handleSubmission(
-                  updateRoundState(sessionId, roundNumber, ROUND_STATES.GUESSING, v.options),
+                  //updateRoundState(sessionId, roundNumber, ROUND_STATES.GUESSING, v.options),
+                  importQuestion(q),
                   setErrorVisible,
                   setErrorMessage
                 )
