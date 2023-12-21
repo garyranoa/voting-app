@@ -101,7 +101,7 @@ function VoterEntryViewOptions({ sessionId, roundNumber, options }) {
             <>
               <Button key={i} color={i % 2 ? 'red' : 'blue'} variant="filled" radius="md" mt="xl" mb="xl" uppercase
                   disabled={disabled}
-                    onClick={() => updateUserVote(sessionId,roundNumber,cookieCutter.get("username"), item)}>
+                    onClick={() => updateUserVote(sessionId,roundNumber,cookieCutter.get("username"), {id: i, name: item})}>
               <Center><BiUpvote size={25} /><Box ml={10}>{item}</Box></Center>
             </Button>&nbsp;
             </>
