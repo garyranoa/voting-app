@@ -35,7 +35,7 @@ const scenarioHandler = (id, round, voters, isLastRound, timer, rounds, votingOp
           votes={round.votes}
           roundNumber={round.number}
           timer={timer}
-          voting_state={round.voting_state}
+          votingState={round.votingState}
           votingOptions={votingOptions}
         />
       );
@@ -71,8 +71,8 @@ export default function Round({ sessionData }) {
   if (rounds === undefined) return Loading();
   const latestRound = rounds.at(-1);
   const isLastRound = latestRound.number == limit;
-  let options = latestRound.number == 1 ? defaultOptions : latestRound.votingOptions
-  if (latestRound.state === ROUND_STATES.SELECTING) { options = defaultOptions }
+  let options = latestRound.options
+
   return (
     <>
       <div>

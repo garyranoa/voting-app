@@ -101,8 +101,8 @@ function VoterEntryViewOptions({ sessionId, roundNumber, options }) {
             <>
               <Button key={i} color={i % 2 ? 'red' : 'blue'} variant="filled" radius="md" mt="xl" mb="xl" uppercase
                   disabled={disabled}
-                    onClick={() => updateUserVote(sessionId,roundNumber,cookieCutter.get("username"), {id: i, name: item})}>
-              <Center><BiUpvote size={25} /><Box ml={10}>{item}</Box></Center>
+                    onClick={() => updateUserVote(sessionId,roundNumber,cookieCutter.get("username"), {id: i, name: item.name})}>
+              <Center><BiUpvote size={25} /><Box ml={10}>{item.name}</Box></Center>
             </Button>&nbsp;
             </>
         ))}
@@ -159,7 +159,7 @@ const RenderTime = ({ remainingTime }) => {
   );
 };
 
-function VoterView(sessionId, question, votes, roundNumber, timer, voting_state, votingOptions) {
+function VoterView(sessionId, question, votes, roundNumber, timer, votingState, votingOptions) {
   const [createOpened, setCreateOpened] = useState(false);
   const [createOpenedPause, setCreateOpenedPause] = useState(false);
   const [createOpenedAction, setCreateOpenedAction] = useState(false);
@@ -175,10 +175,10 @@ const cardStyle = {
   marginLeft: "auto",
   marginRight: "auto",
 };
-console.log(voting_state, action)
+console.log(votingState, action)
 
   let actionMessage = ""
-  if (voting_state === VOTING_STATES.PAUSED) {  
+  if (votingState === VOTING_STATES.PAUSED) {  
     if (!createOpenedPause) {
       setCreateOpenedPause(true)
       if (showTimer) { 
@@ -263,19 +263,19 @@ console.log(voting_state, action)
         <VoterEntryViewOptions sessionId={sessionId} roundNumber={roundNumber} options={votingOptions} />
       )}
 
-      {voting_state === VOTING_STATES.PAUSED ? (
+      {votingState === VOTING_STATES.PAUSED ? (
         <DisableVotingModal
-            title={voting_state}
+            title={votingState}
             opened={createOpenedPause}
             setOpened={setCreateOpenedPause}/>) : (<></>)}
 
-      {voting_state === "RUNNING" && action.length == 0 ? (
+      {votingState === "RUNNING" && action.length == 0 ? (
         <DisableVotingModal
           title="TIME EXPIRES"
           opened={createOpened}
           setOpened={setCreateOpened}/>) : (<></>)}
 
-    {voting_state === "RUNNING" && action.length > 0 ? (
+    {votingState === "RUNNING" && action.length > 0 ? (
         <ActionMessageModal
           title={actionMessage}
           opened={createOpenedAction}
@@ -495,9 +495,10 @@ export default function GuessingState({
   votes,
   roundNumber,
   timer,
-  voting_state,
+  votingState,
   votingOptions
 }) {
+  
   const [definition, setDefinition] = useState("");
   /*useEffect(() => {
     getWordDefinition(options)
@@ -514,5 +515,5 @@ export default function GuessingState({
         roundNumber,
         ""
       )
-    : VoterView(sessionId, question, votes, roundNumber, timer, voting_state, votingOptions);
+    : VoterView(sessionId, question, votes, roundNumber, timer, votingState, votingOptions);
 }
