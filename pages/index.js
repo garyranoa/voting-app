@@ -7,6 +7,7 @@ import { useState } from "react";
 export default function Home() {
   const [createOpened, setCreateOpened] = useState(false);
   const [joinOpened, setJoinOpened] = useState(false);
+  
   return (
     <div>
       <main>
