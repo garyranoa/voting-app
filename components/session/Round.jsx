@@ -71,7 +71,10 @@ export default function Round({ sessionData }) {
   if (rounds === undefined) return Loading();
   const latestRound = rounds.at(-1);
   const isLastRound = latestRound.number == limit;
-  let options = latestRound.options
+  let options = latestRound.defaultOptions
+  if (latestRound.state == ROUND_STATES.GUESSING) {
+    options = latestRound.votingOptions
+  }
 
   return (
     <>

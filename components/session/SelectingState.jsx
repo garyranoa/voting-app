@@ -59,6 +59,11 @@ function DasherControls({ sessionId, roundNumber, options }) {
   const [errorVisible, setErrorVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  /*let optionValues = []
+  options && options.map((item, i) => (
+    optionValues.push({value: item.name, label: item.name})
+  ));*/
+  
   const form = useForm({
     initialValues: {  },
     validate: {...nextRoundValidators },
@@ -82,7 +87,7 @@ function DasherControls({ sessionId, roundNumber, options }) {
                   setErrorMessage
                 )
               )}>
-              <OptionsInput maxSelectedValues={10} defaultValue={options} form={form} />
+              <OptionsInput maxSelectedValues={10} form={form} />
               <Group position="center" spacing="md" grow align="center" className="entryBtns mt-4">
                 <Button className="customBtn1" onClick={() => updateWord(sessionId, roundNumber)}>New Option</Button>
                 <Button className="customBtn2" type="submit">Confirm Option</Button>

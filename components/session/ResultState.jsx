@@ -4,7 +4,7 @@ import cookieCutter from "cookie-cutter";
 import Link from "next/link";
 import { newRound } from "../../lib/firebase";
 
-function EndOfGame(option1, option2) {
+function EndOfGame(option1, option2, rounds) {
 
   const totalVotes = (option1.length > 0 ? option1[0].votes : 0) + (option2.length > 0 ? option2[0].votes : 0)
   const percent1 = (option2[0].votes / totalVotes) * 100
@@ -31,6 +31,23 @@ function EndOfGame(option1, option2) {
           </tr>
         </thead>
         <tbody>
+        {rounds && rounds.map((item, i) => (
+            
+            console.log(item.number)
+
+          ))}
+
+        {rounds && rounds.map((item, i) => (
+            <>
+              <tr key={item.number}>
+                  Round 1
+                <td>{option2[0].name}</td>
+                <td>{option2[0].votes} / {`${percent1.toFixed()}%`}</td>
+              </tr>
+            </>
+
+        ))}
+
             {option2.length > 0 && (
               <tr>
               <td>{option2[0].name}</td>
@@ -93,9 +110,9 @@ function ResultStats({ results }) {
         <tbody>
           {results.map((entry) => {
             return (
-              <tr key={entry.option}>
-                <td style={{ textAlign: "center" }}>{entry.option}</td>
-                <td style={{ textAlign: "center" }}>{entry.percent}</td>
+              <tr key={entry}>
+                <td style={{ textAlign: "center" }}>{entry.name}</td>
+                <td style={{ textAlign: "center" }}>{entry.rating}%</td>
               </tr>
             );
           })}
@@ -153,10 +170,6 @@ export default function ResultState({
     }),
     "order"
   );
-  const topScore = results[0].votes;
-  const winners = results
-    .filter((entry) => entry.score == topScore)
-    .map((entry) => entry.user);
 
   let option1TotalVotes = 0
   let option2TotalVotes = 0
@@ -194,19 +207,18 @@ const option2 = [{name: "KEEP", votes: option2TotalVotes}]
 const percent1 = (option1TRoundVotes / totalVoters) * 100
 const percent2 = (option2TRoundVotes / totalVoters) * 100
 
-const stats = [{option: "KEEP", percent: `${percent2.toFixed()}%`}]
-stats.push({option: "KILL", percent: `${percent1.toFixed()}%`})
+const stats = round.votingOptions;
   
   return (
     <>
       {dasher === cookieCutter.get("username") && (
       <Resultboard results={results} />)}
 
-      {dasher === cookieCutter.get("username") && (
+      {!isLastRound && dasher === cookieCutter.get("username") && (
       <ResultStats results={stats} />)}
 
       {isLastRound
-        ? EndOfGame(option1, option2)
+        ? EndOfGame(option1, option2, rounds)
         : GameContinues(sessionId, dasher)}
     </>
   );
