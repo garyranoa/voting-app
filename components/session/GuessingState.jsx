@@ -280,7 +280,6 @@ console.log(votingState, action)
           withCloseButton={true}
           closeOnConfirm={true}
           closeOnCancel={true}
-          centered
           overlayProps={{
             backgroundOpacity: 0.55,
             blur: 6,
@@ -524,14 +523,13 @@ function DasherView(sessionId, question, votes, roundNumber, definition) {
           withCloseButton={true}
           closeOnConfirm={true}
           closeOnCancel={true}
-          centered
           overlayProps={{
             backgroundOpacity: 0.55,
             blur: 6,
           }}>
             <Text dangerouslySetInnerHTML={{ __html: question.description }}></Text>
         </Modal>
-        
+
       <Title className="voteOption mt-2 mb-3">Selected vote from Voters</Title>
       <GuessCardV2 votes={votes} sid={sessionId} round={roundNumber} />
       <Button className="customBtn mt-4" disabled={!ready} onClick={() => submissionHandler(sessionId, roundNumber, votes)}>Submit</Button>

@@ -151,7 +151,6 @@ export default function SelectingState({
           withCloseButton={true}
           closeOnConfirm={true}
           closeOnCancel={true}
-          centered
           overlayProps={{
             backgroundOpacity: 0.55,
             blur: 6,
