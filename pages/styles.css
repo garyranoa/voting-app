@@ -156,8 +156,8 @@ p, label, span, div {
 }
 .votersRef {
   color: #fff !important;
-  font-size: 25px!important;
-  font-weight: 700 !important;
+  font-size: 22px!important;
+  font-weight: 600 !important;
   text-align: center !important;
 }
 .votersDescription {
@@ -182,7 +182,7 @@ p, label, span, div {
   top: 50% !important;
   position: relative !important;
 }
-.customModal .mantine-Modal-modal .mantine-ActionIcon-root {
+.customModal .mantine-Modal-modal .mantine-ActionIcon-root, .votingDescription .mantine-Modal-modal .mantine-ActionIcon-root {
   position: absolute !important;
   top: 10px !important;
   right: 10px !important;
@@ -195,6 +195,20 @@ p, label, span, div {
   font-weight: 700 !important;
   text-align: center !important;
   margin: 0 auto !important;
+}
+.votingDescription .mantine-Modal-modal {
+  background-color: #fff !important;
+  border-radius: 20px !important;
+  width: 95% !important;
+  max-width: 960px;
+  padding: 2.5rem 2rem 1rem !important;
+  transform: translateY(-50%) !important;
+  top: 50% !important;
+  position: relative !important;
+}
+.votingDescription div, .votingDescription p {
+  color: #000;
+  font-size: 16px !important;
 }
 .votingTitle1 {
   color: #647a68 !important;
@@ -306,7 +320,7 @@ p, label, span, div {
 }
 
 /*misc*/
-.viewDescription {
+.viewDescription button {
   background-color: transparent !important;
   display: inline-block !important;
   color: #fff !important;
@@ -319,9 +333,9 @@ p, label, span, div {
   text-decoration: none;
 }
 .viewDescription svg {
-  font-size: 18px;
+  font-size: 17px;
   vertical-align: top;
-  margin-top: 3px;
+  margin-right: 5px;
 }
 .customBtn {
   background-color: #5f63f2 !important;
@@ -450,6 +464,11 @@ ul.votersList li {
   }
   .customModal .mantine-Modal-modal form button.mantine-Button-root {
     width: 100% !important;
+  }
+  .votingDescription .mantine-Modal-modal {
+    padding: 1rem !important;
+    top: 10% !important;
+    transform: translateY(-7%) !important;
   }
   .votingCard button {
     width: 90% !important;

@@ -135,13 +135,13 @@ export default function SelectingState({
         {/* <Text className="votersDescription" dangerouslySetInnerHTML={{ __html: question.description }}></Text> */}
 
         {question.description && (
-        <Text className="viewDescription">
-          <IoMdInformationCircleOutline />
+        <Text className="viewDescription text-center">          
           <Button onClick={() =>
-              setCreateOpenedDescription(true)}>View Description</Button>
+              setCreateOpenedDescription(true)}><IoMdInformationCircleOutline /> View Description</Button>
         </Text>)}
         
         <Modal
+          className="votingDescription"
           title={title}
           scrollAreaComponent={ScrollArea.Autosize}
           opened={createOpenedDescription}
@@ -156,7 +156,7 @@ export default function SelectingState({
             backgroundOpacity: 0.55,
             blur: 6,
           }}>
-            <Text className="votersDescription" dangerouslySetInnerHTML={{ __html: question.description }}></Text>
+            <Text dangerouslySetInnerHTML={{ __html: question.description }}></Text>
         </Modal>
           
         {isDasher ? (
