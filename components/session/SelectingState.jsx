@@ -132,9 +132,8 @@ export default function SelectingState({
         <Title className="votersRef mb-4">{question.title}</Title>
         {/* <Text className="votersDescription" dangerouslySetInnerHTML={{ __html: question.description }}></Text> */}
         
-        <Text className="votersDescription">
-          <IoMdInformationCircleOutline />
-          <a href="#">View Description</a>
+        <Text className="votersDescription mb-4">
+          <a href="#" className="viewDescription"><IoMdInformationCircleOutline /> View Description</a>
         </Text>
         {isDasher ? (
           <DasherControls sessionId={sessionId} roundNumber={roundNumber} options={votingOptions} />

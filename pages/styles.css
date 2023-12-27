@@ -156,7 +156,7 @@ p, label, span, div {
 }
 .votersRef {
   color: #fff !important;
-  font-size: 28px!important;
+  font-size: 25px!important;
   font-weight: 700 !important;
   text-align: center !important;
 }
@@ -306,6 +306,23 @@ p, label, span, div {
 }
 
 /*misc*/
+.viewDescription {
+  background-color: transparent !important;
+  display: inline-block !important;
+  color: #fff !important;
+  font-size: 16px !important;
+  border-radius: 30px !important;
+  padding: 10px 20px !important;
+  height: auto !important;
+  text-transform: uppercase !important;
+  border: 1px solid #fff;
+  text-decoration: none;
+}
+.viewDescription svg {
+  font-size: 18px;
+  vertical-align: top;
+  margin-top: 4px;
+}
 .customBtn {
   background-color: #5f63f2 !important;
   display: block !important;
@@ -343,7 +360,7 @@ p, label, span, div {
   background-color: #647a68 !important;
   height: 3px !important;
   width: 150px !important;
-  margin: 20px auto !important;
+  margin: 15px auto !important;
 }
 .errorBox {
   background-color: #647a68 !important;
