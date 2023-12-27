@@ -10,18 +10,22 @@ import {
   Text,
   Title,
 } from "@mantine/core";
+import { useRouter } from "next/router";
 
 export default function Layout({ children }) {
+
+  const router = useRouter();
+  const isHome = router.asPath === '/'
+
   return (
-    <div
-      className="content bd-masthead"
-    >
+    <div className="content bd-masthead">
       <div className="contentWrapper">
+        {isHome && (
         <Link href="/" passHref>
           <a className="logo text-center">
             <Image src="/hisa-logo.png" alt="" width={170} height={170} />
           </a>
-        </Link>
+        </Link>)}
         <div>{children}</div>
       </div>
       {/*<Footer />*/}

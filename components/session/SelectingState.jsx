@@ -2,7 +2,7 @@
  * What users see when the state is in the "dasher" state
  */
 
-import { Title, Text, Card, Group, Button } from "@mantine/core";
+import { Title, Text, Card, Group, Button, Modal, ScrollArea  } from "@mantine/core";
 import cookieCutter from "cookie-cutter";
 import { useEffect, useState } from "react";
 import { updateRoundState, updateWord} from "../../lib/firebase";
@@ -114,6 +114,8 @@ export default function SelectingState({
 }) {
   const isDasher = cookieCutter.get("username") === dasher;
   const [definition, setDefinition] = useState("");
+  const [createOpenedDescription, setCreateOpenedDescription] = useState(false);
+  const title =  <Text><IoMdInformationCircleOutline /> DESCRIPTION</Text>
   /*useEffect(() => {
     getWordDefinition(options)
       .then(setDefinition)
@@ -131,10 +133,32 @@ export default function SelectingState({
         <Title className="votersFeature mb-4">Feature #{question.id}</Title>
         <Title className="votersRef mb-4">{question.title}</Title>
         {/* <Text className="votersDescription" dangerouslySetInnerHTML={{ __html: question.description }}></Text> */}
+
+        {question.description && (
+        <Text className="viewDescription">
+          <IoMdInformationCircleOutline />
+          <Button onClick={() =>
+              setCreateOpenedDescription(true)}>View Description</Button>
+        </Text>)}
         
-        <Text className="votersDescription mb-4">
-          <a href="#" className="viewDescription"><IoMdInformationCircleOutline /> View Description</a>
-        </Text>
+        <Modal
+          title={title}
+          scrollAreaComponent={ScrollArea.Autosize}
+          opened={createOpenedDescription}
+          onClose={() => setCreateOpenedDescription(false)}
+          closeOnClickOutside={true}
+          closeOnEscape={true}
+          withCloseButton={true}
+          closeOnConfirm={true}
+          closeOnCancel={true}
+          centered
+          overlayProps={{
+            backgroundOpacity: 0.55,
+            blur: 6,
+          }}>
+            <Text className="votersDescription" dangerouslySetInnerHTML={{ __html: question.description }}></Text>
+        </Modal>
+          
         {isDasher ? (
           <DasherControls sessionId={sessionId} roundNumber={roundNumber} options={votingOptions} />
         ) : (
