@@ -9,7 +9,7 @@ import {
   Title,
   Box,
   UnstyledButton,
-  Menu, MenuItem, MenuLabel, Divider,
+  Menu, MenuItem, MenuLabel, Divider, Modal, ScrollArea
 } from "@mantine/core";
 
 import { IconCheck, IconX } from "@tabler/icons";
@@ -229,7 +229,9 @@ console.log(votingState, action)
     }
   }
 
-  
+  const [createOpenedDescription, setCreateOpenedDescription] = useState(false);
+  const title =  <Text><IoMdInformationCircleOutline /> DESCRIPTION</Text>
+
   return (
     <div style={{ paddingLeft: "10px", paddingRight: "10px" }}>
       {(showTimer && vote.length === 0) ? (
@@ -256,9 +258,10 @@ console.log(votingState, action)
         <Title className="votersFeature mb-4">Feature #{question.id}</Title>
         <Title className="votersRef mb-4">{question.title}</Title>
         {/* <Title className="votersDescription" dangerouslySetInnerHTML={{ __html: question.description }}></Title> */}
+        {question.description && (
         <Text className="viewDescription text-center">          
-          <Button><IoMdInformationCircleOutline /> View Description</Button>
-        </Text>
+          <Button onClick={() =>setCreateOpenedDescription(true)}><IoMdInformationCircleOutline /> View Description</Button>
+        </Text>)}
       </Card>
       {vote.length > 0 ? (
         <VoterWaitView vote={vote} />
@@ -266,14 +269,35 @@ console.log(votingState, action)
         <VoterEntryViewOptions sessionId={sessionId} roundNumber={roundNumber} options={votingOptions} />
       )}
 
+        <Modal
+          className="votingDescription"
+          title={title}
+          scrollAreaComponent={ScrollArea.Autosize}
+          opened={createOpenedDescription}
+          onClose={() => setCreateOpenedDescription(false)}
+          closeOnClickOutside={true}
+          closeOnEscape={true}
+          withCloseButton={true}
+          closeOnConfirm={true}
+          closeOnCancel={true}
+          centered
+          overlayProps={{
+            backgroundOpacity: 0.55,
+            blur: 6,
+          }}>
+            <Text dangerouslySetInnerHTML={{ __html: question.description }}></Text>
+        </Modal>
+
       {votingState === VOTING_STATES.PAUSED ? (
         <DisableVotingModal
+            className="votingDescription"
             title={votingState}
             opened={createOpenedPause}
             setOpened={setCreateOpenedPause}/>) : (<></>)}
 
       {votingState === "RUNNING" && action.length == 0 ? (
         <DisableVotingModal
+          className="votingDescription"
           title="TIME EXPIRES"
           opened={createOpened}
           setOpened={setCreateOpened}/>) : (<></>)}

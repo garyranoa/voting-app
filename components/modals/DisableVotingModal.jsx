@@ -5,6 +5,7 @@ export default function DisableModal(props) {
   const icon = (props.title === "PAUSED" ? <BiPauseCircle size={50} /> : <BiStopwatch size={50} /> )
     return (
         <Modal
+          className={props.className}
           opened={props.opened}
           onClose={() => props.setOpened(false)}
           closeOnClickOutside={false}
