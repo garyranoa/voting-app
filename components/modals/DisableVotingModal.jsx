@@ -13,7 +13,6 @@ export default function DisableModal(props) {
           withCloseButton={false}
           closeOnConfirm={false}
           closeOnCancel={false}
-          centered
           overlayProps={{
             backgroundOpacity: 0.55,
             blur: 6,
