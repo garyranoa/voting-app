@@ -202,7 +202,7 @@ p, label, span, div {
   width: 95% !important;
   max-width: 960px;
   padding: 2.5rem 2rem 1rem !important;
-  transform: translateY(-50%) !important;
+  transform: translateY(-30%) !important;
   top: 25% !important;
   position: relative !important;
 }
