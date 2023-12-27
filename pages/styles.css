@@ -202,8 +202,8 @@ p, label, span, div {
   width: 95% !important;
   max-width: 960px;
   padding: 2.5rem 2rem 1rem !important;
-  transform: translateY(-50%) !important;
-  top: 50% !important;
+  transform: translateY(-25%) !important;
+  top: 25% !important;
   position: relative !important;
 }
 .votingDescription div, .votingDescription p {
