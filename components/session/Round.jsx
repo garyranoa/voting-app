@@ -21,7 +21,7 @@ const scenarioHandler = (id, round, voters, isLastRound, timer, rounds, votingOp
         <SelectingState
           sessionId={id}
           dasher={round.dasher}
-          options={round.options}
+          question={round.question}
           roundNumber={round.number}
           votingOptions={votingOptions}
         />
@@ -31,11 +31,11 @@ const scenarioHandler = (id, round, voters, isLastRound, timer, rounds, votingOp
         <GuessingState
           sessionId={id}
           dasher={round.dasher}
-          options={round.options}
+          question={round.question}
           votes={round.votes}
           roundNumber={round.number}
           timer={timer}
-          voting_state={round.voting_state}
+          votingState={round.votingState}
           votingOptions={votingOptions}
         />
       );
@@ -71,8 +71,11 @@ export default function Round({ sessionData }) {
   if (rounds === undefined) return Loading();
   const latestRound = rounds.at(-1);
   const isLastRound = latestRound.number == limit;
-  let options = latestRound.number == 1 ? defaultOptions : latestRound.votingOptions
-  if (latestRound.state === ROUND_STATES.SELECTING) { options = defaultOptions }
+  let options = latestRound.defaultOptions
+  if (latestRound.state == ROUND_STATES.GUESSING) {
+    options = latestRound.votingOptions
+  }
+
   return (
     <>
       <div>

@@ -7,10 +7,8 @@ export default function VotingOptionsInput(props) {
         { value: 'KILL', label: 'KILL' },
         { value: 'Q1', label: 'Q1' },
         { value: 'Q2', label: 'Q2' },
-        { value: 'Q3', label: 'Q3' },
-        { value: 'Q4', label: 'Q4' },
-        { value: '2ND HALF', label: '2ND HALF' },
-      ];
+        { value: 'H2', label: 'H2' },
+    ];
 
     return (
         <>

@@ -45,11 +45,12 @@ function handleSubmission(request, username, setErrorVisible, setErrorMessage) {
 export default function SessionModal(props) {
   const [errorVisible, setErrorVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  
   const scenarioValidators = props.join
     ? joinSessionValidators
     : newSessionValidators;
   const form = useForm({
-    initialValues: { username: "", sessionId: "" },
+    initialValues: { username: "", sessionId: "", options: [] },
     validate: { ...baseSessionValidators, ...scenarioValidators },
   });
   

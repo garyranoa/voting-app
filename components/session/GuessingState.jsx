@@ -101,8 +101,8 @@ function VoterEntryViewOptions({ sessionId, roundNumber, options }) {
             <>
               <Button key={i} color={i % 2 ? 'red' : 'blue'} variant="filled" radius="md" mt="xl" mb="xl" uppercase
                   disabled={disabled}
-                    onClick={() => updateUserVote(sessionId,roundNumber,cookieCutter.get("username"), item)}>
-              <Center><BiUpvote size={25} /><Box ml={10}>{item}</Box></Center>
+                    onClick={() => updateUserVote(sessionId,roundNumber,cookieCutter.get("username"), {id: i, name: item.name})}>
+              <Center><BiUpvote size={25} /><Box ml={10}>{item.name}</Box></Center>
             </Button>&nbsp;
             </>
         ))}
@@ -159,7 +159,7 @@ const RenderTime = ({ remainingTime }) => {
   );
 };
 
-function VoterView(sessionId, options, votes, roundNumber, timer, voting_state, votingOptions) {
+function VoterView(sessionId, question, votes, roundNumber, timer, votingState, votingOptions) {
   const [createOpened, setCreateOpened] = useState(false);
   const [createOpenedPause, setCreateOpenedPause] = useState(false);
   const [createOpenedAction, setCreateOpenedAction] = useState(false);
@@ -175,10 +175,10 @@ const cardStyle = {
   marginLeft: "auto",
   marginRight: "auto",
 };
-console.log(voting_state, action)
+console.log(votingState, action)
 
   let actionMessage = ""
-  if (voting_state === VOTING_STATES.PAUSED) {  
+  if (votingState === VOTING_STATES.PAUSED) {  
     if (!createOpenedPause) {
       setCreateOpenedPause(true)
       if (showTimer) { 
@@ -253,9 +253,9 @@ console.log(voting_state, action)
       </div>) : <></>}
       <Title className="voteOption mb-4 mt-4">Vote the following feature</Title>
       <Card className="votersCard">
-        <Title className="votersFeature mb-4">Feature #{options[0].id}</Title>
-        <Title className="votersRef mb-4">{options[0].title}</Title>
-        <Title className="votersDescription" dangerouslySetInnerHTML={{ __html: options[0].description }}></Title>
+        <Title className="votersFeature mb-4">Feature #{question.id}</Title>
+        <Title className="votersRef mb-4">{question.title}</Title>
+        <Title className="votersDescription" dangerouslySetInnerHTML={{ __html: question.description }}></Title>
       </Card>
       {vote.length > 0 ? (
         <VoterWaitView vote={vote} />
@@ -263,19 +263,19 @@ console.log(voting_state, action)
         <VoterEntryViewOptions sessionId={sessionId} roundNumber={roundNumber} options={votingOptions} />
       )}
 
-      {voting_state === VOTING_STATES.PAUSED ? (
+      {votingState === VOTING_STATES.PAUSED ? (
         <DisableVotingModal
-            title={voting_state}
+            title={votingState}
             opened={createOpenedPause}
             setOpened={setCreateOpenedPause}/>) : (<></>)}
 
-      {voting_state === "RUNNING" && action.length == 0 ? (
+      {votingState === "RUNNING" && action.length == 0 ? (
         <DisableVotingModal
           title="TIME EXPIRES"
           opened={createOpened}
           setOpened={setCreateOpened}/>) : (<></>)}
 
-    {voting_state === "RUNNING" && action.length > 0 ? (
+    {votingState === "RUNNING" && action.length > 0 ? (
         <ActionMessageModal
           title={actionMessage}
           opened={createOpenedAction}
@@ -436,7 +436,7 @@ function GuessCardV2({ votes, sid, round }) {
 }
 
 
-function DasherView(sessionId, options, votes, roundNumber, definition) {
+function DasherView(sessionId, question, votes, roundNumber, definition) {
   const ready =  Object.keys(votes).every(
     (user) => votes[user].vote.length > 0
   );
@@ -475,8 +475,8 @@ function DasherView(sessionId, options, votes, roundNumber, definition) {
       />
 
       <Card className="votersCard mb-4">
-        <Title className="votersFeature mb-4">Feature #{options[0].id}</Title>
-        <Title className="votersRef mb-4">{options[0].title}</Title>
+        <Title className="votersFeature mb-4">Feature #{question.id}</Title>
+        <Title className="votersRef mb-4">{question.title}</Title>
       </Card>
       <Title className="voteOption mt-2 mb-3">Selected vote from Voters</Title>
       <GuessCardV2 votes={votes} sid={sessionId} round={roundNumber} />
@@ -491,13 +491,14 @@ function DasherView(sessionId, options, votes, roundNumber, definition) {
 export default function GuessingState({
   sessionId,
   dasher,
-  options,
+  question,
   votes,
   roundNumber,
   timer,
-  voting_state,
+  votingState,
   votingOptions
 }) {
+  
   const [definition, setDefinition] = useState("");
   /*useEffect(() => {
     getWordDefinition(options)
@@ -509,10 +510,10 @@ export default function GuessingState({
   return cookieCutter.get("username") === dasher
     ? DasherView(
         sessionId,
-        options,
+        question,
         votes,
         roundNumber,
         ""
       )
-    : VoterView(sessionId, options, votes, roundNumber, timer, voting_state, votingOptions);
+    : VoterView(sessionId, question, votes, roundNumber, timer, votingState, votingOptions);
 }
