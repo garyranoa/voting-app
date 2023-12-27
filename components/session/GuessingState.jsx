@@ -165,9 +165,10 @@ function VoterView(sessionId, question, votes, roundNumber, timer, votingState, 
   const [createOpenedAction, setCreateOpenedAction] = useState(false);
   const [showTimer, setShowTimer] = useState(false);
   const user = cookieCutter.get("username")
-  const vote = votes[cookieCutter.get("username")].vote;
-  const expire = votes[cookieCutter.get("username")]?.expire;
-  const action = votes[cookieCutter.get("username")]?.action;
+  console.log(votes)
+  const vote = votes != undefined && votes[cookieCutter.get("username")]?.vote;
+  const expire = votes != undefined && votes[cookieCutter.get("username")]?.expire;
+  const action = votes != undefined && votes[cookieCutter.get("username")]?.action;
 
   const paddingSides = "10px";
 const cardStyle = {
