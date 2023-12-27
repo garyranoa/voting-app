@@ -31,7 +31,7 @@ import { getWordDefinition } from "../../lib/vocab";
 import DisableVotingModal from "../modals/DisableVotingModal";
 import ActionMessageModal from "../modals/ActionMessageModal";
 import { CountdownCircleTimer } from 'react-countdown-circle-timer'
-
+import { IoMdInformationCircleOutline } from "react-icons/io";
 
 function GuesserEntryView({ sessionId, roundNumber }) {
   const [definition, setDefinition] = useState("");
@@ -255,7 +255,10 @@ console.log(votingState, action)
       <Card className="votersCard">
         <Title className="votersFeature mb-4">Feature #{question.id}</Title>
         <Title className="votersRef mb-4">{question.title}</Title>
-        <Title className="votersDescription" dangerouslySetInnerHTML={{ __html: question.description }}></Title>
+        {/* <Title className="votersDescription" dangerouslySetInnerHTML={{ __html: question.description }}></Title> */}
+        <Text className="viewDescription text-center">          
+          <Button><IoMdInformationCircleOutline /> View Description</Button>
+        </Text>
       </Card>
       {vote.length > 0 ? (
         <VoterWaitView vote={vote} />

@@ -156,8 +156,8 @@ p, label, span, div {
 }
 .votersRef {
   color: #fff !important;
-  font-size: 22px!important;
-  font-weight: 600 !important;
+  font-size: 20px!important;
+  font-weight: 400 !important;
   text-align: center !important;
 }
 .votersDescription {
