@@ -467,6 +467,9 @@ function DasherView(sessionId, question, votes, roundNumber, definition) {
   const ready =  Object.keys(votes).every(
     (user) => votes[user].vote.length > 0
   );
+
+  const [createOpenedDescription, setCreateOpenedDescription] = useState(false);
+  const title =  <Text><IoMdInformationCircleOutline /> DESCRIPTION</Text>
   return (
     <>
     
@@ -504,7 +507,31 @@ function DasherView(sessionId, question, votes, roundNumber, definition) {
       <Card className="votersCard mb-4">
         <Title className="votersFeature mb-4">Feature #{question.id}</Title>
         <Title className="votersRef mb-4">{question.title}</Title>
+        {question.description && (
+        <Text className="viewDescription text-center">          
+          <Button onClick={() =>setCreateOpenedDescription(true)}><IoMdInformationCircleOutline /> View Description</Button>
+        </Text>)}
       </Card>
+
+      <Modal
+          className="votingDescription"
+          title={title}
+          scrollAreaComponent={ScrollArea.Autosize}
+          opened={createOpenedDescription}
+          onClose={() => setCreateOpenedDescription(false)}
+          closeOnClickOutside={true}
+          closeOnEscape={true}
+          withCloseButton={true}
+          closeOnConfirm={true}
+          closeOnCancel={true}
+          centered
+          overlayProps={{
+            backgroundOpacity: 0.55,
+            blur: 6,
+          }}>
+            <Text dangerouslySetInnerHTML={{ __html: question.description }}></Text>
+        </Modal>
+        
       <Title className="voteOption mt-2 mb-3">Selected vote from Voters</Title>
       <GuessCardV2 votes={votes} sid={sessionId} round={roundNumber} />
       <Button className="customBtn mt-4" disabled={!ready} onClick={() => submissionHandler(sessionId, roundNumber, votes)}>Submit</Button>
