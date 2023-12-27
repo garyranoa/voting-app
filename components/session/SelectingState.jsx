@@ -11,6 +11,7 @@ import OptionsInput from "../inputs/OptionsInput";
 import { useForm } from "@mantine/form";
 import ErrorMessage, { displayError } from "../errors/ErrorMessage";
 import { nextRoundValidators } from "../../lib/validators";
+import { IoMdInformationCircleOutline } from "react-icons/io";
 
 const paddingSides = "20px";
 const cardStyle = {
@@ -129,7 +130,12 @@ export default function SelectingState({
         <Title size="h3"></Title>
         <Title className="votersFeature mb-4">Feature #{question.id}</Title>
         <Title className="votersRef mb-4">{question.title}</Title>
-        <Text className="votersDescription" dangerouslySetInnerHTML={{ __html: question.description }}></Text>
+        {/* <Text className="votersDescription" dangerouslySetInnerHTML={{ __html: question.description }}></Text> */}
+        
+        <Text className="votersDescription">
+          <IoMdInformationCircleOutline />
+          <a href="#">View Description</a>
+        </Text>
         {isDasher ? (
           <DasherControls sessionId={sessionId} roundNumber={roundNumber} options={votingOptions} />
         ) : (

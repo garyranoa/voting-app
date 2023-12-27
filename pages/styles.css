@@ -26,11 +26,11 @@ p, label, span, div {
 .contentWrapper {
   width: 90%;
   max-width: 600px;
-  border-radius: 20px;
+  border-radius: 30px;
   box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.49);
   -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.49);
   -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.49);
-  padding: 4rem 4rem;
+  padding: 2rem 3rem;
   background-color: #fff;
   margin: 5% auto;
   transform: translateY(-5%);
@@ -65,7 +65,7 @@ p, label, span, div {
 }
 .votingCard {
   background-color: #647a68 !important;
-  border-radius: 20px !important;
+  border-radius: 30px !important;
   padding: 0 !important;
 }
 .votingCard h1 {
@@ -177,7 +177,7 @@ p, label, span, div {
   background-color: #fff !important;
   border-radius: 20px !important;
   width: 500px !important;
-  padding: 4rem 2rem !important;
+  padding: 2.5rem 2rem 1rem !important;
   transform: translateY(-50%) !important;
   top: 50% !important;
   position: relative !important;
@@ -311,7 +311,7 @@ p, label, span, div {
   display: block !important;
   margin: 10px auto !important;
   color: #fff !important;
-  font-size: 20px !important;
+  font-size: 16px !important;
   border-radius: 30px !important;
   padding: 20px 0 !important;
   height: auto !important;
