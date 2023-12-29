@@ -464,7 +464,7 @@ function GuessCardV2({ votes, sid, round }) {
 
 
 function DasherView(sessionId, question, votes, roundNumber, definition) {
-  const ready =  Object.keys(votes).every(
+  const ready = votes &&  Object.keys(votes).every(
     (user) => votes[user].vote.length > 0
   );
 
