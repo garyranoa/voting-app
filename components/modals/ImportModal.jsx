@@ -16,6 +16,7 @@ import TimerInput from "../inputs/TimerInput";
 import OptionsInput from "../inputs/OptionsInput";
 import SessionIdInput from "../inputs/SessionIdInput";
 import DropzoneUpload from "../inputs/DropzoneUpload";
+import Dropzone from "../inputs/Dropzone";
 import ErrorMessage, { displayError } from "../errors/ErrorMessage";
 import { useState } from "react";
 import Router from "next/router";
@@ -52,7 +53,7 @@ export default function SessionModal(props) {
     : newSessionValidators;
   const form = useForm({
     initialValues: { username: "", sessionId: "", options: [] },
-    validate: { ...baseSessionValidators, ...scenarioValidators },
+    //validate: { ...baseSessionValidators, ...scenarioValidators },
   });
   
   return (
@@ -62,22 +63,8 @@ export default function SessionModal(props) {
       onClose={() => props.setOpened(false)}
       title={props.title}
     >
-      <form
-        onSubmit={form.onSubmit((v) =>
-          handleSubmission(
-            props.join
-              ? joinSession(v.sessionId, v.username)
-              : initSession(v.username, v.rounds, v.timer, v.options),
-            v.username,
-            setErrorVisible,
-            setErrorMessage
-          )
-        )}
-      >
-        <DropzoneUpload form={form} />
-        <Button type="submit">Import</Button>
-      </form>
-      {errorVisible && <ErrorMessage message={errorMessage} />}
+      <Dropzone className='p-16 mt-10 border border-neutral-200' />
+
     </Modal>
   );
 }

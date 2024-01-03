@@ -1,9 +1,10 @@
 import { Group, Text, rem } from '@mantine/core';
 import { IconUpload, IconPhoto, IconX } from '@tabler/icons-react';
-import { Dropzone, DropzoneProps, MIME_TYPES } from '@mantine/dropzone';
+import { Dropzone, DropzoneProps, MIME_TYPES, MS_EXCEL_MIME_TYPE } from '@mantine/dropzone';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import { storage } from '../../firebase'
 import React, { useState } from 'react'
+
 
 export default function DropzoneUpload(props) {
   //const [file, setFile] = useState<File>()
@@ -32,13 +33,15 @@ export default function DropzoneUpload(props) {
     }
 
   return (
-    <>
 
-<Dropzone
+    <>
+    <Dropzone
+      loading={isUploading}
       onDrop={(files) => console.log('accepted files', files)}
       onReject={(files) => console.log('rejected files', files)}
+      accept={['text/csv', MS_EXCEL_MIME_TYPE]}
       maxFiles={1}
-      {...props}
+      {...props.form.getInputProps('file')}
     >
       <Group justify="center" gap="xl" mih={220} style={{ pointerEvents: 'none' }}>
         <Dropzone.Accept>
@@ -62,11 +65,18 @@ export default function DropzoneUpload(props) {
 
         <div>
           <Text size="md" inline>
-            Drag CSV here or click to select file
+              Drag CSV here or click to select file
           </Text>
         </div>
       </Group>
     </Dropzone>
+    
+      <div>
+        <Text size="md" inline align='center'>
+            Filename: Features.csv
+        </Text>
+      </div>
+      
     </>
   );
 }
