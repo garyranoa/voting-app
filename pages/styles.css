@@ -3,12 +3,15 @@ body {
   background-size: cover;
 }
 h1 {
-    font-family: 'Poppins', sans-serif !important;
-    text-align: center;
-    margin-bottom: 40px;
-  }
-p, label, span, div {
-  font-family: 'Poppins', sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
+  text-align: center;
+  margin-bottom: 40px;
+}
+p,
+label,
+span,
+div {
+  font-family: "Poppins", sans-serif !important;
 }
 
 .logo {
@@ -25,22 +28,33 @@ p, label, span, div {
 }
 .contentWrapper {
   width: 90%;
-  max-width: 600px;
   border-radius: 30px;
-  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.49);
-  -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.49);
-  -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.49);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.49);
+  -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.49);
+  -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.49);
   padding: 2rem 3rem;
   background-color: #fff;
   margin: 5% auto;
+  max-width: 600px;
   transform: translateY(-5%);
+}
+
+.contentWrapperV2 {
+  width: 90%;
+  border-radius: 30px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.49);
+  -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.49);
+  -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.49);
+  padding: 2rem 3rem;
+  background-color: #fff;
+  margin: 5% auto;
 }
 
 .votingWrap h1 {
   font-size: 48px;
   font-weight: 700;
   color: #647a68;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   text-transform: uppercase;
 }
 .votingText {
@@ -92,7 +106,8 @@ p, label, span, div {
   padding: 20px 0 !important;
   height: auto !important;
 }
-.voteCounter, .voteOption {
+.voteCounter,
+.voteOption {
   color: #000 !important;
   font-size: 24px !important;
   font-weight: 700 !important;
@@ -102,14 +117,16 @@ p, label, span, div {
 .votersCard {
   background-color: #647a68 !important;
   border-radius: 30px !important;
-  padding: 2rem !important;overflow: visible !important;
+  padding: 2rem !important;
+  overflow: visible !important;
 }
 .votersCard1 {
   background-color: #f0f0f0 !important;
   border-radius: 30px !important;
   padding: 2rem !important;
 }
-.votersUsername button, .votersUsername {
+.votersUsername button,
+.votersUsername {
   color: #000 !important;
   font-size: 16px;
   padding: 10px;
@@ -131,38 +148,39 @@ p, label, span, div {
 }
 .voterSwitch span.mantine-1xbdki {
   border-radius: 0 !important;
-  -webkit-transform: translate(0, 0 );
-  -moz-transform: translate(0, 0 );
-  -ms-transform: translate(0, 0 );
-  transform: translate(0, 0 );
+  -webkit-transform: translate(0, 0);
+  -moz-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  transform: translate(0, 0);
   width: 55px !important;
 }
 .voterSwitch span.mantine-tl0dfr {
   border-radius: 0 !important;
-  -webkit-transform: translate(55px, 0 );
-  -moz-transform: translate(55px, 0 );
-  -ms-transform: translate(55px, 0 );
-  transform: translate(55px, 0 );
+  -webkit-transform: translate(55px, 0);
+  -moz-transform: translate(55px, 0);
+  -ms-transform: translate(55px, 0);
+  transform: translate(55px, 0);
 }
-.voterSwitch .mantine-SegmentedControl-control, .voterSwitch .mantine-SegmentedControl-controlActive {
+.voterSwitch .mantine-SegmentedControl-control,
+.voterSwitch .mantine-SegmentedControl-controlActive {
   border-radius: 0 !important;
 }
 .votersFeature {
   color: #fff !important;
-  font-size: 18px!important;
+  font-size: 18px !important;
   font-weight: 600 !important;
   text-align: center !important;
   text-transform: uppercase !important;
 }
 .votersRef {
   color: #fff !important;
-  font-size: 20px!important;
+  font-size: 20px !important;
   font-weight: 400 !important;
   text-align: center !important;
 }
 .votersDescription {
   color: #fff !important;
-  font-size: 16px!important;
+  font-size: 16px !important;
   font-weight: 400 !important;
   text-align: center !important;
 }
@@ -182,13 +200,15 @@ p, label, span, div {
   top: 50% !important;
   position: relative !important;
 }
-.customModal .mantine-Modal-modal .mantine-ActionIcon-root, .votingDescription .mantine-Modal-modal .mantine-ActionIcon-root {
+.customModal .mantine-Modal-modal .mantine-ActionIcon-root,
+.votingDescription .mantine-Modal-modal .mantine-ActionIcon-root {
   position: absolute !important;
   top: 10px !important;
   right: 10px !important;
   color: #000 !important;
 }
-.customModal .mantine-Modal-title, .votingTitle {
+.customModal .mantine-Modal-title,
+.votingTitle {
   color: #647a68 !important;
   font-size: 36px !important;
   text-transform: uppercase !important;
@@ -206,7 +226,8 @@ p, label, span, div {
   top: 25% !important;
   position: relative !important;
 }
-.votingDescription div, .votingDescription p {
+.votingDescription div,
+.votingDescription p {
   color: #000;
   font-size: 16px !important;
 }
@@ -220,7 +241,7 @@ p, label, span, div {
 }
 .customTable th {
   color: #000 !important;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 600 !important;
   font-size: 18px !important;
   border-bottom: 1px solid #cfcfcf !important;
@@ -231,7 +252,7 @@ p, label, span, div {
 }
 .customTable td {
   color: #000 !important;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 400 !important;
   font-size: 16px !important;
   border: none !important;
@@ -273,10 +294,12 @@ p, label, span, div {
 .customModal .mantine-Input-rightSection {
   right: 15px !important;
 }
-.customModal .mantine-NumberInput-controlUp, .customModal .mantine-NumberInput-controlDown {
+.customModal .mantine-NumberInput-controlUp,
+.customModal .mantine-NumberInput-controlDown {
   border: none !important;
 }
-.customModal .mantine-NumberInput-controlUp:hover, .customModal .mantine-NumberInput-controlDown:hover {
+.customModal .mantine-NumberInput-controlUp:hover,
+.customModal .mantine-NumberInput-controlDown:hover {
   color: #000 !important;
   background-color: transparent !important;
 }
@@ -286,7 +309,7 @@ p, label, span, div {
   padding: 7px 10px;
 }
 .customSelect label {
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
   color: #fff;
 }
 .customSelect .mantine-MultiSelect-wrapper .mantine-MultiSelect-value {
@@ -301,7 +324,7 @@ p, label, span, div {
   right: 0 !important;
   font-weight: 700 !important;
 }
-.customSelect .mantine-MultiSelect-wrapper input{
+.customSelect .mantine-MultiSelect-wrapper input {
   position: absolute;
   z-index: 1;
   width: 100%;
@@ -436,7 +459,6 @@ ul.votersList li {
 .time-wrapper .time.down {
   opacity: 0;
   transform: translateY(100%);
-  
 }
 
 @media (max-width: 480px) {
@@ -450,12 +472,14 @@ ul.votersList li {
   .entryBtns {
     display: block;
   }
-  .customBtn1, .customBtn2 {
+  .customBtn1,
+  .customBtn2 {
     width: 100%;
     margin-bottom: 10px;
     max-width: 100%;
   }
-  .customModal .mantine-Modal-title, .votingTitle {
+  .customModal .mantine-Modal-title,
+  .votingTitle {
     font-size: 30px !important;
   }
   .customModal .mantine-Modal-modal {
@@ -477,4 +501,8 @@ ul.votersList li {
     width: 100%;
   }
 }
-  
+
+.Dashboard-Questions-Table tr td div img {
+  width: 100px;
+  height: 100px;
+}
