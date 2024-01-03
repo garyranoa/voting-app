@@ -33,7 +33,7 @@ function handleSubmission(request, username, setErrorVisible, setErrorMessage) {
     .catch((error) => displayError(error, setErrorVisible, setErrorMessage));
 }
 
-export default function SessionModal(props) {
+export default function ImportModal(props) {
   const [errorVisible, setErrorVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
