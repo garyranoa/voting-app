@@ -3,6 +3,8 @@ import { sortBy } from "lodash";
 import cookieCutter from "cookie-cutter";
 import Link from "next/link";
 import { newRound } from "../../lib/firebase";
+import { useState } from "react";
+import ImportModal from "../modals/ImportModal";
 
 function EndOfGame(rounds) {
   return (
@@ -55,6 +57,9 @@ function EndOfGame(rounds) {
 }
 
 function GameContinues(sessionId, dasher) {
+
+  const [createOpened, setCreateOpened] = useState(false);
+
   return (
     <>
       {cookieCutter.get("username") != dasher && (
@@ -65,10 +70,17 @@ function GameContinues(sessionId, dasher) {
         
           <Button className="customBtn mt-4 mb-4" onClick={() => newRound(sessionId)}>Next Round</Button>
           <Button className="customBtn mt-4 mb-4" onClick={() => newRound(sessionId, true)}>Next Round with KEEP Questions</Button>
-          <Button className="customBtn mt-4 mb-4" onClick={() => alert('Import new question still in progress')}>Import New Questions</Button>
+          <Button className="customBtn mt-4 mb-4" onClick={() => setCreateOpened(true)}>Import New Questions</Button>
           <Text className="votersText text-center">
             <p>As the dasher, you can end this round. Please check with your friends that everyone is ready!</p>
           </Text>
+
+          <ImportModal
+            title="Import Question"
+            join={false}
+            opened={createOpened}
+            setOpened={setCreateOpened}
+          />
         </>
       )}
     </>
