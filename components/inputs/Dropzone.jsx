@@ -4,7 +4,8 @@ import { useDropzone } from 'react-dropzone'
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import { BiCloudUpload, BiSolidMessageSquareX, BiSolidFile  } from "react-icons/bi";
 import ErrorMessage, { displayError } from "../errors/ErrorMessage";
-import { storage } from '../../firebase'
+import { importQuestionFromCSV } from "../../lib/firebaseQuestions"
+
 
 const Dropzone = ({ className }) => {
   const [errorVisible, setErrorVisible] = useState(false);
@@ -61,14 +62,31 @@ const Dropzone = ({ className }) => {
   const handleSubmit = async e => {
     e.preventDefault()
 
+    const papa = require("papaparse");
     if (!files?.length) return
     console.log(files)
     
-    const formData = new FormData()
-    files.forEach(file => formData.append('file', file))
-    formData.append('upload_preset', 'friendsbook')
-
+    let csvData = {};
     if (files) {
+        const reader = new FileReader();
+
+        files.forEach(file => reader.readAsBinaryString(file))
+        reader.onabort = () => console.log("file reading was aborted");
+        reader.onerror = () => console.log("file reading failed");
+        reader.onload = () => {
+            // Parse CSV file
+            papa.parse(reader.result, { header: true }).data.forEach((row) => {
+                if (row.id) {csvData[row.id] = {id : row.id, title: row.title, description: row.description};}
+            });
+            if (csvData) {
+                importQuestionFromCSV(csvData);
+            }
+            setFiles([])
+            alert('Import Successful');
+        };
+    }
+
+    /*if (files) {
         const file = files[0]
         const name = file.name
         const storageRef = ref(storage, `csv/${name}`)
@@ -93,7 +111,7 @@ const Dropzone = ({ className }) => {
           },
           () => {
             getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-              //url is download url of file
+              console.log(url)
               setDownloadURL(url)
               setFiles([])
             })
@@ -101,7 +119,7 @@ const Dropzone = ({ className }) => {
         )
       } else {
         message.error('File not found')
-      }
+      }*/
 
   }
 

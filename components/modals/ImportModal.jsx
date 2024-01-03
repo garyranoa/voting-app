@@ -5,17 +5,6 @@
 import { Button, Modal } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { initSession, joinSession, getVotingOption } from "../../lib/firebase";
-import {
-  baseSessionValidators,
-  joinSessionValidators,
-  newSessionValidators,
-} from "../../lib/validators";
-import UsernameInput from "../inputs/UserInput";
-import RoundsInput from "../inputs/RoundsInput";
-import TimerInput from "../inputs/TimerInput";
-import OptionsInput from "../inputs/OptionsInput";
-import SessionIdInput from "../inputs/SessionIdInput";
-import DropzoneUpload from "../inputs/DropzoneUpload";
 import Dropzone from "../inputs/Dropzone";
 import ErrorMessage, { displayError } from "../errors/ErrorMessage";
 import { useState } from "react";
@@ -47,15 +36,7 @@ function handleSubmission(request, username, setErrorVisible, setErrorMessage) {
 export default function SessionModal(props) {
   const [errorVisible, setErrorVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  
-  const scenarioValidators = props.join
-    ? joinSessionValidators
-    : newSessionValidators;
-  const form = useForm({
-    initialValues: { username: "", sessionId: "", options: [] },
-    //validate: { ...baseSessionValidators, ...scenarioValidators },
-  });
-  
+
   return (
     <Modal
       className="customModal"
