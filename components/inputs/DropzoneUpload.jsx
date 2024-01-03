@@ -6,7 +6,7 @@ import { storage } from '../../firebase'
 import React, { useState } from 'react'
 
 export default function DropzoneUpload(props) {
-  const [file, setFile] = useState<File>()
+  //const [file, setFile] = useState<File>()
   const [downloadURL, setDownloadURL] = useState('')
   const [isUploading, setIsUploading] = useState(false)
   const [progressUpload, setProgressUpload] = useState(0)
@@ -67,10 +67,6 @@ export default function DropzoneUpload(props) {
         </div>
       </Group>
     </Dropzone>
-
-    <Text size="sm" inline>
-        Import CSV
-    </Text>
     </>
   );
 }
