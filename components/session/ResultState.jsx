@@ -18,6 +18,7 @@ import { BiUpvote } from "react-icons/bi"
 import VoterMenu from "../admin/voterMenu"
 
 function EndOfGame(rounds) {
+  const [createOpened, setCreateOpened] = useState(false)
   return (
     <>
       <Title mb="md" size="h4">
@@ -59,10 +60,24 @@ function EndOfGame(rounds) {
             )}
         </tbody>
       </Table>
-
-      <Title mt="xl" mb="xl">
-        The End
-      </Title>
+      
+      <Title mt="xl" mb="xl">The End of Round </Title>
+      <Button
+            className="customBtn mt-4 mb-4"
+            onClick={() => newRound(sessionId, true)}
+          >
+            Next Round with KEEP Questions
+          </Button>
+          <Button
+            className="customBtn mt-4 mb-4"
+            onClick={() => setCreateOpened(true)}>Import New Questions</Button>
+          <ImportModal
+            title="Import Question"
+            join={false}
+            opened={createOpened}
+            setOpened={setCreateOpened}
+          />
+          
       <Text mt="xl">We hope you have enjoyed this game!</Text>
       <Link href="/" passHref>
         <Button mt="xl" mb="xl" variant="filled" color="red.8" radius="md">
@@ -98,12 +113,7 @@ function GameContinues(sessionId, dasher) {
             </p>
           </Text>
 
-          <ImportModal
-            title="Import Question"
-            join={false}
-            opened={createOpened}
-            setOpened={setCreateOpened}
-          />
+          
         </>
       )}
     </>
