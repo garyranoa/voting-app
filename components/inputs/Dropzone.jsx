@@ -82,7 +82,7 @@ const Dropzone = ({ className, setOpened }) => {
             }
             setFiles([])
             alert('Import Successful');
-            setOpened(false);
+            if (setOpened) { setOpened(false) };
         };
     }
 
