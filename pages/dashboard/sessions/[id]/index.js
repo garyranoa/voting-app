@@ -255,7 +255,7 @@ export default function SessionDashboard() {
     <div>
       <main>
         <div className="votingWrap">
-          <h1 className="mt-3 mb-3">Session ({id})</h1>
+          <h1 className="mt-3 mb-3">Backlog Voting ({id})</h1>
 
           <Table className="Dashboard-Sessions-Table">
             <thead>

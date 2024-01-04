@@ -22,7 +22,7 @@ export default function VoterMenu({ modifyHandler, deleteHandler }) {
         <Menu.Item icon={<IconSettings size={14} />} onClick={modifyHandler}>
           Modify
         </Menu.Item>
-        <Menu.Divider />
+        {/* <Menu.Divider />
         <Menu.Label>Danger zone</Menu.Label>
         <Menu.Item
           color="red"
@@ -30,7 +30,7 @@ export default function VoterMenu({ modifyHandler, deleteHandler }) {
           onClick={deleteHandler}
         >
           Delete
-        </Menu.Item>
+        </Menu.Item> */}
       </Menu.Dropdown>
     </Menu>
   )
