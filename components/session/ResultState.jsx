@@ -80,7 +80,7 @@ function GameContinues(sessionId, dasher) {
     <>
       {cookieCutter.get("username") != dasher && (
         <Text className="votingText">
-          <p>Please wait for the dasher to begin begin the next round</p>
+          <p>Please wait for the admin to begin the next question</p>
         </Text>
       )}
       {cookieCutter.get("username") == dasher && (
@@ -89,23 +89,11 @@ function GameContinues(sessionId, dasher) {
             className="customBtn mt-4 mb-4"
             onClick={() => newRound(sessionId)}
           >
-            Next Round
-          </Button>
-          <Button
-            className="customBtn mt-4 mb-4"
-            onClick={() => newRound(sessionId, true)}
-          >
-            Next Round with KEEP Questions
-          </Button>
-          <Button
-            className="customBtn mt-4 mb-4"
-            onClick={() => setCreateOpened(true)}
-          >
-            Import New Questions
+            Next Question
           </Button>
           <Text className="votersText text-center">
             <p>
-              As the dasher, you can end this round. Please check with your
+              As the admin, you can end this round. Please check with your
               friends that everyone is ready!
             </p>
           </Text>

@@ -31,7 +31,7 @@ const cardStyle = {
 function DasherCaption() {
   return (
     <Text className="votingText">
-      <p>Pick a word for Voting option</p>
+      <p>Pick a question for this round</p>
     </Text>
   )
 }
@@ -47,7 +47,7 @@ function GuesserCaption() {
         maxWidth: "350px",
       }}
     >
-      The dasher is picking a voting option.
+      The admin is picking a voting question.
     </Text>
   )
 }
@@ -91,7 +91,7 @@ function DasherControls({ sessionId, roundNumber, options }) {
           className="customBtn1"
           onClick={() => updateWord(sessionId, roundNumber)}
         >
-          New Option
+          New Question
         </Button>
         <Button
           className="customBtn2"
@@ -104,7 +104,7 @@ function DasherControls({ sessionId, roundNumber, options }) {
             )
           }
         >
-          Confirm Option
+          Confirm Question
         </Button>
       </Group>
     </>
@@ -137,10 +137,10 @@ function DasherControls({ sessionId, roundNumber, options }) {
             className="customBtn1"
             onClick={() => updateWord(sessionId, roundNumber)}
           >
-            New Option
+            New Question
           </Button>
           <Button className="customBtn2" type="submit">
-            Confirm Option
+            Confirm Question
           </Button>
         </Group>
       </form>
@@ -183,7 +183,7 @@ export default function SelectingState({
   }, [options]);*/
   return (
     <>
-      <Title className="voteOption">Voting Option Selection</Title>
+      <Title className="voteOption">Voting Question Selection</Title>
       {isDasher ? <DasherCaption /> : <GuesserCaption />}
       <br />
       <Card className="votersCard">
