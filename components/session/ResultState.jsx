@@ -34,11 +34,14 @@ function handleNewGame(request, setErrorVisible, setErrorMessage) {
     .catch((error) => console.log(error) /*displayError(error, setErrorVisible, setErrorMessage)*/);
 }
 
-function EndOfGame(sessionId, rounds, dasher) {
+function EndOfGame(sessionId, session) {
   const [errorVisible, setErrorVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [createOpened, setCreateOpened] = useState(false)
   let baseSessionId = sessionId;
+  const rounds = session.rounds;
+  const dasher = session.creator;
+  //Router.push("/[sessionId]", `/${sessionId}`);
   return (
     <>
       <Title mb="md" size="h4">
@@ -418,7 +421,7 @@ export default function ResultState({
         <ResultStats results={stats} />
       )}
 
-      {isLastRound ? EndOfGame(sessionId, rounds, dasher) : GameContinues(sessionId, dasher)}
+      {isLastRound ? EndOfGame(sessionId, session) : GameContinues(sessionId, dasher)}
     </>
   )
 }
