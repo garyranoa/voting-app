@@ -7,7 +7,7 @@ import ErrorMessage, { displayError } from "../errors/ErrorMessage";
 import { importQuestionFromCSV } from "../../lib/firebaseQuestions"
 
 
-const Dropzone = ({ className }) => {
+const Dropzone = ({ className, setOpened }) => {
   const [errorVisible, setErrorVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [downloadURL, setDownloadURL] = useState('')
@@ -61,11 +61,10 @@ const Dropzone = ({ className }) => {
 
   const handleSubmit = async e => {
     e.preventDefault()
-
-    const papa = require("papaparse");
-    if (!files?.length) return
-    console.log(files)
     
+    if (!files?.length) return
+    
+    const papa = require("papaparse");
     let csvData = {};
     if (files) {
         const reader = new FileReader();
@@ -83,6 +82,7 @@ const Dropzone = ({ className }) => {
             }
             setFiles([])
             alert('Import Successful');
+            setOpened(false);
         };
     }
 
