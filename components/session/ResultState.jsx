@@ -17,7 +17,7 @@ import ImportModal from "../modals/ImportModal"
 import { BiUpvote } from "react-icons/bi"
 import VoterMenu from "../admin/voterMenu"
 
-function EndOfGame(rounds) {
+function EndOfGame(rounds, dasher) {
   const [createOpened, setCreateOpened] = useState(false)
   return (
     <>
@@ -61,8 +61,10 @@ function EndOfGame(rounds) {
         </tbody>
       </Table>
       
-      <Title mt="xl" mb="xl">The End of Round </Title>
-      <Button
+      <Title mt="xl" mb="xl">End of Round </Title>
+      {cookieCutter.get("username") == dasher && (
+        <>
+          <Button
             className="customBtn mt-4 mb-4"
             onClick={() => newRound(sessionId, true)}
           >
@@ -77,7 +79,10 @@ function EndOfGame(rounds) {
             opened={createOpened}
             setOpened={setCreateOpened}
           />
-          
+        </>
+      )}
+      
+
       <Text mt="xl">We hope you have enjoyed this game!</Text>
       <Link href="/" passHref>
         <Button mt="xl" mb="xl" variant="filled" color="red.8" radius="md">
@@ -394,7 +399,7 @@ export default function ResultState({
         <ResultStats results={stats} />
       )}
 
-      {isLastRound ? EndOfGame(rounds) : GameContinues(sessionId, dasher)}
+      {isLastRound ? EndOfGame(rounds, dasher) : GameContinues(sessionId, dasher)}
     </>
   )
 }
