@@ -105,7 +105,7 @@ export default function Round({ sessionData }) {
       </div>
       {latestRound.state != null && (
         <Text className="voteCounter">
-          Round {latestRound.number} of {limit}
+          Question {latestRound.number} of {limit}
         </Text>
       )}
       <div className="divider"></div>
