@@ -1,16 +1,28 @@
-import { Table, Title, Text, Button } from "@mantine/core";
-import { sortBy } from "lodash";
-import cookieCutter from "cookie-cutter";
-import Link from "next/link";
-import { newRound } from "../../lib/firebase";
-import { useState } from "react";
-import ImportModal from "../modals/ImportModal";
+import {
+  Table,
+  Title,
+  Text,
+  Button,
+  Modal,
+  Center,
+  Box,
+  ScrollArea,
+} from "@mantine/core"
+import { sortBy } from "lodash"
+import cookieCutter from "cookie-cutter"
+import Link from "next/link"
+import { deleteUserVote, newRound, updateUserVote } from "../../lib/firebase"
+import { useState } from "react"
+import ImportModal from "../modals/ImportModal"
+import { BiUpvote } from "react-icons/bi"
+import VoterMenu from "../admin/voterMenu"
 
 function EndOfGame(rounds) {
   return (
     <>
-
-<Title mb="md" size="h4">ENDING STATS</Title>
+      <Title mb="md" size="h4">
+        ENDING STATS
+      </Title>
       <Table
         mr="auto"
         ml="auto"
@@ -23,23 +35,28 @@ function EndOfGame(rounds) {
         <caption></caption>
         <thead>
           <tr>
-          <th style={{ textAlign: "center" }}>ROUND</th>
+            <th style={{ textAlign: "center" }}>ROUND</th>
             <th style={{ textAlign: "center" }}>OPTION</th>
             <th style={{ textAlign: "center" }}>VOTING %</th>
           </tr>
         </thead>
         <tbody>
-        {rounds && rounds.map((item, i) => (
-            item.votingOptions && item.votingOptions.map((votingItem, x) => {
-                return (
-                <tr key={`id-${item.number}${x}`}>
-                  <td style={{ textAlign: "center" }}>{item.number}</td>
-                  <td style={{ textAlign: "center" }}>{votingItem.name}</td>
-                  <td style={{ textAlign: "center" }}>{votingItem.votes} / {`${votingItem.rating.toFixed()}%`}</td>
-                </tr>
-              );
-            })
-        ))}
+          {rounds &&
+            rounds.map(
+              (item, i) =>
+                item.votingOptions &&
+                item.votingOptions.map((votingItem, x) => {
+                  return (
+                    <tr key={`id-${item.number}${x}`}>
+                      <td style={{ textAlign: "center" }}>{item.number}</td>
+                      <td style={{ textAlign: "center" }}>{votingItem.name}</td>
+                      <td style={{ textAlign: "center" }}>
+                        {votingItem.votes} / {`${votingItem.rating.toFixed()}%`}
+                      </td>
+                    </tr>
+                  )
+                })
+            )}
         </tbody>
       </Table>
 
@@ -53,26 +70,44 @@ function EndOfGame(rounds) {
         </Button>
       </Link>
     </>
-  );
+  )
 }
 
 function GameContinues(sessionId, dasher) {
-
-  const [createOpened, setCreateOpened] = useState(false);
+  const [createOpened, setCreateOpened] = useState(false)
 
   return (
     <>
       {cookieCutter.get("username") != dasher && (
-        <Text className="votingText"><p>Please wait for the dasher to begin begin the next round</p></Text>
+        <Text className="votingText">
+          <p>Please wait for the dasher to begin begin the next round</p>
+        </Text>
       )}
       {cookieCutter.get("username") == dasher && (
         <>
-        
-          <Button className="customBtn mt-4 mb-4" onClick={() => newRound(sessionId)}>Next Round</Button>
-          <Button className="customBtn mt-4 mb-4" onClick={() => newRound(sessionId, true)}>Next Round with KEEP Questions</Button>
-          <Button className="customBtn mt-4 mb-4" onClick={() => setCreateOpened(true)}>Import New Questions</Button>
+          <Button
+            className="customBtn mt-4 mb-4"
+            onClick={() => newRound(sessionId)}
+          >
+            Next Round
+          </Button>
+          <Button
+            className="customBtn mt-4 mb-4"
+            onClick={() => newRound(sessionId, true)}
+          >
+            Next Round with KEEP Questions
+          </Button>
+          <Button
+            className="customBtn mt-4 mb-4"
+            onClick={() => setCreateOpened(true)}
+          >
+            Import New Questions
+          </Button>
           <Text className="votersText text-center">
-            <p>As the dasher, you can end this round. Please check with your friends that everyone is ready!</p>
+            <p>
+              As the dasher, you can end this round. Please check with your
+              friends that everyone is ready!
+            </p>
           </Text>
 
           <ImportModal
@@ -84,14 +119,19 @@ function GameContinues(sessionId, dasher) {
         </>
       )}
     </>
-  );
+  )
 }
 
 function ResultStats({ results }) {
   return (
     <>
-      <Title className="votingTitle1 mt-4 pt-4">ROUND STATS</Title>
-      <Table className="customTable" cellPadding="0" cellSpacing="0" width="100%">
+      <Title className="votingTitle1 mt-4 pt-4">QUESTION STATS</Title>
+      <Table
+        className="customTable"
+        cellPadding="0"
+        cellSpacing="0"
+        width="100%"
+      >
         <caption></caption>
         <thead>
           <tr>
@@ -106,39 +146,215 @@ function ResultStats({ results }) {
                 <td style={{ textAlign: "center" }}>{entry.name}</td>
                 <td style={{ textAlign: "center" }}>{entry.rating}%</td>
               </tr>
-            );
+            )
           })}
         </tbody>
       </Table>
     </>
-  );
+  )
 }
 
-function Resultboard({ results }) {
+function ResultboardItem({ session, roundNumber, voter, vote }) {
+  const sessionId = session.id
+  const [showVoteOption, setShowVoteOption] = useState(false)
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false)
+  const options =
+    session && session.defaultOptions ? session.defaultOptions : []
+  console.log("session", session)
+  const modifyHandler = () => {
+    setShowVoteOption(true)
+  }
+  const deleteHandler = () => {
+    setShowConfirmDelete(true)
+  }
+
+  const modifyModal = showVoteOption && (
+    <>
+      <Modal
+        title={""}
+        scrollAreaComponent={ScrollArea.Autosize}
+        opened={showVoteOption}
+        onClose={() => setShowVoteOption(false)}
+        closeOnClickOutside={true}
+        closeOnEscape={true}
+        withCloseButton={true}
+        closeOnConfirm={true}
+        closeOnCancel={true}
+        overlayProps={{
+          backgroundOpacity: 0.55,
+          blur: 6,
+        }}
+        size="sm"
+      >
+        Voter: {voter}
+        <div
+          style={{
+            paddingTop: "10px",
+            marginLeft: "auto",
+            marginRight: "auto",
+            maxWidth: "200px",
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          {options &&
+            options.map((item, i) => (
+              <Button
+                key={i}
+                color={i % 2 ? "red" : "blue"}
+                variant="filled"
+                radius="md"
+                mt="xl"
+                mb="xl"
+                mr="xs"
+                uppercase
+                onClick={() => {
+                  updateUserVote(sessionId, roundNumber, voter, {
+                    id: i,
+                    name: item,
+                  })
+                  setShowVoteOption(false)
+                }}
+              >
+                <Center>
+                  <BiUpvote size={25} />
+                  <Box ml={10}>{item}</Box>
+                </Center>
+              </Button>
+            ))}
+        </div>
+      </Modal>
+    </>
+  )
+
+  const confirmDeleteModal = showConfirmDelete && (
+    <>
+      <Modal
+        title={""}
+        scrollAreaComponent={ScrollArea.Autosize}
+        opened={showConfirmDelete}
+        onClose={() => setShowConfirmDelete(false)}
+        closeOnClickOutside={true}
+        closeOnEscape={true}
+        withCloseButton={true}
+        closeOnConfirm={true}
+        closeOnCancel={true}
+        overlayProps={{
+          backgroundOpacity: 0.55,
+          blur: 6,
+        }}
+        size="sm"
+      >
+        Voter: {voter}
+        <div
+          style={{
+            paddingTop: "10px",
+            marginLeft: "auto",
+            marginRight: "auto",
+            maxWidth: "200px",
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Button
+            color={"blue"}
+            variant="filled"
+            radius="md"
+            mt="xl"
+            mb="xl"
+            mr="xs"
+            uppercase
+            onClick={() => {
+              deleteUserVote(sessionId, roundNumber, voter, {
+                id: i,
+                name: item,
+              })
+              setShowConfirmDelete(false)
+            }}
+          >
+            <Center>
+              <BiUpvote size={25} />
+              <Box ml={10}>DELETE</Box>
+            </Center>
+          </Button>
+          <Button
+            color={"red"}
+            variant="filled"
+            radius="md"
+            mt="xl"
+            mb="xl"
+            mr="xs"
+            uppercase
+            onClick={() => {
+              setShowConfirmDelete(false)
+            }}
+          >
+            <Center>
+              <BiUpvote size={25} />
+              <Box ml={10}>CANCEL</Box>
+            </Center>
+          </Button>
+        </div>
+      </Modal>
+    </>
+  )
+
+  return (
+    <tr>
+      <td style={{ textAlign: "center" }}>{voter}</td>
+      <td style={{ textAlign: "center" }}>
+        <strong>{vote}</strong>
+      </td>
+      <td style={{ textAlign: "center" }}>
+        {modifyModal}
+        {confirmDeleteModal}
+        <VoterMenu
+          modifyHandler={modifyHandler}
+          deleteHandler={deleteHandler}
+        />
+      </td>
+    </tr>
+  )
+}
+
+function Resultboard({ session, roundNumber, results }) {
   return (
     <>
       <Title className="votingTitle1">RESULTS</Title>
-      <Table className="customTable mb-4" cellPadding="0" cellSpacing="0" width="100%">
+      <Table
+        className="customTable mb-4"
+        cellPadding="0"
+        cellSpacing="0"
+        width="100%"
+      >
         <caption></caption>
         <thead>
           <tr>
             <th style={{ textAlign: "center" }}>VOTER</th>
             <th style={{ textAlign: "center" }}>SELECTION</th>
+            <th style={{ textAlign: "center" }}>ACTION</th>
           </tr>
         </thead>
         <tbody>
           {results.map((entry, i) => {
             return (
-              <tr key={`results${i}`}>
-                <td style={{ textAlign: "center" }}>{entry.user}</td>
-                <td style={{ textAlign: "center" }}><strong>{entry.votes}</strong></td>
-              </tr>
-            );
+              <ResultboardItem
+                key={`results${i}`}
+                session={session}
+                roundNumber={roundNumber}
+                voter={entry.user}
+                vote={entry.votes}
+              />
+            )
           })}
         </tbody>
       </Table>
     </>
-  );
+  )
 }
 
 export default function ResultState({
@@ -147,35 +363,40 @@ export default function ResultState({
   dasher,
   isLastRound,
   round,
-  rounds
-
+  rounds,
+  roundNumber,
+  session,
 }) {
   const results = sortBy(
     Object.keys(voters)
-    .filter((user) => user != dasher)
-    .map((user) => {
-      return {
-        user: user,
-        votes: round.votes[user].vote,
-        order: user
-      };
-    }),
+      .filter((user) => user != dasher)
+      .map((user) => {
+        return {
+          user: user,
+          votes: user in round.votes ? round.votes[user].vote : "",
+          order: user,
+        }
+      }),
     "order"
-  );
+  )
 
-const stats = round.votingOptions;
-  
+  const stats = round.votingOptions
+
   return (
     <>
       {dasher === cookieCutter.get("username") && (
-      <Resultboard results={results} />)}
+        <Resultboard
+          session={session}
+          roundNumber={roundNumber}
+          results={results}
+        />
+      )}
 
       {!isLastRound && dasher === cookieCutter.get("username") && (
-      <ResultStats results={stats} />)}
+        <ResultStats results={stats} />
+      )}
 
-      {isLastRound
-        ? EndOfGame(rounds)
-        : GameContinues(sessionId, dasher)}
+      {isLastRound ? EndOfGame(rounds) : GameContinues(sessionId, dasher)}
     </>
-  );
+  )
 }

@@ -2,28 +2,38 @@
  * What users see when the state is in the "dasher" state
  */
 
-import { Title, Text, Card, Group, Button, Modal, ScrollArea  } from "@mantine/core";
-import cookieCutter from "cookie-cutter";
-import { useEffect, useState } from "react";
-import { updateRoundState, updateWord} from "../../lib/firebase";
-import { ROUND_STATES } from "../../lib/constants";
-import OptionsInput from "../inputs/OptionsInput";
-import { useForm } from "@mantine/form";
-import ErrorMessage, { displayError } from "../errors/ErrorMessage";
-import { nextRoundValidators } from "../../lib/validators";
-import { IoMdInformationCircleOutline } from "react-icons/io";
+import {
+  Title,
+  Text,
+  Card,
+  Group,
+  Button,
+  Modal,
+  ScrollArea,
+} from "@mantine/core"
+import cookieCutter from "cookie-cutter"
+import { useEffect, useState } from "react"
+import { updateRoundState, updateWord } from "../../lib/firebase"
+import { ROUND_STATES } from "../../lib/constants"
+import OptionsInput from "../inputs/OptionsInput"
+import { useForm } from "@mantine/form"
+import ErrorMessage, { displayError } from "../errors/ErrorMessage"
+import { nextRoundValidators } from "../../lib/validators"
+import { IoMdInformationCircleOutline } from "react-icons/io"
 
-const paddingSides = "20px";
+const paddingSides = "20px"
 const cardStyle = {
   maxWidth: "350px",
   marginLeft: "auto",
   marginRight: "auto",
-};
+}
 
 function DasherCaption() {
   return (
-    <Text className="votingText"><p>Pick a word for Voting option</p></Text>
-  );
+    <Text className="votingText">
+      <p>Pick a word for Voting option</p>
+    </Text>
+  )
 }
 
 function GuesserCaption() {
@@ -39,70 +49,114 @@ function GuesserCaption() {
     >
       The dasher is picking a voting option.
     </Text>
-  );
+  )
 }
 
 function handleSubmission(request, setErrorVisible, setErrorMessage) {
   request
     .then((result) => {
-      const { error } = result;
+      const { error } = result
       if (!error) {
-          
       } else {
-        displayError(error, setErrorVisible, setErrorMessage);
+        displayError(error, setErrorVisible, setErrorMessage)
       }
     })
-    .catch((error) => displayError(error, setErrorVisible, setErrorMessage));
+    .catch((error) => displayError(error, setErrorVisible, setErrorMessage))
 }
 
-
 function DasherControls({ sessionId, roundNumber, options }) {
-  const [errorVisible, setErrorVisible] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorVisible, setErrorVisible] = useState(false)
+  const [errorMessage, setErrorMessage] = useState("")
 
   /*let optionValues = []
   options && options.map((item, i) => (
     optionValues.push({value: item.name, label: item.name})
   ));*/
-  
-  const form = useForm({
-    initialValues: {  },
-    validate: {...nextRoundValidators },
-  });
 
-  return (
-      (roundNumber == 1 ?
-            <>
-              <Group position="center" spacing="md" grow align="center" className="entryBtns mt-4">
-                <Button className="customBtn1" onClick={() => updateWord(sessionId, roundNumber)}>New Option</Button>
-                <Button className="customBtn2" onClick={() => updateRoundState(sessionId, roundNumber, ROUND_STATES.GUESSING, options)}>Confirm Option</Button>
-              </Group>
-            </> 
-        :
-          <>
-            <form className="customModal"
-            onSubmit={form.onSubmit((v) =>
-              handleSubmission(
-                  updateRoundState(sessionId, roundNumber, ROUND_STATES.GUESSING, v.options),
-                  setErrorVisible,
-                  setErrorMessage
-                )
-              )}>
-              <OptionsInput maxSelectedValues={10} form={form} />
-              <Group position="center" spacing="md" grow align="center" className="entryBtns mt-4">
-                <Button className="customBtn1" onClick={() => updateWord(sessionId, roundNumber)}>New Option</Button>
-                <Button className="customBtn2" type="submit">Confirm Option</Button>
-            </Group>
-            </form>
-            {errorVisible && <ErrorMessage message={errorMessage} />}
-          </>
-        ));
+  const form = useForm({
+    initialValues: {},
+    validate: { ...nextRoundValidators },
+  })
+
+  return roundNumber == 1 ? (
+    <>
+      <Group
+        position="center"
+        spacing="md"
+        grow
+        align="center"
+        className="entryBtns mt-4"
+      >
+        <Button
+          className="customBtn1"
+          onClick={() => updateWord(sessionId, roundNumber)}
+        >
+          New Option
+        </Button>
+        <Button
+          className="customBtn2"
+          onClick={() =>
+            updateRoundState(
+              sessionId,
+              roundNumber,
+              ROUND_STATES.GUESSING,
+              options
+            )
+          }
+        >
+          Confirm Option
+        </Button>
+      </Group>
+    </>
+  ) : (
+    <>
+      <form
+        className="customModal"
+        onSubmit={form.onSubmit((v) =>
+          handleSubmission(
+            updateRoundState(
+              sessionId,
+              roundNumber,
+              ROUND_STATES.GUESSING,
+              v.options
+            ),
+            setErrorVisible,
+            setErrorMessage
+          )
+        )}
+      >
+        <OptionsInput maxSelectedValues={10} form={form} />
+        <Group
+          position="center"
+          spacing="md"
+          grow
+          align="center"
+          className="entryBtns mt-4"
+        >
+          <Button
+            className="customBtn1"
+            onClick={() => updateWord(sessionId, roundNumber)}
+          >
+            New Option
+          </Button>
+          <Button className="customBtn2" type="submit">
+            Confirm Option
+          </Button>
+        </Group>
+      </form>
+      {errorVisible && <ErrorMessage message={errorMessage} />}
+    </>
+  )
 }
 
 function GuesserWaitScreen() {
   return (
-    <Text className="votingInfo" italic><p>Waiting for the dasher to either confirm or reject the voting option...</p></Text>
-  );
+    <Text className="votingInfo" italic>
+      <p>
+        Waiting for the dasher to either confirm or reject the voting option...
+      </p>
+    </Text>
+  )
 }
 
 export default function SelectingState({
@@ -110,12 +164,16 @@ export default function SelectingState({
   dasher,
   question,
   roundNumber,
-  votingOptions
+  votingOptions,
 }) {
-  const isDasher = cookieCutter.get("username") === dasher;
-  const [definition, setDefinition] = useState("");
-  const [createOpenedDescription, setCreateOpenedDescription] = useState(false);
-  const title =  <Text><IoMdInformationCircleOutline /> DESCRIPTION</Text>
+  const isDasher = cookieCutter.get("username") === dasher
+  const [definition, setDefinition] = useState("")
+  const [createOpenedDescription, setCreateOpenedDescription] = useState(false)
+  const title = (
+    <Text>
+      <IoMdInformationCircleOutline /> DESCRIPTION
+    </Text>
+  )
   /*useEffect(() => {
     getWordDefinition(options)
       .then(setDefinition)
@@ -135,11 +193,13 @@ export default function SelectingState({
         {/* <Text className="votersDescription" dangerouslySetInnerHTML={{ __html: question.description }}></Text> */}
 
         {question.description && (
-        <Text className="viewDescription text-center">          
-          <Button onClick={() =>
-              setCreateOpenedDescription(true)}><IoMdInformationCircleOutline /> View Description</Button>
-        </Text>)}
-        
+          <Text className="viewDescription text-center">
+            <Button onClick={() => setCreateOpenedDescription(true)}>
+              <IoMdInformationCircleOutline /> View Description
+            </Button>
+          </Text>
+        )}
+
         <Modal
           className="votingDescription"
           title={title}
@@ -154,16 +214,23 @@ export default function SelectingState({
           overlayProps={{
             backgroundOpacity: 0.55,
             blur: 6,
-          }}>
-            <Text dangerouslySetInnerHTML={{ __html: question.description }}></Text>
+          }}
+        >
+          <Text
+            dangerouslySetInnerHTML={{ __html: question.description }}
+          ></Text>
         </Modal>
-          
+
         {isDasher ? (
-          <DasherControls sessionId={sessionId} roundNumber={roundNumber} options={votingOptions} />
+          <DasherControls
+            sessionId={sessionId}
+            roundNumber={roundNumber}
+            options={votingOptions}
+          />
         ) : (
           <GuesserWaitScreen />
         )}
-      </Card>      
+      </Card>
     </>
-  );
+  )
 }
