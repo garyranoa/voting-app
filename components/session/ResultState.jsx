@@ -11,14 +11,34 @@ import {
 import { sortBy } from "lodash"
 import cookieCutter from "cookie-cutter"
 import Link from "next/link"
-import { deleteUserVote, newRound, updateUserVote } from "../../lib/firebase"
+import { deleteUserVote, newRound, updateUserVote, newGameSession } from "../../lib/firebase"
 import { useState } from "react"
 import ImportModal from "../modals/ImportModal"
 import { BiUpvote } from "react-icons/bi"
 import VoterMenu from "../admin/voterMenu"
+import Router from "next/router";
+import ErrorMessage, { displayError } from "../errors/ErrorMessage";
 
-function EndOfGame(rounds, dasher) {
+
+function handleNewGame(request, setErrorVisible, setErrorMessage) {
+  request
+    .then((result) => {
+      const { sessionId, error } = result;
+      if (!error) {
+        Router.push("/[sessionId]", `/${sessionId}`);
+      } else {
+        //displayError(error, setErrorVisible, setErrorMessage);
+        console.log(error);
+      }
+    })
+    .catch((error) => console.log(error) /*displayError(error, setErrorVisible, setErrorMessage)*/);
+}
+
+function EndOfGame(sessionId, rounds, dasher) {
+  const [errorVisible, setErrorVisible] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [createOpened, setCreateOpened] = useState(false)
+  let baseSessionId = sessionId;
   return (
     <>
       <Title mb="md" size="h4">
@@ -66,8 +86,7 @@ function EndOfGame(rounds, dasher) {
         <>
           <Button
             className="customBtn mt-4 mb-4"
-            onClick={() => newRound(sessionId, true)}
-          >
+            onClick={() => handleNewGame(newGameSession(baseSessionId))}>
             Next Round with KEEP Questions
           </Button>
           <Button
@@ -163,7 +182,7 @@ function ResultboardItem({ session, roundNumber, voter, vote }) {
   const [showConfirmDelete, setShowConfirmDelete] = useState(false)
   const options =
     session && session.defaultOptions ? session.defaultOptions : []
-  console.log("session", session)
+  
   const modifyHandler = () => {
     setShowVoteOption(true)
   }
@@ -399,7 +418,7 @@ export default function ResultState({
         <ResultStats results={stats} />
       )}
 
-      {isLastRound ? EndOfGame(rounds, dasher) : GameContinues(sessionId, dasher)}
+      {isLastRound ? EndOfGame(sessionId, rounds, dasher) : GameContinues(sessionId, dasher)}
     </>
   )
 }
