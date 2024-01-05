@@ -42,12 +42,14 @@ function EndOfGame(sessionId, session) {
   let baseSessionId = sessionId;
   const rounds = session.rounds;
   const dasher = session.creator;
-
+  console.log('result state', sessionId)
   //voters auto redirect to new game sssion
   if (cookieCutter.get("username") != dasher 
       && session.state == GAME_STATES.NEXTROUND 
       && session.nextSessionId) {
-        Router.push("/[sessionId]", `/${sessionId}`);
+        const nextSessionId = session.nextSessionId;
+        console.log('nextSessionId', nextSessionId)
+        Router.push("/[nextSessionId]", `/${nextSessionId}`);
   }
   
   return (
@@ -92,7 +94,9 @@ function EndOfGame(sessionId, session) {
         </tbody>
       </Table>
       
+      
       <Title mt="xl" mb="xl">End of Round </Title>
+      
       {session.roundNumber == 1 && cookieCutter.get("username") == dasher && (
         <>
           <Button
@@ -112,13 +116,17 @@ function EndOfGame(sessionId, session) {
         </>
       )}
       
+      {session.roundNumber > 1 && (
+        <>
+          <Text mt="xl">We hope you have enjoyed this game!</Text>
+            <Link href="/" passHref>
+              <Button mt="xl" mb="xl" variant="filled" color="red.8" radius="md">
+                Home
+            </Button>
+          </Link>`
+        </>
+      )}
 
-      <Text mt="xl">We hope you have enjoyed this game!</Text>
-      <Link href="/" passHref>
-        <Button mt="xl" mb="xl" variant="filled" color="red.8" radius="md">
-          Home
-        </Button>
-      </Link>
     </>
   )
 }

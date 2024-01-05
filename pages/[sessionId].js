@@ -15,6 +15,8 @@ const scenarioHandler = (sessionData) => {
       return <Lobby sessionData={sessionData} />
     case GAME_STATES.STARTED:
       return <Round sessionData={sessionData} />
+    case GAME_STATES.NEXTROUND:
+        return <Round sessionData={sessionData} />
     case GAME_STATES.INVALID:
       return <Error message="The session code is invalid!" />
     default:
