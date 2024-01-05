@@ -82,7 +82,7 @@ const scenarioHandler = (
 }
 
 export default function Round({ sessionData }) {
-  const { limit, rounds, voters, id, timer, defaultOptions } = sessionData
+  const { limit, rounds, voters, id, timer, roundNumber, defaultOptions } = sessionData
   if (rounds === undefined) return Loading()
   const latestRound = rounds.at(-1)
   const isLastRound = latestRound.number == limit
@@ -96,6 +96,7 @@ export default function Round({ sessionData }) {
       {latestRound.dasher === cookieCutter.get("username") && (
         <div className="text-center">({latestRound.state})</div>
       )}
+      <div className="text-center">Round {roundNumber}</div>
       <div>
         {latestRound.dasher === cookieCutter.get("username") ? (
           <Title className="votingTitle">You are the admin</Title>
