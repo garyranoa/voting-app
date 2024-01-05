@@ -60,9 +60,9 @@ function ResultboardItem({ session, roundNumber, voter, vote }) {
   const sessionId = session.id
   const [showVoteOption, setShowVoteOption] = useState(false)
   const [showConfirmDelete, setShowConfirmDelete] = useState(false)
-  const options =
-    session && session.defaultOptions ? session.defaultOptions : []
-  console.log("session", session)
+  const currentRound =
+    roundNumber in session.rounds ? session.rounds[roundNumber] : null
+  const options = currentRound.votingOptions.map((m) => m.name)
   const modifyHandler = () => {
     setShowVoteOption(true)
   }
