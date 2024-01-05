@@ -16,6 +16,7 @@ import {
   Modal,
   ScrollArea,
   Table,
+  NativeSelect,
 } from "@mantine/core"
 
 import { IconCheck, IconX } from "@tabler/icons"
@@ -45,6 +46,7 @@ import {
   updateUserTimeExpire,
   updateUserActionVote,
   deleteUserVote,
+  updateRoundFinalVote,
 } from "../../lib/firebase"
 import { getWordDefinition } from "../../lib/vocab"
 import DisableVotingModal from "../modals/DisableVotingModal"
@@ -818,7 +820,6 @@ function DasherView(
   const ready =
     votes && Object.keys(votes).every((user) => votes[user].vote.length > 0)
 
-  console.log("round.votes", round.votes)
   const results = sortBy(
     Object.keys(voters)
       .filter((user) => user != dasher)
@@ -832,8 +833,9 @@ function DasherView(
     "order"
   )
 
+  const votingOptions = round.votingOptions
   const stats = round.votingOptions
-
+  const [finalDecision, setFinalDecision] = useState("")
   const [createOpenedDescription, setCreateOpenedDescription] = useState(false)
   const title = (
     <Text>
@@ -921,12 +923,29 @@ function DasherView(
         <ResultStats results={stats} />
       )}
 
+      <NativeSelect
+        className="mt-4"
+        label="Final Decision"
+        data={votingOptions.map((f) => f.name)}
+        value={finalDecision}
+        onChange={(event) => setFinalDecision(event.currentTarget.value)}
+        withAsterisk
+      />
+      <Button
+        className="customBtn mt-4"
+        onClick={() =>
+          updateRoundFinalVote(sessionId, roundNumber, finalDecision)
+        }
+      >
+        FINAL DECISION
+      </Button>
+
       <Button
         className="customBtn mt-4"
         disabled={!ready}
         onClick={() => submissionHandler(sessionId, roundNumber, votes)}
       >
-        Submit
+        MOVE TO NEXT QUESTION
       </Button>
       {!ready && (
         <Text className="votingText">
