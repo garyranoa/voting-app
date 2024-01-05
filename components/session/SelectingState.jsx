@@ -78,7 +78,8 @@ function DasherControls({ sessionId, roundNumber, options }) {
     validate: { ...nextRoundValidators },
   })
 
-  return roundNumber == 1 ? (
+  const showOptions = false;
+  return !showOptions ? (
     <>
       <Group
         position="center"
@@ -104,7 +105,7 @@ function DasherControls({ sessionId, roundNumber, options }) {
             )
           }
         >
-          Confirm Question
+          Start Voting
         </Button>
       </Group>
     </>
@@ -140,7 +141,7 @@ function DasherControls({ sessionId, roundNumber, options }) {
             New Question
           </Button>
           <Button className="customBtn2" type="submit">
-            Confirm Question
+            Start Voting
           </Button>
         </Group>
       </form>
@@ -153,7 +154,7 @@ function GuesserWaitScreen() {
   return (
     <Text className="votingInfo" italic>
       <p>
-        Waiting for the dasher to either confirm or reject the voting option...
+        Waiting for the admin to either confirm or reject the voting option...
       </p>
     </Text>
   )

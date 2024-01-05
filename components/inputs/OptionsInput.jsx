@@ -5,9 +5,9 @@ export default function VotingOptionsInput(props) {
     const data = [
         { value: 'KEEP', label: 'KEEP' },
         { value: 'KILL', label: 'KILL' },
-        { value: 'Q1', label: 'Q1' },
-        { value: 'Q2', label: 'Q2' },
-        { value: 'H2', label: 'H2' },
+        //{ value: 'Q1', label: 'Q1' },
+        //{ value: 'Q2', label: 'Q2' },
+        //{ value: 'H2', label: 'H2' },
     ];
 
     return (

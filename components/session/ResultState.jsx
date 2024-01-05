@@ -18,6 +18,7 @@ import { BiUpvote } from "react-icons/bi"
 import VoterMenu from "../admin/voterMenu"
 import Router from "next/router";
 import ErrorMessage, { displayError } from "../errors/ErrorMessage";
+import { GAME_STATES } from "../../lib/constants"
 
 
 function handleNewGame(request, setErrorVisible, setErrorMessage) {
@@ -41,7 +42,16 @@ function EndOfGame(sessionId, session) {
   let baseSessionId = sessionId;
   const rounds = session.rounds;
   const dasher = session.creator;
-  //Router.push("/[sessionId]", `/${sessionId}`);
+  console.log('result state', sessionId)
+  //voters auto redirect to new game sssion
+  if (cookieCutter.get("username") != dasher 
+      && session.state == GAME_STATES.NEXTROUND 
+      && session.nextSessionId) {
+        const nextSessionId = session.nextSessionId;
+        console.log('nextSessionId', nextSessionId)
+        Router.push("/[sessionId]", `/${nextSessionId}`);
+  }
+  
   return (
     <>
       <Title mb="md" size="h4">
@@ -84,8 +94,10 @@ function EndOfGame(sessionId, session) {
         </tbody>
       </Table>
       
+      
       <Title mt="xl" mb="xl">End of Round </Title>
-      {cookieCutter.get("username") == dasher && (
+      
+      {session.roundNumber == 1 && cookieCutter.get("username") == dasher && (
         <>
           <Button
             className="customBtn mt-4 mb-4"
@@ -104,13 +116,17 @@ function EndOfGame(sessionId, session) {
         </>
       )}
       
+      {session.roundNumber > 1 && (
+        <>
+          <Text mt="xl">We hope you have enjoyed this game!</Text>
+            <Link href="/" passHref>
+              <Button mt="xl" mb="xl" variant="filled" color="red.8" radius="md">
+                Home
+            </Button>
+          </Link>`
+        </>
+      )}
 
-      <Text mt="xl">We hope you have enjoyed this game!</Text>
-      <Link href="/" passHref>
-        <Button mt="xl" mb="xl" variant="filled" color="red.8" radius="md">
-          Home
-        </Button>
-      </Link>
     </>
   )
 }

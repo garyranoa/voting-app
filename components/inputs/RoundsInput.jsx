@@ -6,7 +6,7 @@ export default function SelectRoundsInput(props) {
             <NumberInput
                 mt="xl"
                 id="session-rounds"
-                label="Enter the desired number of rounds"
+                label="Enter the desired number of questions"
                 placeholder="10"
                 {...props.form.getInputProps('rounds')}
             />
