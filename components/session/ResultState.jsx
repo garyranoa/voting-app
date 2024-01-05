@@ -18,6 +18,7 @@ import { BiUpvote } from "react-icons/bi"
 import VoterMenu from "../admin/voterMenu"
 import Router from "next/router";
 import ErrorMessage, { displayError } from "../errors/ErrorMessage";
+import { GAME_STATES } from "../../lib/constants"
 
 
 function handleNewGame(request, setErrorVisible, setErrorMessage) {
@@ -41,7 +42,14 @@ function EndOfGame(sessionId, session) {
   let baseSessionId = sessionId;
   const rounds = session.rounds;
   const dasher = session.creator;
-  //Router.push("/[sessionId]", `/${sessionId}`);
+
+  //voters auto redirect to new game sssion
+  if (cookieCutter.get("username") != dasher 
+      && session.state == GAME_STATES.NEXTROUND 
+      && session.nextSessionId) {
+        Router.push("/[sessionId]", `/${sessionId}`);
+  }
+  
   return (
     <>
       <Title mb="md" size="h4">
@@ -85,7 +93,7 @@ function EndOfGame(sessionId, session) {
       </Table>
       
       <Title mt="xl" mb="xl">End of Round </Title>
-      {cookieCutter.get("username") == dasher && (
+      {session.roundNumber == 1 && cookieCutter.get("username") == dasher && (
         <>
           <Button
             className="customBtn mt-4 mb-4"
