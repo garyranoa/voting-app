@@ -49,7 +49,7 @@ function EndOfGame(sessionId, session) {
       && session.nextSessionId) {
         const nextSessionId = session.nextSessionId;
         console.log('nextSessionId', nextSessionId)
-        Router.push("/[nextSessionId]", `/${nextSessionId}`);
+        Router.push("/[sessionId]", `/${nextSessionId}`);
   }
   
   return (
