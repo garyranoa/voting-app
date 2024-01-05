@@ -815,8 +815,20 @@ function DasherView(
   dasher,
   voters,
   round,
-  session
+  session,
+  timer
 ) {
+  const [showTimer, setShowTimer] = useState(true)
+  const expire =
+    votes != undefined && votes[cookieCutter.get("username")]?.expire
+
+  console.log("expire", expire)
+  useEffect(() => {
+    if (expire === 0) {
+      setShowTimer(false)
+    }
+  }, [expire])
+
   const ready =
     votes && Object.keys(votes).every((user) => votes[user].vote.length > 0)
 
@@ -888,6 +900,26 @@ function DasherView(
           </Text>
         )}
       </Card>
+
+      {showTimer ? (
+        <div className="timer-wrapper">
+          <CountdownCircleTimer
+            isPlaying
+            size={150}
+            duration={timer}
+            colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
+            colorsTime={[10, 6, 3, 0]}
+            onComplete={() => {
+              setShowTimer(false)
+              return { shouldRepeat: false, delay: 1.5 }
+            }}
+          >
+            {RenderTime}
+          </CountdownCircleTimer>
+        </div>
+      ) : (
+        <></>
+      )}
 
       <Modal
         className="votingDescription"
@@ -989,7 +1021,8 @@ export default function GuessingState({
         dasher,
         voters,
         round,
-        session
+        session,
+        timer
       )
     : VoterView(
         sessionId,
