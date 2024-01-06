@@ -33,6 +33,7 @@ const scenarioHandler = (
           question={round.question}
           roundNumber={round.number}
           votingOptions={votingOptions}
+          session={sessionData}
         />
       )
     case ROUND_STATES.GUESSING:

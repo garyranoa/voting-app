@@ -64,9 +64,17 @@ function handleSubmission(request, setErrorVisible, setErrorMessage) {
     .catch((error) => displayError(error, setErrorVisible, setErrorMessage))
 }
 
-function DasherControls({ sessionId, roundNumber, options }) {
+function DasherControls({ session, roundNumber, options }) {
   const [errorVisible, setErrorVisible] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
+  const [questionIndex, setQuestionIndex] = useState(0)
+  
+  function indexCounter() {
+    setQuestionIndex(currentIndex => {
+      const index = currentIndex + 1;
+      return index;
+    })
+  }
 
   /*let optionValues = []
   options && options.map((item, i) => (
@@ -90,7 +98,7 @@ function DasherControls({ sessionId, roundNumber, options }) {
       >
         <Button
           className="customBtn1"
-          onClick={() => updateWord(sessionId, roundNumber)}
+          onClick={() => updateWord(session.id, session._qIndex, roundNumber)}
         >
           New Question
         </Button>
@@ -98,7 +106,7 @@ function DasherControls({ sessionId, roundNumber, options }) {
           className="customBtn2"
           onClick={() =>
             updateRoundState(
-              sessionId,
+              session.id,
               roundNumber,
               ROUND_STATES.GUESSING,
               options
@@ -166,9 +174,9 @@ export default function SelectingState({
   question,
   roundNumber,
   votingOptions,
+  session,
 }) {
   const isDasher = cookieCutter.get("username") === dasher
-  const [definition, setDefinition] = useState("")
   const [createOpenedDescription, setCreateOpenedDescription] = useState(false)
   const title = (
     <Text>
@@ -224,7 +232,7 @@ export default function SelectingState({
 
         {isDasher ? (
           <DasherControls
-            sessionId={sessionId}
+            session={session}
             roundNumber={roundNumber}
             options={votingOptions}
           />
