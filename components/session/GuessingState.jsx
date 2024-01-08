@@ -670,7 +670,7 @@ function VoterView(
   )
 }
 
-function submissionHandler(sessionId, roundNumber, votes) {
+function submissionHandler(sessionId, roundNumber, votes, timer) {
   /*Object.keys(votes).forEach((user) => {
     if (votes[user].correct) {
       updateUserIsCorrect(sessionId, roundNumber, user).catch((error) =>
@@ -678,7 +678,7 @@ function submissionHandler(sessionId, roundNumber, votes) {
       );
     }
   });*/
-  updateRoundState(sessionId, roundNumber, ROUND_STATES.RESULTS).catch(
+  updateRoundState(sessionId, roundNumber, ROUND_STATES.RESULTS, votes, timer).catch(
     (error) => console.log(error)
   )
 }
@@ -1009,7 +1009,7 @@ function DasherView(
       <Button
         className="customBtn mt-4"
         disabled={!ready}
-        onClick={() => submissionHandler(sessionId, roundNumber, votes)}
+        onClick={() => submissionHandler(sessionId, roundNumber, votes, timer)}
       >
         MOVE TO NEXT QUESTION
       </Button>
