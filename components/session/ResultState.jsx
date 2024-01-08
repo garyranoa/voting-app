@@ -11,47 +11,58 @@ import {
 import { sortBy } from "lodash"
 import cookieCutter from "cookie-cutter"
 import Link from "next/link"
-import { deleteUserVote, newRound, updateUserVote, newGameSession } from "../../lib/firebase"
+import {
+  deleteUserVote,
+  newRound,
+  updateUserVote,
+  newGameSession,
+} from "../../lib/firebase"
 import { useState } from "react"
 import ImportModal from "../modals/ImportModal"
 import { BiUpvote } from "react-icons/bi"
 import VoterMenu from "../admin/voterMenu"
-import Router from "next/router";
-import ErrorMessage, { displayError } from "../errors/ErrorMessage";
+import Router from "next/router"
+import ErrorMessage, { displayError } from "../errors/ErrorMessage"
 import { GAME_STATES } from "../../lib/constants"
-
 
 function handleNewGame(request, setErrorVisible, setErrorMessage) {
   request
     .then((result) => {
-      const { sessionId, error } = result;
+      const { sessionId, error } = result
       if (!error) {
-        Router.push("/[sessionId]", `/${sessionId}`);
+        Router.push("/[sessionId]", `/${sessionId}`)
       } else {
         //displayError(error, setErrorVisible, setErrorMessage);
-        console.log(error);
+        console.log(error)
       }
     })
-    .catch((error) => console.log(error) /*displayError(error, setErrorVisible, setErrorMessage)*/);
+    .catch(
+      (error) =>
+        console.log(
+          error
+        ) /*displayError(error, setErrorVisible, setErrorMessage)*/
+    )
 }
 
 function EndOfGame(sessionId, session) {
-  const [errorVisible, setErrorVisible] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorVisible, setErrorVisible] = useState(false)
+  const [errorMessage, setErrorMessage] = useState("")
   const [createOpened, setCreateOpened] = useState(false)
-  let baseSessionId = sessionId;
-  const rounds = session.rounds;
-  const dasher = session.creator;
-  console.log('result state', sessionId)
+  let baseSessionId = sessionId
+  const rounds = session.rounds
+  const dasher = session.creator
+  console.log("result state", sessionId)
   //voters auto redirect to new game sssion
-  if (cookieCutter.get("username") != dasher 
-      && session.state == GAME_STATES.NEXTROUND 
-      && session.nextSessionId) {
-        const nextSessionId = session.nextSessionId;
-        console.log('nextSessionId', nextSessionId)
-        Router.push("/[sessionId]", `/${nextSessionId}`);
+  if (
+    cookieCutter.get("username") != dasher &&
+    session.state == GAME_STATES.NEXTROUND &&
+    session.nextSessionId
+  ) {
+    const nextSessionId = session.nextSessionId
+    console.log("nextSessionId", nextSessionId)
+    Router.push("/[sessionId]", `/${nextSessionId}`)
   }
-  
+
   return (
     <>
       <Title mb="md" size="h4">
@@ -93,20 +104,25 @@ function EndOfGame(sessionId, session) {
             )}
         </tbody>
       </Table>
-      
-      
-      <Title mt="xl" mb="xl">End of Round </Title>
-      
+
+      <Title mt="xl" mb="xl">
+        End of Round{" "}
+      </Title>
+
       {session.roundNumber == 1 && cookieCutter.get("username") == dasher && (
         <>
           <Button
             className="customBtn mt-4 mb-4"
-            onClick={() => handleNewGame(newGameSession(baseSessionId))}>
+            onClick={() => handleNewGame(newGameSession(baseSessionId))}
+          >
             Next Round with KEEP Questions
           </Button>
           <Button
             className="customBtn mt-4 mb-4"
-            onClick={() => setCreateOpened(true)}>Import New Questions</Button>
+            onClick={() => setCreateOpened(true)}
+          >
+            Import New Questions
+          </Button>
           <ImportModal
             title="Import Question"
             join={false}
@@ -115,18 +131,18 @@ function EndOfGame(sessionId, session) {
           />
         </>
       )}
-      
+
       {session.roundNumber > 1 && (
         <>
           <Text mt="xl">We hope you have enjoyed this game!</Text>
-            <Link href="/" passHref>
-              <Button mt="xl" mb="xl" variant="filled" color="red.8" radius="md">
-                Home
+          <Link href="/" passHref>
+            <Button mt="xl" mb="xl" variant="filled" color="red.8" radius="md">
+              Home
             </Button>
-          </Link>`
+          </Link>
+          `
         </>
       )}
-
     </>
   )
 }
@@ -155,15 +171,18 @@ function GameContinues(sessionId, dasher) {
               friends that everyone is ready!
             </p>
           </Text>
-
-          
         </>
       )}
     </>
   )
 }
 
-function ResultStats({ results }) {
+function ResultStats({ round }) {
+  const { votingOptionsStats } = useRoundStats({
+    votes: round?.votes,
+    votingOptions: round?.votingOptions,
+  })
+
   return (
     <>
       <Title className="votingTitle1 mt-4 pt-4">QUESTION STATS</Title>
@@ -181,7 +200,7 @@ function ResultStats({ results }) {
           </tr>
         </thead>
         <tbody>
-          {results.map((entry, i) => {
+          {votingOptionsStats.map((entry, i) => {
             return (
               <tr key={`stats${i}`}>
                 <td style={{ textAlign: "center" }}>{entry.name}</td>
@@ -201,7 +220,7 @@ function ResultboardItem({ session, roundNumber, voter, vote }) {
   const [showConfirmDelete, setShowConfirmDelete] = useState(false)
   const options =
     session && session.defaultOptions ? session.defaultOptions : []
-  
+
   const modifyHandler = () => {
     setShowVoteOption(true)
   }
@@ -421,8 +440,6 @@ export default function ResultState({
     "order"
   )
 
-  const stats = round.votingOptions
-
   return (
     <>
       {dasher === cookieCutter.get("username") && (
@@ -434,10 +451,12 @@ export default function ResultState({
       )}
 
       {!isLastRound && dasher === cookieCutter.get("username") && (
-        <ResultStats results={stats} />
+        <ResultStats round={round} />
       )}
 
-      {isLastRound ? EndOfGame(sessionId, session) : GameContinues(sessionId, dasher)}
+      {isLastRound
+        ? EndOfGame(sessionId, session)
+        : GameContinues(sessionId, dasher)}
     </>
   )
 }

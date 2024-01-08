@@ -56,6 +56,7 @@ import { IoMdInformationCircleOutline } from "react-icons/io"
 import { sortBy } from "lodash"
 import VoterMenu from "../admin/voterMenu"
 import useRoundTimer from "../../hooks/useRoundTimer"
+import useRoundStats from "../../hooks/useRoundStats"
 
 function ResultboardItem({ session, roundNumber, voter, vote }) {
   const sessionId = session.id
@@ -274,7 +275,12 @@ function Resultboard({ session, roundNumber, results }) {
   )
 }
 
-function ResultStats({ results }) {
+function ResultStats({ round }) {
+  const { votingOptionsStats } = useRoundStats({
+    votes: round?.votes,
+    votingOptions: round?.votingOptions,
+  })
+
   return (
     <>
       <Title className="votingTitle1 mt-4 pt-4">QUESTION STATS</Title>
@@ -292,7 +298,7 @@ function ResultStats({ results }) {
           </tr>
         </thead>
         <tbody>
-          {results.map((entry, i) => {
+          {votingOptionsStats.map((entry, i) => {
             return (
               <tr key={`stats${i}`}>
                 <td style={{ textAlign: "center" }}>{entry.name}</td>
@@ -860,7 +866,6 @@ function DasherView(
 
   const votingOptions = round.votingOptions
   const stats = round.votingOptions
-  console.log("round.votingOptions", round.votingOptions)
   const [finalDecision, setFinalDecision] = useState("")
   const [createOpenedDescription, setCreateOpenedDescription] = useState(false)
   const title = (
@@ -948,7 +953,7 @@ function DasherView(
       )}
 
       {!isLastRound && dasher === cookieCutter.get("username") && (
-        <ResultStats results={stats} />
+        <ResultStats round={round} />
       )}
 
       {timeLeft === 0 && (
