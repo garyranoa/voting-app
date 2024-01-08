@@ -108,7 +108,7 @@ function DasherControls({ session, roundNumber, options }) {
       >
         <Button
           className="customBtn1"
-          onClick={() => updateWord(session.id, session._qIndex, roundNumber)}
+          onClick={() => updateWord(session.id, roundNumber)}
         >
           New Question
         </Button>
