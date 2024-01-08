@@ -24,6 +24,7 @@ import VoterMenu from "../admin/voterMenu"
 import Router from "next/router"
 import ErrorMessage, { displayError } from "../errors/ErrorMessage"
 import { GAME_STATES } from "../../lib/constants"
+import useRoundStats from "../../hooks/useRoundStats"
 
 function handleNewGame(request, setErrorVisible, setErrorMessage) {
   request
