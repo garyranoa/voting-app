@@ -848,6 +848,15 @@ function DasherView(
     endAt: round?.endAt,
   })
 
+  const { votingOptionsStats } = useRoundStats({
+    votes: round?.votes,
+    votingOptions: round?.votingOptions,
+  })
+
+  const highestVote = votingOptionsStats
+    .sort((a, b) => b.rating - a.rating)
+    .at(0)
+
   const ready =
     votes && Object.keys(votes).every((user) => votes[user].vote.length > 0)
 
@@ -865,8 +874,13 @@ function DasherView(
   )
 
   const votingOptions = round.votingOptions
-  const stats = round.votingOptions
   const [finalDecision, setFinalDecision] = useState("")
+  useEffect(() => {
+    if (highestVote.name) {
+      setFinalDecision(highestVote.name)
+    }
+  }, [highestVote.name])
+
   const [createOpenedDescription, setCreateOpenedDescription] = useState(false)
   const title = (
     <Text>
