@@ -44,7 +44,7 @@ export default function useRoundTimer({ endAt }) {
   const [timeLeft, setTimeLeft] = useState()
   useEffect(() => {
     // endAt should be calculated using current datetime + round duration
-    if (endAt) {
+    if (endAt) {      
       const date1 = new Date(endAt)
       const date2 = new Date()
       const diff = date1.getTime() - date2.getTime()

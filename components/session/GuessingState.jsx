@@ -47,6 +47,7 @@ import {
   updateUserActionVote,
   deleteUserVote,
   updateRoundFinalVote,
+  updateRoundEndAt,
 } from "../../lib/firebase"
 import { getWordDefinition } from "../../lib/vocab"
 import DisableVotingModal from "../modals/DisableVotingModal"
@@ -990,6 +991,20 @@ function DasherView(
           </Button>
         </>
       )}
+
+      <Button
+        className="customBtn mt-4"
+        onClick={() => updateRoundEndAt(sessionId, roundNumber, 10)}
+      >
+        INCREMENT TIMER BY 10
+      </Button>
+
+      <Button
+        className="customBtn mt-4"
+        onClick={() => updateRoundEndAt(sessionId, roundNumber, -10)}
+      >
+        DECREMENT TIMER BY 10
+      </Button>
 
       <Button
         className="customBtn mt-4"
