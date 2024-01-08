@@ -116,9 +116,9 @@ function EndOfGame(sessionId, session) {
             className="customBtn mt-4 mb-4"
             onClick={() => handleNewGame(newGameSession(baseSessionId))}
           >
-            Next Round with KEEP Questions
+            PROCEED NEXT ROUND
           </Button>
-          <Button
+          {/*<Button
             className="customBtn mt-4 mb-4"
             onClick={() => setCreateOpened(true)}
           >
@@ -129,7 +129,7 @@ function EndOfGame(sessionId, session) {
             join={false}
             opened={createOpened}
             setOpened={setCreateOpened}
-          />
+        />*/}
         </>
       )}
 
