@@ -582,7 +582,7 @@ function VoterView(
         <></>
       )} */}
 
-      {theTimerComponent}
+      {vote.length === 0 ? theTimerComponent : <></>}
       <Title className="voteOption mb-4 mt-4">Vote the following feature</Title>
       <Card className="votersCard">
         <Title className="votersFeature mb-4">Feature #{question.id}</Title>
@@ -679,9 +679,13 @@ function submissionHandler(sessionId, roundNumber, votes, timer) {
       );
     }
   });*/
-  updateRoundState(sessionId, roundNumber, ROUND_STATES.RESULTS, votes, timer).catch(
-    (error) => console.log(error)
-  )
+  updateRoundState(
+    sessionId,
+    roundNumber,
+    ROUND_STATES.RESULTS,
+    votes,
+    timer
+  ).catch((error) => console.log(error))
 }
 
 function GuessCard({ guesses }) {
