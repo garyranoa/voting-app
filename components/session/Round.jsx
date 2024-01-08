@@ -93,19 +93,34 @@ export default function Round({ sessionData }) {
     options = latestRound.votingOptions
   }
 
+  let title = <></>
+
+  if (cookieCutter.get("username") === latestRound.dasher) {
+    title = <Title className="votingTitle">You are the admin</Title>
+  } else if (cookieCutter.get("username").indexOf("spectator") > -1) {
+    title = <Title className="votingTitle">You are a spectator</Title>
+  } else {
+    title = <Title className="votingTitle">You are a voter</Title>
+  }
+
+  const filteredVoters = {}
+
+  Object.keys(voters)
+    .map((f) => {
+      if (f.indexOf("spectator") < 0) {
+        filteredVoters[f] = voters[f]
+      }
+    })
+    .filter((f) => !!f)
+  console.log("filteredVoters", filteredVoters)
+
   return (
     <>
       {latestRound.dasher === cookieCutter.get("username") && (
         <div className="text-center">({latestRound.state})</div>
       )}
       <div className="text-center">Round {roundNumber}</div>
-      <div>
-        {latestRound.dasher === cookieCutter.get("username") ? (
-          <Title className="votingTitle">You are the admin</Title>
-        ) : (
-          <Title className="votingTitle">You are a voter</Title>
-        )}
-      </div>
+      <div>{title}</div>
       {latestRound.state != null && (
         <Text className="voteCounter">
           Question {latestRound.number} of {limit}
@@ -115,7 +130,7 @@ export default function Round({ sessionData }) {
       {scenarioHandler(
         id,
         latestRound,
-        voters,
+        filteredVoters,
         isLastRound,
         timer,
         rounds,

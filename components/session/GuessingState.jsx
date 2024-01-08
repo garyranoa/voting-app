@@ -59,6 +59,7 @@ import VoterMenu from "../admin/voterMenu"
 import useRoundTimer from "../../hooks/useRoundTimer"
 import useRoundStats from "../../hooks/useRoundStats"
 import { showNotification } from "@mantine/notifications"
+import SpectatorView from "./SpectatorView"
 
 function ResultboardItem({ session, roundNumber, voter, vote }) {
   const sessionId = session.id
@@ -1059,6 +1060,24 @@ export default function GuessingState({
         console.log(`Error retrieving definition for word ${word}: ${error}`)
       );
   }, [options]);*/
+
+  //const spectators = Object.values(voters).filter((f) => f.role === "spectator")
+  if (cookieCutter.get("username").indexOf("spectator") > -1) {
+    return SpectatorView(
+      sessionId,
+      question,
+      votes,
+      roundNumber,
+      "",
+      isLastRound,
+      dasher,
+      voters,
+      round,
+      session,
+      timer
+    )
+  }
+
   return cookieCutter.get("username") === dasher
     ? DasherView(
         sessionId,
