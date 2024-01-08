@@ -24,6 +24,7 @@ import VoterMenu from "../admin/voterMenu"
 import Router from "next/router"
 import ErrorMessage, { displayError } from "../errors/ErrorMessage"
 import { GAME_STATES } from "../../lib/constants"
+import useRoundStats from "../../hooks/useRoundStats"
 
 function handleNewGame(request, setErrorVisible, setErrorMessage) {
   request
@@ -115,9 +116,9 @@ function EndOfGame(sessionId, session) {
             className="customBtn mt-4 mb-4"
             onClick={() => handleNewGame(newGameSession(baseSessionId))}
           >
-            Next Round with KEEP Questions
+            PROCEED NEXT ROUND
           </Button>
-          <Button
+          {/*<Button
             className="customBtn mt-4 mb-4"
             onClick={() => setCreateOpened(true)}
           >
@@ -128,7 +129,7 @@ function EndOfGame(sessionId, session) {
             join={false}
             opened={createOpened}
             setOpened={setCreateOpened}
-          />
+        />*/}
         </>
       )}
 
