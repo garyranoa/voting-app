@@ -1,3 +1,5 @@
+import SelectionButton from "../components/buttons/SelectionButton";
+
 export default function Summary() {
   
   return (
@@ -122,6 +124,11 @@ export default function Summary() {
           </div> 
         </div>
       </div>
+      <SelectionButton
+            className="customBtn"
+            content="SAVE"
+            onClick={() => setCreateOpened(true)}
+          />
     </div>
   );
 }
