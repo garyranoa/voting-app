@@ -9,7 +9,7 @@ import { useRouter } from "next/router"
 function MyApp({ Component, pageProps }) {
   const router = useRouter()
 
-  const isDashboard = router.pathname.startsWith("/dashboard")
+  const isDashboard = router.pathname.startsWith("/dashboard") || router.pathname.startsWith("/summary")
 
   const LayoutToUse = isDashboard ? DashboardLayout : Layout
 
