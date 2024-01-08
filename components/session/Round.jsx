@@ -83,7 +83,8 @@ const scenarioHandler = (
 }
 
 export default function Round({ sessionData }) {
-  const { limit, rounds, voters, id, timer, roundNumber, defaultOptions } = sessionData
+  const { limit, rounds, voters, id, timer, roundNumber, defaultOptions } =
+    sessionData
   if (rounds === undefined) return Loading()
   const latestRound = rounds.at(-1)
   const isLastRound = latestRound.number == limit

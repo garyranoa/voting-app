@@ -55,6 +55,7 @@ import { CountdownCircleTimer } from "react-countdown-circle-timer"
 import { IoMdInformationCircleOutline } from "react-icons/io"
 import { sortBy } from "lodash"
 import VoterMenu from "../admin/voterMenu"
+import useRoundTimer from "../../hooks/useRoundTimer"
 
 function ResultboardItem({ session, roundNumber, voter, vote }) {
   const sessionId = session.id
@@ -459,11 +460,17 @@ function VoterView(
   roundNumber,
   timer,
   votingState,
-  votingOptions
+  votingOptions,
+  round
 ) {
   const [createOpened, setCreateOpened] = useState(false)
   const [createOpenedPause, setCreateOpenedPause] = useState(false)
   const [createOpenedAction, setCreateOpenedAction] = useState(false)
+
+  const [timeLeft, _, theTimerComponent] = useRoundTimer({
+    endAt: round?.endAt,
+  })
+
   const [showTimer, setShowTimer] = useState(false)
   const user = cookieCutter.get("username")
   console.log("user", [votes, user])
@@ -539,7 +546,7 @@ function VoterView(
 
   return (
     <div style={{ paddingLeft: "10px", paddingRight: "10px" }}>
-      {showTimer && vote.length === 0 ? (
+      {/* {showTimer && vote.length === 0 ? (
         <div className="timer-wrapper">
           <CountdownCircleTimer
             isPlaying
@@ -565,7 +572,9 @@ function VoterView(
         </div>
       ) : (
         <></>
-      )}
+      )} */}
+
+      {theTimerComponent}
       <Title className="voteOption mb-4 mt-4">Vote the following feature</Title>
       <Card className="votersCard">
         <Title className="votersFeature mb-4">Feature #{question.id}</Title>
@@ -579,14 +588,25 @@ function VoterView(
           </Text>
         )}
       </Card>
-      {vote?.length > 0 ? (
-        <VoterWaitView vote={vote} />
+      {timeLeft === 0 ? (
+        <>
+          <Title className="voteOption mt-2 mb-4">
+            Timer Expires! Voting has been closed for this question. Please wait
+            for the admin&apos;s next question.
+          </Title>
+        </>
       ) : (
-        <VoterEntryViewOptions
-          sessionId={sessionId}
-          roundNumber={roundNumber}
-          options={votingOptions}
-        />
+        <>
+          {vote?.length > 0 ? (
+            <VoterWaitView vote={vote} />
+          ) : (
+            <VoterEntryViewOptions
+              sessionId={sessionId}
+              roundNumber={roundNumber}
+              options={votingOptions}
+            />
+          )}
+        </>
       )}
 
       <Modal
@@ -818,16 +838,9 @@ function DasherView(
   session,
   timer
 ) {
-  const [showTimer, setShowTimer] = useState(true)
-  const expire =
-    votes != undefined && votes[cookieCutter.get("username")]?.expire
-
-  console.log("expire", expire)
-  useEffect(() => {
-    if (expire === 0) {
-      setShowTimer(false)
-    }
-  }, [expire])
+  const [timeLeft, _, theTimerComponent] = useRoundTimer({
+    endAt: round?.endAt,
+  })
 
   const ready =
     votes && Object.keys(votes).every((user) => votes[user].vote.length > 0)
@@ -847,6 +860,7 @@ function DasherView(
 
   const votingOptions = round.votingOptions
   const stats = round.votingOptions
+  console.log("round.votingOptions", round.votingOptions)
   const [finalDecision, setFinalDecision] = useState("")
   const [createOpenedDescription, setCreateOpenedDescription] = useState(false)
   const title = (
@@ -901,25 +915,7 @@ function DasherView(
         )}
       </Card>
 
-      {showTimer ? (
-        <div className="timer-wrapper">
-          <CountdownCircleTimer
-            isPlaying
-            size={150}
-            duration={timer}
-            colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
-            colorsTime={[10, 6, 3, 0]}
-            onComplete={() => {
-              setShowTimer(false)
-              return { shouldRepeat: false, delay: 1.5 }
-            }}
-          >
-            {RenderTime}
-          </CountdownCircleTimer>
-        </div>
-      ) : (
-        <></>
-      )}
+      {theTimerComponent}
 
       <Modal
         className="votingDescription"
@@ -955,22 +951,26 @@ function DasherView(
         <ResultStats results={stats} />
       )}
 
-      <NativeSelect
-        className="mt-4"
-        label="Final Decision"
-        data={votingOptions.map((f) => f.name)}
-        value={finalDecision}
-        onChange={(event) => setFinalDecision(event.currentTarget.value)}
-        withAsterisk
-      />
-      <Button
-        className="customBtn mt-4"
-        onClick={() =>
-          updateRoundFinalVote(sessionId, roundNumber, finalDecision)
-        }
-      >
-        FINAL DECISION
-      </Button>
+      {timeLeft === 0 && (
+        <>
+          <NativeSelect
+            className="mt-4"
+            label="Final Decision"
+            data={votingOptions.map((f) => f.name)}
+            value={finalDecision}
+            onChange={(event) => setFinalDecision(event.currentTarget.value)}
+            withAsterisk
+          />
+          <Button
+            className="customBtn mt-4"
+            onClick={() =>
+              updateRoundFinalVote(sessionId, roundNumber, finalDecision)
+            }
+          >
+            FINAL DECISION
+          </Button>
+        </>
+      )}
 
       <Button
         className="customBtn mt-4"
@@ -1031,6 +1031,7 @@ export default function GuessingState({
         roundNumber,
         timer,
         votingState,
-        votingOptions
+        votingOptions,
+        round
       )
 }
