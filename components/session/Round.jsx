@@ -68,12 +68,16 @@ const scenarioHandler = (
       return (
         <ResultState
           sessionId={id}
-          voters={voters}
           dasher={round.dasher}
-          isLastRound={isLastRound}
-          round={round}
-          rounds={rounds}
+          question={round.question}
+          votes={round.votes}
           roundNumber={round.number}
+          timer={timer}
+          votingState={round.votingState}
+          votingOptions={votingOptions}
+          isLastRound={isLastRound}
+          voters={voters}
+          round={round}
           session={sessionData}
         />
       )

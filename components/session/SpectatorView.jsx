@@ -26,6 +26,7 @@ import { sortBy } from "lodash"
 import VoterMenu from "../admin/voterMenu"
 import useRoundTimer from "../../hooks/useRoundTimer"
 import useRoundStats from "../../hooks/useRoundStats"
+import { ROUND_STATES } from "../../lib/constants"
 
 function ResultboardItem({ session, roundNumber, voter, vote }) {
   const sessionId = session.id
@@ -306,8 +307,7 @@ export default function SpectatorView(
     .sort((a, b) => b.rating - a.rating)
     .at(0)
 
-  const ready =
-    votes && Object.keys(votes).every((user) => votes[user].vote.length > 0)
+  const ready = round.state !== ROUND_STATES.RESULTS
 
   const results = sortBy(
     Object.keys(voters)
@@ -369,7 +369,7 @@ export default function SpectatorView(
         </Text>
       ) : (
         <Text className="votingText">
-          <p>Voting hasn&apos;t started yet!</p>
+          <p>Please wait for next question!</p>
         </Text>
       )}
     </>

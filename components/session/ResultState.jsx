@@ -25,6 +25,7 @@ import Router from "next/router"
 import ErrorMessage, { displayError } from "../errors/ErrorMessage"
 import { GAME_STATES } from "../../lib/constants"
 import useRoundStats from "../../hooks/useRoundStats"
+import SpectatorView from "./SpectatorView"
 
 function handleNewGame(request, setErrorVisible, setErrorMessage) {
   request
@@ -420,12 +421,16 @@ function Resultboard({ session, roundNumber, results }) {
 
 export default function ResultState({
   sessionId,
-  voters,
   dasher,
-  isLastRound,
-  round,
-  rounds,
+  question,
+  votes,
   roundNumber,
+  timer,
+  votingState,
+  votingOptions,
+  isLastRound,
+  voters,
+  round,
   session,
 }) {
   const results = sortBy(
@@ -440,6 +445,22 @@ export default function ResultState({
       }),
     "order"
   )
+
+  if (cookieCutter.get("username").indexOf("spectator") > -1) {
+    return SpectatorView(
+      sessionId,
+      question,
+      votes,
+      roundNumber,
+      "",
+      isLastRound,
+      dasher,
+      voters,
+      round,
+      session,
+      timer
+    )
+  }
 
   return (
     <>
