@@ -192,20 +192,19 @@ div {
 }
 
 .summaryWrap h1 {
-  font-size: 48px;
+  font-size: 40px;
   font-weight: 700;
   color: #647a68;
   font-family: "Poppins", sans-serif;
   text-transform: uppercase;
 }
 .summaryGrid {
-  display: grid;
+  display: inline-grid;
   grid-template-columns: repeat(3, 33.33333%);
-  padding: 10px;
-  gap: 20px;
 }
 .summaryItem {
   border-bottom: 4px solid #647a68;
+  margin: 20px;
 }
 .summaryItem h2 {
   color: #3f3f3f;
