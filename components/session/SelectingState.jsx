@@ -20,6 +20,7 @@ import { useForm } from "@mantine/form"
 import ErrorMessage, { displayError } from "../errors/ErrorMessage"
 import { nextRoundValidators } from "../../lib/validators"
 import { IoMdInformationCircleOutline } from "react-icons/io"
+import TimerInput from "../inputs/TimerInput"
 
 const paddingSides = "20px"
 const cardStyle = {
@@ -68,11 +69,11 @@ function DasherControls({ session, roundNumber, options }) {
   const [errorVisible, setErrorVisible] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
   const [questionIndex, setQuestionIndex] = useState(0)
-  
+
   function indexCounter() {
-    setQuestionIndex(currentIndex => {
-      const index = currentIndex + 1;
-      return index;
+    setQuestionIndex((currentIndex) => {
+      const index = currentIndex + 1
+      return index
     })
   }
 
@@ -82,13 +83,22 @@ function DasherControls({ session, roundNumber, options }) {
   ));*/
 
   const form = useForm({
-    initialValues: {},
+    initialValues: { timer: session.timer || 60 },
     validate: { ...nextRoundValidators },
   })
 
-  const showOptions = false;
+  const showOptions = false
   return !showOptions ? (
     <>
+      <Group
+        position="center"
+        spacing="md"
+        grow
+        align="center"
+        className="entryBtns mt-4"
+      >
+        <TimerInput form={form} />
+      </Group>
       <Group
         position="center"
         spacing="md"
@@ -109,7 +119,8 @@ function DasherControls({ session, roundNumber, options }) {
               session.id,
               roundNumber,
               ROUND_STATES.GUESSING,
-              options
+              options,
+              form.values.timer
             )
           }
         >
