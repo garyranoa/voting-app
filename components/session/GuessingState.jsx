@@ -58,6 +58,7 @@ import { sortBy } from "lodash"
 import VoterMenu from "../admin/voterMenu"
 import useRoundTimer from "../../hooks/useRoundTimer"
 import useRoundStats from "../../hooks/useRoundStats"
+import { showNotification } from "@mantine/notifications"
 
 function ResultboardItem({ session, roundNumber, voter, vote }) {
   const sessionId = session.id
@@ -983,9 +984,19 @@ function DasherView(
           />
           <Button
             className="customBtn mt-4"
-            onClick={() =>
-              updateRoundFinalVote(sessionId, roundNumber, finalDecision)
-            }
+            onClick={() => {
+              ;(async function () {
+                await updateRoundFinalVote(
+                  sessionId,
+                  roundNumber,
+                  finalDecision
+                )
+                showNotification({
+                  title: "Success!",
+                  message: "Successfully Updated Final Decision",
+                })
+              })()
+            }}
           >
             FINAL DECISION
           </Button>

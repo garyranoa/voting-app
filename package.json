@@ -16,6 +16,7 @@
     "@mantine/hooks": "^5.3.2",
     "@mantine/modals": "^5.3.2",
     "@mantine/next": "^5.3.2",
+    "@mantine/notifications": "^5.3.2",
     "@next/font": "^13.0.0",
     "@tabler/icons": "^1.96.0",
     "@tabler/icons-react": "^2.42.0",
