@@ -495,7 +495,7 @@ function VoterView(
         setShowTimer(false)
       }
     }
-  } else if (expire == 0 && action.length > 0) {
+  } else if (expire == 0 && action?.length > 0) {
     if (action == "ACTION") {
       updateUserActionVote(sessionId, roundNumber, user, "")
       if (createOpenedAction) {
@@ -519,7 +519,7 @@ function VoterView(
       }
     }
   } else {
-    if (expire === 0 && action.length == 0) {
+    if (expire === 0 && action?.length == 0) {
       if (!showTimer) {
         setShowTimer(true)
       } else {
@@ -579,7 +579,7 @@ function VoterView(
           </Text>
         )}
       </Card>
-      {vote.length > 0 ? (
+      {vote?.length > 0 ? (
         <VoterWaitView vote={vote} />
       ) : (
         <VoterEntryViewOptions
@@ -619,7 +619,7 @@ function VoterView(
         <></>
       )}
 
-      {votingState === "RUNNING" && action.length == 0 ? (
+      {votingState === "RUNNING" && action?.length == 0 ? (
         <DisableVotingModal
           className="votingDescription"
           title="TIME EXPIRES"
@@ -630,7 +630,7 @@ function VoterView(
         <></>
       )}
 
-      {votingState === "RUNNING" && action.length > 0 ? (
+      {votingState === "RUNNING" && action?.length > 0 ? (
         <ActionMessageModal
           title={actionMessage}
           opened={createOpenedAction}
