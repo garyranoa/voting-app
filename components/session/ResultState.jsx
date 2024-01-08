@@ -53,7 +53,7 @@ function EndOfGame(sessionId, session) {
   let baseSessionId = sessionId
   const rounds = session.rounds
   const dasher = session.creator
-  console.log("result state", sessionId)
+  
   //voters auto redirect to new game sssion
   if (
     cookieCutter.get("username") != dasher &&
@@ -61,8 +61,9 @@ function EndOfGame(sessionId, session) {
     session.nextSessionId
   ) {
     const nextSessionId = session.nextSessionId
-    console.log("nextSessionId", nextSessionId)
-    Router.push("/[sessionId]", `/${nextSessionId}`)
+    sessionId = nextSessionId
+    console.log("nextSessionId", sessionId)
+    Router.push("/[sessionId]", `/${sessionId}`)
   }
 
   return (
