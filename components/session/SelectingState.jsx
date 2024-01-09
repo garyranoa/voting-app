@@ -46,7 +46,7 @@ function GuesserCaption() {
       style={{
         paddingLeft: paddingSides,
         paddingRight: paddingSides,
-        maxWidth: "350px",
+        textAlign: "center",
       }}
     >
       The admin is picking a voting question.

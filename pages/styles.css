@@ -382,6 +382,9 @@ div {
 .bb-1 {
   border-bottom: 2px solid #cfcfcf;
 }
+.modifyVoteBtn {
+  background-color: #647a68;
+}
 .viewDescription button {
   background-color: transparent !important;
   display: inline-block !important;
