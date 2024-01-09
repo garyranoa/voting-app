@@ -694,7 +694,7 @@ function submissionHandler(sessionId, roundNumber, votes, timer, finalVote) {
     ROUND_STATES.RESULTS,
     votes,
     timer,
-    finalVote,
+    finalVote
   ).catch((error) => console.log(error))
 }
 
@@ -1038,7 +1038,23 @@ function DasherView(
 
       <Button
         className="customBtn mt-4"
-        onClick={() => submissionHandler(sessionId, roundNumber, votes, timer, highestVote.name)}
+        onClick={() => {
+          if (!round.finalVote) {
+            showNotification({
+              title: "Required!",
+              message:
+                "You must select a final decision before you can proceed to the next question.",
+            })
+            return
+          }
+          submissionHandler(
+            sessionId,
+            roundNumber,
+            votes,
+            timer,
+            highestVote.name
+          )
+        }}
       >
         MOVE TO NEXT QUESTION
       </Button>

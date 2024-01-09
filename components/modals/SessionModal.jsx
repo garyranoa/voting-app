@@ -52,7 +52,7 @@ export default function SessionModal(props) {
     ? joinSessionValidators
     : newSessionValidators;
   const form = useForm({
-    initialValues: { username: "", sessionId: "", options: [] },
+    initialValues: { username: "", sessionId: "", timer: 60, rounds: 1, options: [] },
     validate: { ...baseSessionValidators, ...scenarioValidators },
   });
   
