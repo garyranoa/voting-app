@@ -6,6 +6,7 @@ import Head from "next/head"
 import "./styles.css"
 import { useRouter } from "next/router"
 import { NotificationsProvider } from "@mantine/notifications"
+import useServerTime from "../hooks/useServerTime"
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter()
@@ -15,6 +16,8 @@ function MyApp({ Component, pageProps }) {
     router.pathname.startsWith("/summary")
 
   const LayoutToUse = isDashboard ? DashboardLayout : Layout
+
+  const { serverTimeComponent } = useServerTime()
 
   return (
     <MantineProvider
@@ -54,6 +57,7 @@ function MyApp({ Component, pageProps }) {
           <Component {...pageProps} />
           <Analytics />
         </LayoutToUse>
+        {serverTimeComponent}
       </NotificationsProvider>
     </MantineProvider>
   )
