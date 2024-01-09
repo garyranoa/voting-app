@@ -32,6 +32,7 @@ import { showNotification } from "@mantine/notifications"
 import { mkConfig, generateCsv, download } from 'export-to-csv'; 
 import { jsPDF } from 'jspdf'; 
 import autoTable from 'jspdf-autotable';
+//import parse from 'html-react-parser';
 
 function handleNewGame(request, setErrorVisible, setErrorMessage) {
   request
@@ -457,6 +458,8 @@ function ExportFile({ session }) {
   const rounds = session.rounds;
 
   for (var x in rounds) {
+    const description = {__html: rounds[x].question.description};
+    const desc = (<div dangerouslySetInnerHTML={description} />)
     data.push({id: rounds[x].question.id,
                title: rounds[x].question.title,
                description: rounds[x].question.description,
@@ -475,7 +478,11 @@ function ExportFile({ session }) {
   };
 
   const handleExportPDF = () => {
-    const doc = new jsPDF();
+    //const doc = new jsPDF();
+    const doc = new jsPDF({
+          orientation: 'landscape',
+          unit: 'in',
+    });
     const tableData = data.map((row) => row && Object.values(row));
     const tableHeaders = columns.map((c) => c.header);
     autoTable(doc, {head: [tableHeaders],body: tableData,});
