@@ -21,6 +21,7 @@ import ErrorMessage, { displayError } from "../errors/ErrorMessage"
 import { nextRoundValidators } from "../../lib/validators"
 import { IoMdInformationCircleOutline } from "react-icons/io"
 import TimerInput from "../inputs/TimerInput"
+import { useClickOutside } from '@mantine/hooks';
 
 const paddingSides = "20px"
 const cardStyle = {
@@ -189,6 +190,7 @@ export default function SelectingState({
 }) {
   const isDasher = cookieCutter.get("username") === dasher
   const [createOpenedDescription, setCreateOpenedDescription] = useState(false)
+  const ref = useClickOutside(() => setCreateOpenedDescription(false));
   const title = (
     <Text>
       <IoMdInformationCircleOutline /> DESCRIPTION
@@ -231,12 +233,13 @@ export default function SelectingState({
           withCloseButton={true}
           closeOnConfirm={true}
           closeOnCancel={true}
+          trapFocus={false}
           overlayProps={{
             backgroundOpacity: 0.55,
             blur: 6,
           }}
         >
-          <Text
+          <Text ref={ref}
             dangerouslySetInnerHTML={{ __html: question.description }}
           ></Text>
         </Modal>

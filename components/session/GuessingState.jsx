@@ -60,6 +60,7 @@ import useRoundTimer from "../../hooks/useRoundTimer"
 import useRoundStats from "../../hooks/useRoundStats"
 import { showNotification } from "@mantine/notifications"
 import SpectatorView from "./SpectatorView"
+import { useClickOutside } from '@mantine/hooks';
 
 function ResultboardItem({ session, roundNumber, voter, vote }) {
   const sessionId = session.id
@@ -547,6 +548,7 @@ function VoterView(
   }
 
   const [createOpenedDescription, setCreateOpenedDescription] = useState(false)
+  const ref = useClickOutside(() => setCreateOpenedDescription(false));
   const title = (
     <Text>
       <IoMdInformationCircleOutline /> DESCRIPTION
@@ -634,7 +636,7 @@ function VoterView(
           blur: 6,
         }}
       >
-        <Text dangerouslySetInnerHTML={{ __html: question.description }}></Text>
+        <Text ref={ref} dangerouslySetInnerHTML={{ __html: question.description }}></Text>
       </Modal>
 
       {votingState === VOTING_STATES.PAUSED ? (
@@ -889,6 +891,7 @@ function DasherView(
   }, [highestVote.name])
 
   const [createOpenedDescription, setCreateOpenedDescription] = useState(false)
+  const ref = useClickOutside(() => setCreateOpenedDescription(false));
   const title = (
     <Text>
       <IoMdInformationCircleOutline /> DESCRIPTION
@@ -959,7 +962,7 @@ function DasherView(
           blur: 6,
         }}
       >
-        <Text dangerouslySetInnerHTML={{ __html: question.description }}></Text>
+        <Text ref={ref} dangerouslySetInnerHTML={{ __html: question.description }}></Text>
       </Modal>
 
       {/* <Title className="voteOption mt-2 mb-3">Selected vote from Voters</Title>
