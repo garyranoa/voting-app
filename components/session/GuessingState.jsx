@@ -128,7 +128,7 @@ function ResultboardItem({ session, roundNumber, voter, vote }) {
                 className="modifyVoteBtn"
               >
                 <Center>
-                  <BiUpvote size={25} />
+                  {/* <BiUpvote size={25} /> */}
                   <Box ml={10}>{item}</Box>
                 </Center>
               </Button>
@@ -187,7 +187,7 @@ function ResultboardItem({ session, roundNumber, voter, vote }) {
             className="modifyVoteBtn"
           >
             <Center>
-              <BiUpvote size={25} />
+              {/* <BiUpvote size={25} /> */}
               <Box ml={10}>DELETE</Box>
             </Center>
           </Button>
