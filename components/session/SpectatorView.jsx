@@ -26,7 +26,7 @@ import { sortBy } from "lodash"
 import VoterMenu from "../admin/voterMenu"
 import useRoundTimer from "../../hooks/useRoundTimer"
 import useRoundStats from "../../hooks/useRoundStats"
-import { ROUND_STATES } from "../../lib/constants"
+import { ROUND_STATES, VOTING_STATES } from "../../lib/constants"
 
 function ResultboardItem({ session, roundNumber, voter, vote }) {
   const sessionId = session.id
@@ -300,6 +300,7 @@ export default function SpectatorView(
 ) {
   const [timeLeft, _, theTimerComponent] = useRoundTimer({
     endAt: round?.endAt,
+    show: round.votingState === VOTING_STATES.RUNNING,
   })
 
   const { votingOptionsStats } = useRoundStats({
@@ -325,6 +326,8 @@ export default function SpectatorView(
       }),
     "order"
   )
+
+  const showStats = round.state === ROUND_STATES.RESULTS
 
   const [createOpenedDescription, setCreateOpenedDescription] = useState(false)
   const title = (
@@ -366,7 +369,7 @@ export default function SpectatorView(
       >
         <Text dangerouslySetInnerHTML={{ __html: question.description }}></Text>
       </Modal>
-      <ResultStats round={round} />
+      {showStats ? <ResultStats round={round} /> : <></>}
       {ready ? (
         <Text className="votingText">
           <p>Voting is underway!</p>

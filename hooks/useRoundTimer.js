@@ -40,7 +40,7 @@ const RenderTime = ({ remainingTime }) => {
   )
 }
 
-export default function useRoundTimer({ endAt }) {
+export default function useRoundTimer({ endAt, show }) {
   const [timeLeft, setTimeLeft] = useState()
   useEffect(() => {
     // endAt should be calculated using current datetime + round duration
@@ -56,7 +56,7 @@ export default function useRoundTimer({ endAt }) {
     }
   }, [endAt])
 
-  const theTimerComponent = timeLeft ? (
+  const theTimerComponent = timeLeft && show ? (
     <div className="timer-wrapper">
       <CountdownCircleTimer
         isPlaying

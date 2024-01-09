@@ -60,7 +60,7 @@ import useRoundTimer from "../../hooks/useRoundTimer"
 import useRoundStats from "../../hooks/useRoundStats"
 import { showNotification } from "@mantine/notifications"
 import SpectatorView from "./SpectatorView"
-import { useClickOutside } from '@mantine/hooks';
+import { useClickOutside } from "@mantine/hooks"
 
 function ResultboardItem({ session, roundNumber, voter, vote }) {
   const sessionId = session.id
@@ -481,6 +481,7 @@ function VoterView(
 
   const [timeLeft, _, theTimerComponent] = useRoundTimer({
     endAt: round?.endAt,
+    show: round.votingState === VOTING_STATES.RUNNING,
   })
 
   const [showTimer, setShowTimer] = useState(false)
@@ -550,7 +551,7 @@ function VoterView(
   }
 
   const [createOpenedDescription, setCreateOpenedDescription] = useState(false)
-  const ref = useClickOutside(() => setCreateOpenedDescription(false));
+  const ref = useClickOutside(() => setCreateOpenedDescription(false))
   const title = (
     <Text>
       <IoMdInformationCircleOutline /> DESCRIPTION
@@ -638,7 +639,10 @@ function VoterView(
           blur: 6,
         }}
       >
-        <Text ref={ref} dangerouslySetInnerHTML={{ __html: question.description }}></Text>
+        <Text
+          ref={ref}
+          dangerouslySetInnerHTML={{ __html: question.description }}
+        ></Text>
       </Modal>
 
       {votingState === VOTING_STATES.PAUSED ? (
@@ -676,7 +680,7 @@ function VoterView(
   )
 }
 
-function submissionHandler(sessionId, roundNumber, votes, timer) {
+function submissionHandler(sessionId, roundNumber, votes, timer, finalVote) {
   /*Object.keys(votes).forEach((user) => {
     if (votes[user].correct) {
       updateUserIsCorrect(sessionId, roundNumber, user).catch((error) =>
@@ -689,7 +693,8 @@ function submissionHandler(sessionId, roundNumber, votes, timer) {
     roundNumber,
     ROUND_STATES.RESULTS,
     votes,
-    timer
+    timer,
+    finalVote,
   ).catch((error) => console.log(error))
 }
 
@@ -857,6 +862,7 @@ function DasherView(
 ) {
   const [timeLeft, _, theTimerComponent] = useRoundTimer({
     endAt: round?.endAt,
+    show: round.votingState === VOTING_STATES.RUNNING,
   })
 
   const { votingOptionsStats } = useRoundStats({
@@ -893,7 +899,7 @@ function DasherView(
   }, [highestVote.name])
 
   const [createOpenedDescription, setCreateOpenedDescription] = useState(false)
-  const ref = useClickOutside(() => setCreateOpenedDescription(false));
+  const ref = useClickOutside(() => setCreateOpenedDescription(false))
   const title = (
     <Text>
       <IoMdInformationCircleOutline /> DESCRIPTION
@@ -964,7 +970,10 @@ function DasherView(
           blur: 6,
         }}
       >
-        <Text ref={ref} dangerouslySetInnerHTML={{ __html: question.description }}></Text>
+        <Text
+          ref={ref}
+          dangerouslySetInnerHTML={{ __html: question.description }}
+        ></Text>
       </Modal>
 
       {/* <Title className="voteOption mt-2 mb-3">Selected vote from Voters</Title>
@@ -1029,8 +1038,7 @@ function DasherView(
 
       <Button
         className="customBtn mt-4"
-        disabled={!ready}
-        onClick={() => submissionHandler(sessionId, roundNumber, votes, timer)}
+        onClick={() => submissionHandler(sessionId, roundNumber, votes, timer, highestVote.name)}
       >
         MOVE TO NEXT QUESTION
       </Button>

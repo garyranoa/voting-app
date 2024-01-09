@@ -21,7 +21,7 @@ import ErrorMessage, { displayError } from "../errors/ErrorMessage"
 import { nextRoundValidators } from "../../lib/validators"
 import { IoMdInformationCircleOutline } from "react-icons/io"
 import TimerInput from "../inputs/TimerInput"
-import { useClickOutside } from '@mantine/hooks';
+import { useClickOutside } from "@mantine/hooks"
 
 const paddingSides = "20px"
 const cardStyle = {
@@ -189,8 +189,9 @@ export default function SelectingState({
   session,
 }) {
   const isDasher = cookieCutter.get("username") === dasher
+  const isSpectator = cookieCutter.get("username").indexOf("spectator") > -1
   const [createOpenedDescription, setCreateOpenedDescription] = useState(false)
-  const ref = useClickOutside(() => setCreateOpenedDescription(false));
+  const ref = useClickOutside(() => setCreateOpenedDescription(false))
   const title = (
     <Text>
       <IoMdInformationCircleOutline /> DESCRIPTION
@@ -206,7 +207,7 @@ export default function SelectingState({
   return (
     <>
       <Title className="voteOption">Voting Question Selection</Title>
-      {isDasher ? <DasherCaption /> : <GuesserCaption />}
+      {isDasher ? <DasherCaption /> : isSpectator ? <></> : <GuesserCaption />}
       <br />
       <Card className="votersCard">
         <Title size="h3"></Title>
@@ -239,7 +240,8 @@ export default function SelectingState({
             blur: 6,
           }}
         >
-          <Text ref={ref}
+          <Text
+            ref={ref}
             dangerouslySetInnerHTML={{ __html: question.description }}
           ></Text>
         </Modal>

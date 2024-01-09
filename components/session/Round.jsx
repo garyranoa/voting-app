@@ -116,7 +116,6 @@ export default function Round({ sessionData }) {
       }
     })
     .filter((f) => !!f)
-  console.log("filteredVoters", filteredVoters)
 
   return (
     <>
