@@ -485,7 +485,7 @@ function ExportFile({ session }) {
   return (
       <>
         <Button
-          color="lightblue"
+          className="customBtn mt-4 mb-4"
           onClick={() => {
             ;(async function () {
               handleExportDataCSV()
@@ -502,6 +502,7 @@ function ExportFile({ session }) {
         </Button>
 
         <Button
+            className="customBtn mt-4 mb-4"
             onClick={() => {
               ;(async function () {
                 handleExportPDF()
