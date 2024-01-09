@@ -94,16 +94,17 @@ function ResultboardItem({ session, roundNumber, voter, vote }) {
         }}
         size="sm"
       >
-        Voter: {voter}
+        <center>Voter: {voter}</center>
         <div
           style={{
             paddingTop: "10px",
             marginLeft: "auto",
             marginRight: "auto",
-            maxWidth: "200px",
-            display: "flex",
+            maxWidth: "100%",
+            display: "block",
             flexDirection: "row",
             alignItems: "center",
+            textAlign: "center",
             justifyContent: "space-between",
           }}
         >
@@ -111,7 +112,6 @@ function ResultboardItem({ session, roundNumber, voter, vote }) {
             options.map((item, i) => (
               <Button
                 key={i}
-                color={i % 2 ? "red" : "blue"}
                 variant="filled"
                 radius="md"
                 mt="xl"
@@ -125,6 +125,7 @@ function ResultboardItem({ session, roundNumber, voter, vote }) {
                   })
                   setShowVoteOption(false)
                 }}
+                className="modifyVoteBtn"
               >
                 <Center>
                   <BiUpvote size={25} />
@@ -155,21 +156,21 @@ function ResultboardItem({ session, roundNumber, voter, vote }) {
         }}
         size="sm"
       >
-        Voter: {voter}
+        <center>Voter: {voter}</center>
         <div
           style={{
             paddingTop: "10px",
             marginLeft: "auto",
             marginRight: "auto",
-            maxWidth: "200px",
-            display: "flex",
+            maxWidth: "100%",
+            display: "block",
             flexDirection: "row",
             alignItems: "center",
+            textAlign: "center",
             justifyContent: "space-between",
           }}
         >
           <Button
-            color={"blue"}
             variant="filled"
             radius="md"
             mt="xl"
@@ -183,6 +184,7 @@ function ResultboardItem({ session, roundNumber, voter, vote }) {
               })
               setShowConfirmDelete(false)
             }}
+            className="modifyVoteBtn"
           >
             <Center>
               <BiUpvote size={25} />
@@ -190,7 +192,6 @@ function ResultboardItem({ session, roundNumber, voter, vote }) {
             </Center>
           </Button>
           <Button
-            color={"red"}
             variant="filled"
             radius="md"
             mt="xl"
@@ -200,6 +201,7 @@ function ResultboardItem({ session, roundNumber, voter, vote }) {
             onClick={() => {
               setShowConfirmDelete(false)
             }}
+            className="modifyVoteBtn"
           >
             <Center>
               <BiUpvote size={25} />
