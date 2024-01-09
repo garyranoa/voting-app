@@ -19,6 +19,7 @@ import ErrorMessage, { displayError } from "../errors/ErrorMessage";
 import { useState } from "react";
 import Router from "next/router";
 import cookieCutter from "cookie-cutter";
+import { useClickOutside } from '@mantine/hooks';
 
 /**
  * Session creation modal
@@ -45,6 +46,7 @@ function handleSubmission(request, username, setErrorVisible, setErrorMessage) {
 export default function SessionModal(props) {
   const [errorVisible, setErrorVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const ref = useClickOutside(() => props.setOpened(false));
   
   const scenarioValidators = props.join
     ? joinSessionValidators
@@ -61,7 +63,7 @@ export default function SessionModal(props) {
       onClose={() => props.setOpened(false)}
       title={props.title}
     >
-      <form
+      <form ref={ref}
         onSubmit={form.onSubmit((v) =>
           handleSubmission(
             props.join
