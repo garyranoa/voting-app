@@ -200,7 +200,8 @@ div {
 }
 .summaryGrid {
   display: inline-grid;
-  grid-template-columns: repeat(3, 33.33333%);
+  grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+  width: 100%;
 }
 .summaryItem {
   border-bottom: 4px solid #647a68;
