@@ -95,7 +95,7 @@ function ResultboardItem({ session, roundNumber, voter, vote }) {
               >
                 <Center>
                   {/* <BiUpvote size={25} /> */}
-                  <Box ml={10}>{item}</Box>
+                  <Box>{item}</Box>
                 </Center>
               </Button>
             ))}
@@ -155,7 +155,7 @@ function ResultboardItem({ session, roundNumber, voter, vote }) {
           >
             <Center>
               {/* <BiUpvote size={25} /> */}
-              <Box ml={10}>DELETE</Box>
+              <Box>DELETE</Box>
             </Center>
           </Button>
           <Button
@@ -173,7 +173,7 @@ function ResultboardItem({ session, roundNumber, voter, vote }) {
           >
             <Center>
               {/* <BiUpvote size={25} /> */}
-              <Box ml={10}>CANCEL</Box>
+              <Box>CANCEL</Box>
             </Center>
           </Button>
         </div>
