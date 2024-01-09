@@ -26,6 +26,12 @@ import ErrorMessage, { displayError } from "../errors/ErrorMessage"
 import { GAME_STATES } from "../../lib/constants"
 import useRoundStats from "../../hooks/useRoundStats"
 import SpectatorView from "./SpectatorView"
+import { IconDownload } from '@tabler/icons-react';
+import { showNotification } from "@mantine/notifications"
+
+import { mkConfig, generateCsv, download } from 'export-to-csv'; 
+import { jsPDF } from 'jspdf'; 
+import autoTable from 'jspdf-autotable';
 
 function handleNewGame(request, setErrorVisible, setErrorMessage) {
   request
@@ -83,7 +89,7 @@ function EndOfGame(sessionId, session) {
         <caption></caption>
         <thead>
           <tr>
-            <th style={{ textAlign: "center" }}>ROUND</th>
+            <th style={{ textAlign: "center" }}>QUESTION</th>
             <th style={{ textAlign: "center" }}>OPTION</th>
             <th style={{ textAlign: "center" }}>VOTING %</th>
           </tr>
@@ -422,6 +428,97 @@ function Resultboard({ session, roundNumber, results }) {
   )
 }
 
+function ExportFile({ session }) {
+
+  const columns = [
+    {
+      accessorKey: 'id',
+      header: 'ID',
+      size: 40,
+    },
+    {
+      accessorKey: 'title',
+      header: 'Title',
+      size: 120,
+    },
+    {
+      accessorKey: 'description',
+      header: 'Description',
+      size: 300,
+    },
+    {
+      accessorKey: 'finalVote',
+      header: 'Final Vote',
+      size: 120,
+    },
+  ];
+
+  var data = [];
+  const rounds = session.rounds;
+
+  for (var x in rounds) {
+    data.push({id: rounds[x].question.id,
+               title: rounds[x].question.title,
+               description: rounds[x].question.description,
+               finalVote: rounds[x].finalVote, })
+  }
+
+  const csvConfig = mkConfig({
+    fieldSeparator: ',',
+    decimalSeparator: '.',
+    useKeysAsHeaders: true,
+  });
+
+  const handleExportDataCSV = () => {
+    const csv = generateCsv(csvConfig)(data);
+    download(csvConfig)(csv);
+  };
+
+  const handleExportPDF = () => {
+    const doc = new jsPDF();
+    const tableData = data.map((row) => row && Object.values(row));
+    const tableHeaders = columns.map((c) => c.header);
+    autoTable(doc, {head: [tableHeaders],body: tableData,});
+    doc.save('voting-summary.pdf')
+  };
+
+  return (
+      <>
+        <Button
+          color="lightblue"
+          onClick={() => {
+            ;(async function () {
+              handleExportDataCSV()
+              showNotification({
+                title: "Success!",
+                message: "Successfully exported to CSV",
+              })
+            })()
+          }}
+          leftIcon={<IconDownload />}
+          variant="filled"
+        >
+          Export CSV
+        </Button>
+
+        <Button
+            onClick={() => {
+              ;(async function () {
+                handleExportPDF()
+                showNotification({
+                  title: "Success!",
+                  message: "Successfully exported to PDF",
+                })
+              })()
+            }}
+          leftIcon={<IconDownload />}
+          variant="filled">Export PDF</Button>
+
+      </>
+    )
+
+}
+
 export default function ResultState({
   sessionId,
   dasher,
@@ -478,10 +575,13 @@ export default function ResultState({
       {!isLastRound && dasher === cookieCutter.get("username") && (
         <ResultStats round={round} />
       )}
-
+      
       {isLastRound
         ? EndOfGame(sessionId, session)
         : GameContinues(sessionId, dasher)}
+
+      {isLastRound && dasher === cookieCutter.get("username") && <ExportFile session={session} />}
+
     </>
   )
 }
