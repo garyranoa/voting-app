@@ -63,7 +63,7 @@ export default function SessionModal(props) {
       onClose={() => props.setOpened(false)}
       title={props.title}
     >
-      <form ref={ref}
+      <form 
         onSubmit={form.onSubmit((v) =>
           handleSubmission(
             props.join
