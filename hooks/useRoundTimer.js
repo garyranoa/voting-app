@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { CountdownCircleTimer } from "react-countdown-circle-timer"
+import { getServerTimestamp } from "../lib/firebase"
 
 const RenderTime = ({ remainingTime }) => {
   const currentTime = useRef(remainingTime)
@@ -42,11 +43,13 @@ const RenderTime = ({ remainingTime }) => {
 
 export default function useRoundTimer({ endAt, show }) {
   const [timeLeft, setTimeLeft] = useState()
+
   useEffect(() => {
     // endAt should be calculated using current datetime + round duration
-    if (endAt) {      
+    if (endAt) {
       const date1 = new Date(endAt)
-      const date2 = new Date()
+      const serverTime = getServerTimestamp()
+      const date2 = new Date(serverTime)
       const diff = date1.getTime() - date2.getTime()
       const msec = diff
       // const hh = Math.floor(msec / 1000 / 60 / 60)
@@ -55,26 +58,27 @@ export default function useRoundTimer({ endAt, show }) {
       setTimeLeft(ss)
     }
   }, [endAt])
-
-  const theTimerComponent = timeLeft && show ? (
-    <div className="timer-wrapper">
-      <CountdownCircleTimer
-        isPlaying
-        size={150}
-        duration={timeLeft}
-        colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
-        colorsTime={[10, 6, 3, 0]}
-        onComplete={() => {
-          setTimeLeft(0)
-          return { shouldRepeat: false, delay: 1.5 }
-        }}
-      >
-        {RenderTime}
-      </CountdownCircleTimer>
-    </div>
-  ) : (
-    <></>
-  )
+  
+  const theTimerComponent =
+    timeLeft && show ? (
+      <div className="timer-wrapper">
+        <CountdownCircleTimer
+          isPlaying
+          size={150}
+          duration={timeLeft}
+          colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
+          colorsTime={[10, 6, 3, 0]}
+          onComplete={() => {
+            setTimeLeft(0)
+            return { shouldRepeat: false, delay: 1.5 }
+          }}
+        >
+          {RenderTime}
+        </CountdownCircleTimer>
+      </div>
+    ) : (
+      <></>
+    )
 
   return [timeLeft, setTimeLeft, theTimerComponent]
 }
