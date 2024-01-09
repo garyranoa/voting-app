@@ -565,13 +565,14 @@ export default function ResultState({
 
   return (
     <>
-      {dasher === cookieCutter.get("username") && (
-        <Resultboard
+      {/**{dasher === cookieCutter.get("username") && (
+        
+      <Resultboard
           session={session}
           roundNumber={roundNumber}
           results={results}
-        />
-      )}
+        /> 
+      )}*/}
 
       {!isLastRound && dasher === cookieCutter.get("username") && (
         <ResultStats round={round} />
